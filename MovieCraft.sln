@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Server", "MovieCraft.Server\MovieCraft.Server.csproj", "{6EE1B5C8-4F09-4878-8373-9977F7FD4E98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Shared", "MovieCraft.Shared\MovieCraft.Shared.csproj", "{D9196845-AED7-4B3C-855A-5462CDD5E0D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6EE1B5C8-4F09-4878-8373-9977F7FD4E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EE1B5C8-4F09-4878-8373-9977F7FD4E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EE1B5C8-4F09-4878-8373-9977F7FD4E98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9196845-AED7-4B3C-855A-5462CDD5E0D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9196845-AED7-4B3C-855A-5462CDD5E0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9196845-AED7-4B3C-855A-5462CDD5E0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9196845-AED7-4B3C-855A-5462CDD5E0D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

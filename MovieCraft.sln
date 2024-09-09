@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Server", "MovieC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Shared", "MovieCraft.Shared\MovieCraft.Shared.csproj", "{D9196845-AED7-4B3C-855A-5462CDD5E0D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Client", "MovieCraft.Client\MovieCraft.Client.csproj", "{AF0C337A-98EE-42FF-8DA1-A4927302751D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D9196845-AED7-4B3C-855A-5462CDD5E0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9196845-AED7-4B3C-855A-5462CDD5E0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9196845-AED7-4B3C-855A-5462CDD5E0D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF0C337A-98EE-42FF-8DA1-A4927302751D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF0C337A-98EE-42FF-8DA1-A4927302751D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF0C337A-98EE-42FF-8DA1-A4927302751D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF0C337A-98EE-42FF-8DA1-A4927302751D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

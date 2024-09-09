@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MovieCraft.Client\MovieCraft.Client.csproj" />
+    <ProjectReference Include="..\MovieCraft.Shared\MovieCraft.Shared.csproj" />
   </ItemGroup>
 
 </Project>

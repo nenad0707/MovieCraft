@@ -1,4 +1,4 @@
-namespace MovieCraft.Server
+namespace MovieCraft.Shared
 {
     public class WeatherForecast
     {

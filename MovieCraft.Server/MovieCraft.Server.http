@@ -1,0 +1,6 @@
+@MovieCraft.Server_HostAddress = http://localhost:5100
+
+GET {{MovieCraft.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -11,11 +11,14 @@ public class MovieDbContext : DbContext
 
     public DbSet<Movie> Movies { get; set; }
     public DbSet<User> Users { get; set; }
-    public DbSet<FavoriteMovie> FavoriteMovies { get; set; } 
-  
+    public DbSet<FavoriteMovie> FavoriteMovies { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Movie>()
+            .ToTable("Movies");
 
         modelBuilder.Entity<FavoriteMovie>()
             .HasOne(fm => fm.User)

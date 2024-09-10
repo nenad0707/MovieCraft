@@ -1,8 +1,8 @@
-﻿namespace MovieCraft.Domain.Entities
+﻿namespace MovieCraft.Domain.Entities;
+
+public class User
 {
-    public class User
-    {
-        public string Id { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-    }
+    public int Id { get; set; }
+    public string UserId { get; set; } = default!;
+    public ICollection<FavoriteMovie> FavoriteMovies { get; set; } = new List<FavoriteMovie>();
 }

@@ -2,9 +2,12 @@
 
 public class Movie
 {
-    public int Id { get; set; }
-    public string Title { get; set; } = string.Empty;
-    public string Overview { get; set; } = string.Empty;
-    public DateTime ReleaseDate { get; set; }
-    public string PosterUrl { get; set; } = string.Empty;
+    public int Id { get; set; } = default!;
+    public int TmdbId { get; set; } = default!;
+    public string Title { get; set; } = default!;
+    public string Overview { get; set; } = default!;
+    public DateTime? ReleaseDate { get; set; }
+    public string PosterPath { get; set; } = default!;
+    public ICollection<FavoriteMovie> FavoriteMovies { get; set; } = new List<FavoriteMovie>();
 }
+

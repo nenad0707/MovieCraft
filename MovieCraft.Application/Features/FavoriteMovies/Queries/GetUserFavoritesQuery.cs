@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MovieCraft.Application.DTOs;
 
 namespace MovieCraft.Application.Features.FavoriteMovies.Queries;
 

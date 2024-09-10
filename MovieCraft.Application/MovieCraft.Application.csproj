@@ -13,11 +13,15 @@
   <ItemGroup>
     <Folder Include="Features\FavoriteMovies\Commands\" />
     <Folder Include="Features\FavoriteMovies\Queries\" />
-    <Folder Include="Features\Movies\Commands\" />
     <Folder Include="Features\Movies\Queries\" />
     <Folder Include="DTOs\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Mappings\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
 </Project>

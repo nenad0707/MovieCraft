@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\FavoriteMovies\Commands\" />
-    <Folder Include="Features\FavoriteMovies\Queries\" />
-    <Folder Include="Features\Movies\Queries\" />
-    <Folder Include="DTOs\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Mappings\" />
   </ItemGroup>

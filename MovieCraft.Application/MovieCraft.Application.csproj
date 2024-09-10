@@ -10,4 +10,14 @@
     <ProjectReference Include="..\MovieCraft.Domain\MovieCraft.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\FavoriteMovies\Commands\" />
+    <Folder Include="Features\FavoriteMovies\Queries\" />
+    <Folder Include="Features\Movies\Commands\" />
+    <Folder Include="Features\Movies\Queries\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Mappings\" />
+  </ItemGroup>
+
 </Project>

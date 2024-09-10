@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MovieCraft.Application.DTOs;
 using MovieCraft.Application.Interfaces;
+using MovieCraft.Infrastructure.Configuration;
 using TMDbLib.Client;
 
 namespace MovieCraft.Infrastructure.Services

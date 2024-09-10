@@ -1,4 +1,6 @@
-﻿namespace MovieCraft.Application.Features.FavoriteMovies.Commands;
+﻿using MediatR;
+
+namespace MovieCraft.Application.Features.FavoriteMovies.Commands;
 
 public class AddFavoriteMovieCommand : IRequest
 {

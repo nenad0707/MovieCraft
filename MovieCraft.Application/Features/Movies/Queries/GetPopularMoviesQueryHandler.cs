@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using MovieCraft.Application.DTOs;
+using MovieCraft.Application.Interfaces;
 
 namespace MovieCraft.Application.Features.Movies.Queries;
 
-public class GetPopularMoviesQueryHandler : IRequestHandler<GetPopularMoviesQuery>
+public class GetPopularMoviesQueryHandler : IRequestHandler<GetPopularMoviesQuery, IEnumerable<MovieDto>>
 {
     private readonly ITmdbService _tmdbService;
     private readonly IMapper _mapper;

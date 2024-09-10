@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="TMDbLib" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MovieCraft.Application\MovieCraft.Application.csproj" />
     <ProjectReference Include="..\MovieCraft.Domain\MovieCraft.Domain.csproj" />
   </ItemGroup>

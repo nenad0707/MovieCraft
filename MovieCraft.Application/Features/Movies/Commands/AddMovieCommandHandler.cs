@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
+using MovieCraft.Application.Interfaces;
 using MovieCraft.Domain.Entities;
 
 namespace MovieCraft.Application.Features.Movies.Commands;
 
-public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand>
+public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, Unit>
 {
     private readonly IMovieRepository _movieRepository;
     

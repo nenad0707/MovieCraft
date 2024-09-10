@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using MovieCraft.Application.DTOs;
+using MovieCraft.Application.Interfaces;
 
 namespace MovieCraft.Application.Features.FavoriteMovies.Queries;
 

@@ -2,7 +2,7 @@
 
 namespace MovieCraft.Application.Features.Movies.Commands;
 
-public class AddMovieCommand : IRequest
+public class AddMovieCommand : IRequest<Unit>
 {
     public int TmdbId { get; set; }
     public string Title { get; set; } = default!;

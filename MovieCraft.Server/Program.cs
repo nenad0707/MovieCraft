@@ -1,9 +1,26 @@
+using Microsoft.EntityFrameworkCore;
+using MovieCraft.Application.Interfaces;
+using MovieCraft.Application.Mappings;
+using MovieCraft.Infrastructure.Configuration;
+using MovieCraft.Infrastructure.Services;
+using MovieCraft.Server.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<MovieDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// MediatR and AutoMapper setup
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddAutoMapper(typeof(MovieProfile));
+
+// Register TMDb settings
+builder.Services.Configure<TmdbSettings>(builder.Configuration.GetSection("TMDbSettings"));
+builder.Services.AddScoped<ITmdbService, TmdbService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

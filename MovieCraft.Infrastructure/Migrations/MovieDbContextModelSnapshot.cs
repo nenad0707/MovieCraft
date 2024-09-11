@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MovieCraft.Server.Persistence;
+using MovieCraft.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace MovieCraft.Server.Migrations
+namespace MovieCraft.Infrastructure.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
     partial class MovieDbContextModelSnapshot : ModelSnapshot

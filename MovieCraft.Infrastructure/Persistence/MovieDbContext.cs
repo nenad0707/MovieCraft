@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieCraft.Domain.Entities;
 
-namespace MovieCraft.Server.Persistence;
+namespace MovieCraft.Infrastructure.Persistence;
 
 public class MovieDbContext : DbContext
 {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MovieCraft.Server.Migrations
+namespace MovieCraft.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

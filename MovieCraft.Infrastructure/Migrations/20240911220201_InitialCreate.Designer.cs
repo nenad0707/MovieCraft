@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MovieCraft.Server.Persistence;
+using MovieCraft.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace MovieCraft.Server.Migrations
+namespace MovieCraft.Infrastructure.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20240911204708_InitialCreate")]
+    [Migration("20240911220201_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

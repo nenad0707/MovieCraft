@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MovieCraft.Application.Features.FavoriteMovies.Commands;
-using MovieCraft.Application.Features.FavoriteMovies.Queries;
 using MovieCraft.Application.Features.Users.Commands;
 using MovieCraft.Application.Features.Users.Queries;
 

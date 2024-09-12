@@ -16,16 +16,18 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetByUserIdAsync(string userId)
     {
-        return await _dbContext.Users
-            .Include(u => u.FavoriteMovies)
-            .ThenInclude(fm => fm.Movie)
-            .FirstOrDefaultAsync(u => u.UserId == userId);
+        return await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
     }
 
 
-    public async Task UpdateAsync(User user)
+    public async Task<IEnumerable<User>> GetAllAsync()
     {
-        _dbContext.Users.Update(user);
+        return await _dbContext.Users.ToListAsync();
+    }
+
+    public async Task AddAsync(User user)
+    {
+        await _dbContext.Users.AddAsync(user);
         await _dbContext.SaveChangesAsync();
     }
 }

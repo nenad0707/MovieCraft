@@ -1,27 +1,38 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieCraft.Application.Interfaces;
 using MovieCraft.Domain.Entities;
-using MovieCraft.Infrastructure.Persistence;
 
-namespace MovieCraft.Infrastructure.Repositories;
-
-public class MovieRepository : IMovieRepository
+namespace MovieCraft.Infrastructure.Persistence.Repositories
 {
-    private readonly MovieDbContext _dbContext;
-
-    public MovieRepository(MovieDbContext dbContext)
+    public class MovieRepository : IMovieRepository
     {
-        _dbContext = dbContext;
-    }
+        private readonly MovieDbContext _dbContext;
 
-    public async Task<Movie?> GetByTmdbIdAsync(int tmdbId)
-    {
-        return await _dbContext.Movies.FirstOrDefaultAsync(m => m.TmdbId == tmdbId);
-    }
+        public MovieRepository(MovieDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
-    public async Task AddAsync(Movie movie)
-    {
-        await _dbContext.Movies.AddAsync(movie);
-        await _dbContext.SaveChangesAsync();
+        public async Task<Movie?> GetByTmdbIdAsync(int tmdbId)
+        {
+            return await _dbContext.Movies.FirstOrDefaultAsync(m => m.TmdbId == tmdbId);
+        }
+
+        public async Task AddAsync(Movie movie)
+        {
+            await _dbContext.Movies.AddAsync(movie);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Movie>> GetAllAsync()
+        {
+            return await _dbContext.Movies.ToListAsync();
+        }
+
+       
+        public async Task<IEnumerable<int>> GetAllTmdbIdsAsync()
+        {
+            return await _dbContext.Movies.Select(m => m.TmdbId).ToListAsync();
+        }
     }
 }

@@ -23,18 +23,22 @@ public class GetPopularMoviesQueryHandler : IRequestHandler<GetPopularMoviesQuer
     {
         var popularMovies = await _tmdbService.GetPopularMoviesAsync();
 
+        var existingTmdbIds = await _movieRepository.GetAllTmdbIdsAsync();
 
-        foreach (var movieDto in popularMovies)
+        var newMovies = popularMovies.Where(movieDto => !existingTmdbIds.Contains(movieDto.Id)).ToList();
+
+        foreach (var movieDto in newMovies)
         {
-            var existingMovie = await _movieRepository.GetByTmdbIdAsync(movieDto.Id);
-
-            if (existingMovie == null) 
-            {
-                var movieEntity = _mapper.Map<Movie>(movieDto);
-                await _movieRepository.AddAsync(movieEntity);
-            }
+            var movieEntity = _mapper.Map<Movie>(movieDto); 
+            await _movieRepository.AddAsync(movieEntity); 
         }
 
-        return popularMovies;
+    
+        var moviesInDb = await _movieRepository.GetAllAsync();
+
+       
+        var movieDtos = _mapper.Map<IEnumerable<MovieDto>>(moviesInDb);
+
+        return movieDtos;
     }
 }

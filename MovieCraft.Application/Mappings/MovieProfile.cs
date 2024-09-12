@@ -8,9 +8,11 @@ public class MovieProfile : Profile
 {
     public MovieProfile()
     {
-        CreateMap<Movie, MovieDto>();
-
         CreateMap<MovieDto, Movie>()
-               .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ForMember(dest => dest.TmdbId, opt => opt.MapFrom(src => src.Id)) 
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+        CreateMap<Movie, MovieDto>()
+              .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.TmdbId));
     }
 }

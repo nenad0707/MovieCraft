@@ -21,4 +21,11 @@ public class MoviesController : ControllerBase
         var movies = await _mediator.Send(new GetPopularMoviesQuery());
         return Ok(movies);
     }
+
+    [HttpGet("{tmdbId}")]
+    public async Task<IActionResult> GetMovieByTmdbId(int tmdbId)
+    {
+        var movie = await _mediator.Send(new GetMovieByTmdbIdQuery(tmdbId));
+        return Ok(movie);
+    }
 }

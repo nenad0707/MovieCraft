@@ -5,6 +5,7 @@ using MovieCraft.Application.Interfaces;
 using MovieCraft.Application.Mappings;
 using MovieCraft.Infrastructure.Configuration;
 using MovieCraft.Infrastructure.Persistence;
+using MovieCraft.Infrastructure.Persistence.Repositories;
 using MovieCraft.Infrastructure.Repositories;
 using MovieCraft.Infrastructure.Services;
 

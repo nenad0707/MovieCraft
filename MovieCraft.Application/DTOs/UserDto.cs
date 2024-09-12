@@ -2,7 +2,8 @@
 
 public class UserDto
 {
-    public int Id { get; set; }
+    public int Id { get; set; } 
     public string UserId { get; set; } = default!;
-    public IEnumerable<FavoriteMovieDto> FavoriteMovies { get; set; } = new List<FavoriteMovieDto>();
+    public string Name { get; set; } = default!;
+    public ICollection<FavoriteMovieDto> FavoriteMovies { get; set; } = new List<FavoriteMovieDto>();
 }

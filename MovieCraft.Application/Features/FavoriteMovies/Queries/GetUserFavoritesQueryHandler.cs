@@ -5,20 +5,26 @@ using MovieCraft.Application.Interfaces;
 
 namespace MovieCraft.Application.Features.FavoriteMovies.Queries;
 
-public class GetUserFavoritesQueryHandler : IRequestHandler<GetUserFavoritesQuery, UserDto>
+public class GetUserFavoritesQueryHandler : IRequestHandler<GetUserFavoritesQuery, IEnumerable<FavoriteMovieDto>>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
+    private readonly IFavoriteMovieRepository _favoriteMovieRepository;
 
-    public GetUserFavoritesQueryHandler(IUserRepository userRepository, IMapper mapper)
+    public GetUserFavoritesQueryHandler(IFavoriteMovieRepository favoriteMovieRepository)
     {
-        _userRepository = userRepository;
-        _mapper = mapper;
+        _favoriteMovieRepository = favoriteMovieRepository;
     }
 
-    public async Task<UserDto> Handle(GetUserFavoritesQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<FavoriteMovieDto>> Handle(GetUserFavoritesQuery request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByUserIdAsync(request.UserId);
-        return _mapper.Map<UserDto>(user);
+        var favoriteMovies = await _favoriteMovieRepository.GetFavoriteMoviesByUserIdAsync(request.UserId);
+
+        return favoriteMovies.Select(fm => new FavoriteMovieDto
+        {
+            MovieId = fm.Movie.TmdbId,
+            Title = fm.Movie.Title,
+            Overview = fm.Movie.Overview,
+            ReleaseDate = fm.Movie.ReleaseDate,
+            PosterPath = fm.Movie.PosterPath
+        });
     }
 }

@@ -6,11 +6,13 @@ namespace MovieCraft.Application.Features.FavoriteMovies.Commands;
 
 public class AddFavoriteMovieCommandHandler : IRequestHandler<AddFavoriteMovieCommand, Unit>
 {
+    private readonly IFavoriteMovieRepository _favoriteMovieRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMovieRepository _movieRepository;
 
-    public AddFavoriteMovieCommandHandler(IUserRepository userRepository, IMovieRepository movieRepository)
+    public AddFavoriteMovieCommandHandler(IFavoriteMovieRepository favoriteMovieRepository, IUserRepository userRepository, IMovieRepository movieRepository)
     {
+        _favoriteMovieRepository = favoriteMovieRepository;
         _userRepository = userRepository;
         _movieRepository = movieRepository;
     }
@@ -30,10 +32,13 @@ public class AddFavoriteMovieCommandHandler : IRequestHandler<AddFavoriteMovieCo
             throw new ArgumentNullException(nameof(movie), "Movie not found.");
         }
 
-        user.FavoriteMovies ??= new List<FavoriteMovie>();
-        user.FavoriteMovies.Add(new FavoriteMovie { MovieId = movie.Id, UserId = user.Id });
+        var favoriteMovie = new FavoriteMovie
+        {
+            UserId = user.UserId, 
+            MovieId = movie.Id
+        };
 
-        await _userRepository.UpdateAsync(user);
+        await _favoriteMovieRepository.AddFavoriteMovieAsync(favoriteMovie);
 
         return Unit.Value;
     }

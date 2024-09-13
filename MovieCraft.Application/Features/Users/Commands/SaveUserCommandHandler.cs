@@ -23,7 +23,7 @@ namespace MovieCraft.Application.Features.Users.Commands
                 {
                     UserId = request.UserId,
                     Name = request.Name,
-                  FavoriteMovies = new List<FavoriteMovie>()
+                    FavoriteMovies = new List<FavoriteMovie>()
               };
 
               await _userRepository.AddAsync(existingUser!);

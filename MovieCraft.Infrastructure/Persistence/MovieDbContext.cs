@@ -18,12 +18,19 @@ public class MovieDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Movie>()
-            .ToTable("Movies");
+              .ToTable("Movies");
+
+        modelBuilder.Entity<User>()
+            .ToTable("Users");
+
+        modelBuilder.Entity<FavoriteMovie>()
+            .ToTable("FavoriteMovies");
 
         modelBuilder.Entity<FavoriteMovie>()
             .HasOne(fm => fm.User)
             .WithMany(u => u.FavoriteMovies)
-            .HasForeignKey(fm => fm.UserId);
+            .HasForeignKey(fm => fm.UserId)
+            .HasPrincipalKey(u => u.UserId);
 
         modelBuilder.Entity<FavoriteMovie>()
             .HasOne(fm => fm.Movie)

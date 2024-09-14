@@ -8,4 +8,5 @@ public interface IMovieRepository
     Task AddAsync(Movie movie);
     Task<IEnumerable<Movie>> GetAllAsync();
     Task<IEnumerable<int>> GetAllTmdbIdsAsync();
+    Task AddMoviesAsync(IEnumerable<Movie> movies);
 }

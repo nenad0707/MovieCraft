@@ -24,12 +24,17 @@ namespace MovieCraft.Infrastructure.Persistence.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task AddMoviesAsync(IEnumerable<Movie> movies)
+        {
+            await _dbContext.Movies.AddRangeAsync(movies);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Movie>> GetAllAsync()
         {
             return await _dbContext.Movies.ToListAsync();
         }
 
-       
         public async Task<IEnumerable<int>> GetAllTmdbIdsAsync()
         {
             return await _dbContext.Movies.Select(m => m.TmdbId).ToListAsync();

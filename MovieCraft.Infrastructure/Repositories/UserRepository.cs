@@ -16,13 +16,17 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetByUserIdAsync(string userId)
     {
-        return await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        return await _dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.UserId == userId);
     }
 
 
     public async Task<IEnumerable<User>> GetAllAsync()
     {
-        return await _dbContext.Users.ToListAsync();
+        return await _dbContext.Users
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     public async Task AddAsync(User user)

@@ -15,7 +15,9 @@ namespace MovieCraft.Infrastructure.Persistence.Repositories
 
         public async Task<Movie?> GetByTmdbIdAsync(int tmdbId)
         {
-            return await _dbContext.Movies.FirstOrDefaultAsync(m => m.TmdbId == tmdbId);
+            return await _dbContext.Movies
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.TmdbId == tmdbId);
         }
 
         public async Task AddAsync(Movie movie)
@@ -32,12 +34,17 @@ namespace MovieCraft.Infrastructure.Persistence.Repositories
 
         public async Task<IEnumerable<Movie>> GetAllAsync()
         {
-            return await _dbContext.Movies.ToListAsync();
+            return await _dbContext.Movies
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<int>> GetAllTmdbIdsAsync()
         {
-            return await _dbContext.Movies.Select(m => m.TmdbId).ToListAsync();
+            return await _dbContext.Movies
+                .AsNoTracking()
+                .Select(m => m.TmdbId)
+                .ToListAsync();
         }
     }
 }

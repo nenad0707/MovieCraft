@@ -23,6 +23,7 @@ public class FavoriteMovieRepository : IFavoriteMovieRepository
     public async Task<IEnumerable<FavoriteMovie>> GetFavoriteMoviesByUserIdAsync(string userId)
     {
        return await _dbContext.FavoriteMovies
+            .AsNoTracking()
             .Include(fm => fm.Movie)
             .Where(fm => fm.UserId == userId)
             .ToListAsync();

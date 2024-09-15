@@ -32,7 +32,7 @@ public class MoviesController : ControllerBase
     [HttpGet("{tmdbId}")]
     public async Task<IActionResult> GetMovieByTmdbId(int tmdbId)
     {
-        _logger.LogInformation("Fetching movie with TmdbId: {tmdbId}", tmdbId);
+        _logger.LogInformation("Fetching movie data for a specific movie.");
         var movie = await _mediator.Send(new GetMovieByTmdbIdQuery(tmdbId));
         return Ok(movie);
     }

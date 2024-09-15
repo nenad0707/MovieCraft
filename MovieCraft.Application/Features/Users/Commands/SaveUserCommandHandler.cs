@@ -19,14 +19,14 @@ namespace MovieCraft.Application.Features.Users.Commands
 
             if (existingUser == null)
             {
-              var newUser = new User
+                var newUser = new User
                 {
                     UserId = request.UserId,
                     Name = request.Name,
                     FavoriteMovies = new List<FavoriteMovie>()
-              };
+                };
 
-              await _userRepository.AddAsync(existingUser!);
+                await _userRepository.AddAsync(newUser!);
             }
 
             return Unit.Value;

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using MovieCraft.Application.DTOs;
 using MovieCraft.Application.Interfaces;
@@ -13,17 +14,29 @@ public class GetPopularMoviesQueryHandler : IRequestHandler<GetPopularMoviesQuer
     private readonly IMovieRepository _movieRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<GetPopularMoviesQueryHandler> _logger;
+    private readonly IMemoryCache _memoryCache;
 
-    public GetPopularMoviesQueryHandler(ITmdbService tmdbService, IMapper mapper, IMovieRepository movieRepository, ILogger<GetPopularMoviesQueryHandler> logger)
+    private const string PopularMoviesCacheKey = "PopularMoviesCacheKey";
+
+    public GetPopularMoviesQueryHandler(ITmdbService tmdbService, 
+        IMapper mapper, IMovieRepository movieRepository, 
+        ILogger<GetPopularMoviesQueryHandler> logger, IMemoryCache memoryCache)
     {
         _tmdbService = tmdbService;
         _mapper = mapper;
         _movieRepository = movieRepository;
         _logger = logger;
+        _memoryCache = memoryCache;
     }
 
     public async Task<IEnumerable<MovieDto>> Handle(GetPopularMoviesQuery request, CancellationToken cancellationToken)
     {
+        if (_memoryCache.TryGetValue(PopularMoviesCacheKey, out IEnumerable<MovieDto>? cachedMovies))
+        {
+            _logger.LogInformation("Returning cached popular movies.");
+            return cachedMovies!;
+        }
+
         _logger.LogInformation("Fetching popular movies from TMDB API.");
         var popularMovies = await _tmdbService.GetPopularMoviesAsync();
 
@@ -43,6 +56,8 @@ public class GetPopularMoviesQueryHandler : IRequestHandler<GetPopularMoviesQuer
         var moviesInDb = await _movieRepository.GetAllAsync();
 
         var movieDtos = _mapper.Map<IEnumerable<MovieDto>>(moviesInDb);
+        var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5));
+        _memoryCache.Set(PopularMoviesCacheKey, movieDtos, cacheEntryOptions);
 
         return movieDtos;
     }

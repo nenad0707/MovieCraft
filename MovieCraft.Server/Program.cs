@@ -9,12 +9,48 @@ using MovieCraft.Infrastructure.Persistence;
 using MovieCraft.Infrastructure.Persistence.Repositories;
 using MovieCraft.Infrastructure.Repositories;
 using MovieCraft.Infrastructure.Services;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Display;
+using Serilog.Sinks.Network;
+using Serilog.Sinks.SystemConsole.Themes;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
+
+builder.Services.Configure<PapertrailSettings>(builder.Configuration.GetSection("Papertrail"));
+
+// Add services to the container.
+var papertrailSettings = new PapertrailSettings();
+builder.Configuration.GetSection("Papertrail").Bind(papertrailSettings);
+
+var syslogFormat = "{Timestamp:yyyy-MM-ddTHH:mm:ssZ} [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}"; 
+var syslogFormatter = new MessageTemplateTextFormatter(syslogFormat, null);
+var papertrailUri = $"tls://{papertrailSettings.Host}:{papertrailSettings.Port}";
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug() 
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning) 
+    .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information) 
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information) 
+    .Enrich.FromLogContext()
+    .WriteTo.Console(
+    outputTemplate: syslogFormat,
+    theme: AnsiConsoleTheme.Literate
+)
+    .WriteTo.TCPSink(
+        papertrailUri,
+        textFormatter: syslogFormatter)
+    .CreateLogger();
+
+
+
+builder.Host.UseSerilog();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "identityapp1": {
+      "connectionInfo": "App registration: MovieApp, Tenant: nenadorg (nenadorg.onmicrosoft.com - AAD B2C)",
+      "type": "identityapp.default"
+    }
+  }
+}

@@ -1,6 +1,9 @@
 ﻿@page "/weather"
+@using Microsoft.AspNetCore.Authorization
 @using MovieCraft.Shared
 @inject HttpClient Http
+
+@attribute [Authorize]
 
 <PageTitle>Weather</PageTitle>
 

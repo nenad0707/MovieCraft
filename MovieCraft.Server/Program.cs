@@ -1,5 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Web;
 using MovieCraft.Application.Features.Movies.Queries;
 using MovieCraft.Application.Interfaces;
 using MovieCraft.Application.Mappings;
@@ -12,6 +13,8 @@ using MovieCraft.Infrastructure.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -50,6 +53,7 @@ app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

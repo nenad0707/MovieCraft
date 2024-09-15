@@ -1,0 +1,22 @@
+@page "/authentication/{action}"
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager Navigation
+
+<RemoteAuthenticatorView Action="@Action" OnLogOutSucceeded="HandleLogOutSucceeded">
+    <LoggingIn></LoggingIn>
+    <LogOutSucceeded></LogOutSucceeded>
+    <CompletingLogOut></CompletingLogOut>
+    <LogInFailed></LogInFailed>
+</RemoteAuthenticatorView>
+
+
+@code {
+    [Parameter] public string? Action { get; set; }
+
+    protected void HandleLogOutSucceeded()
+    {
+
+        Navigation.NavigateTo("https://nenadorg.b2clogin.com/nenadorg.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/logout?post_logout_redirect_uri=https://localhost:7005/");
+        // Navigation.NavigateTo("/");
+    }
+}

@@ -1,11 +1,15 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using MovieCraft.Application.Features.Movies.Queries;
 
 namespace MovieCraft.Server.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
+[RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes")]
 public class MoviesController : ControllerBase
 {
     private readonly IMediator _mediator;

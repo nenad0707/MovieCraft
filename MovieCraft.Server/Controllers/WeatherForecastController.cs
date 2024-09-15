@@ -1,10 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using MovieCraft.Shared;
 
 namespace MovieCraft.Server.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
+    [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

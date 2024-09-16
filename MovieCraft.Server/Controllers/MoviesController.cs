@@ -61,7 +61,7 @@ public class MoviesController : ControllerBase
         return Ok(movie);
     }
 
-    [HttpPost("addmovie")]
+    [HttpPost]
     public async Task<IActionResult> AddMovie([FromBody] AddMovieDto addMovieDto)
     {
         if (!ModelState.IsValid)

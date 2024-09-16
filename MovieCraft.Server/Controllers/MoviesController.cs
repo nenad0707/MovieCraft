@@ -6,6 +6,7 @@ using Microsoft.Identity.Web.Resource;
 using MovieCraft.Application.DTOs;
 using MovieCraft.Application.Features.Movies.Commands;
 using MovieCraft.Application.Features.Movies.Queries;
+using MovieCraft.Shared.DTOs;
 
 namespace MovieCraft.Server.Controllers;
 
@@ -61,11 +62,24 @@ public class MoviesController : ControllerBase
     }
 
     [HttpPost("addmovie")]
-    public async Task<IActionResult> AddMovie([FromBody] AddMovieCommand addMovieCommand)
+    public async Task<IActionResult> AddMovie([FromBody] AddMovieDto addMovieDto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         _logger.LogInformation("Adding a new movie.");
 
-        
+        var addMovieCommand = new AddMovieCommand
+        {
+            Title = addMovieDto.Title,
+            Overview = addMovieDto.Overview,
+            ReleaseDate = addMovieDto.ReleaseDate,
+            PosterPath = addMovieDto.PosterPath,
+            TmdbId = addMovieDto.TmdbId
+        };
+
         await _mediator.Send(addMovieCommand);
 
         _logger.LogInformation("Invalidating popular movies cache.");

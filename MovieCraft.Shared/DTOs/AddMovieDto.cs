@@ -19,5 +19,5 @@ public class AddMovieDto
     public string PosterPath { get; set; } = default!;
 
     [Required(ErrorMessage = "TmdbId is required.")]
-    public int TmdbId { get; set; }
+    public int? TmdbId { get; set; }
 }

@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.RateLimiting;
 using MovieCraft.Server.Extensions;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,19 @@ builder.AddAuthenticationServices();
 builder.AddStandardServices();
 builder.AddDatabaseServices();
 builder.AddApplicationServices();
+
+builder.Services.AddRateLimiter(options =>
+{
+    
+    options.AddTokenBucketLimiter("basic", opt =>
+    {
+        opt.TokenLimit = 100; 
+        opt.TokensPerPeriod = 10;
+        opt.ReplenishmentPeriod = TimeSpan.FromSeconds(10);
+        opt.QueueLimit = 2;
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst; 
+    });
+});
 
 var app = builder.Build();
 
@@ -22,6 +37,7 @@ app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
+app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();

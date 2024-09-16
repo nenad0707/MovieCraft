@@ -77,7 +77,7 @@ public class MoviesController : ControllerBase
             Overview = addMovieDto.Overview,
             ReleaseDate = addMovieDto.ReleaseDate,
             PosterPath = addMovieDto.PosterPath,
-            TmdbId = addMovieDto.TmdbId
+            TmdbId = addMovieDto.TmdbId ?? throw new ArgumentNullException(nameof(addMovieDto.TmdbId))
         };
 
         await _mediator.Send(addMovieCommand);

@@ -17,24 +17,53 @@ public class MovieDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Movie>()
-              .ToTable("Movies");
+        modelBuilder.Entity<Movie>(entity =>
+        {
+            entity.ToTable("Movies");
 
-        modelBuilder.Entity<User>()
-            .ToTable("Users");
+            entity.Property(m => m.TmdbId)
+                .IsRequired();
 
-        modelBuilder.Entity<FavoriteMovie>()
-            .ToTable("FavoriteMovies");
+            entity.Property(m => m.Title)
+                .IsRequired()
+                .HasMaxLength(200); 
 
-        modelBuilder.Entity<FavoriteMovie>()
-            .HasOne(fm => fm.User)
-            .WithMany(u => u.FavoriteMovies)
-            .HasForeignKey(fm => fm.UserId)
-            .HasPrincipalKey(u => u.UserId);
+            entity.Property(m => m.Overview)
+                .HasMaxLength(1000); 
 
-        modelBuilder.Entity<FavoriteMovie>()
-            .HasOne(fm => fm.Movie)
-            .WithMany(m => m.FavoriteMovies)
-            .HasForeignKey(fm => fm.MovieId);
+            entity.Property(m => m.PosterPath)
+                .HasMaxLength(500);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("Users");
+
+            entity.HasIndex(u => u.UserId).IsUnique();
+
+            entity.Property(u => u.UserId)
+                .IsRequired()
+                .HasMaxLength(450); 
+
+            entity.Property(u => u.Name)
+                .IsRequired()
+                .HasMaxLength(100); 
+        });
+
+        modelBuilder.Entity<FavoriteMovie>(entity =>
+        {
+            entity.ToTable("FavoriteMovies");
+
+            entity.HasOne(fm => fm.User)
+                .WithMany(u => u.FavoriteMovies)
+                .HasForeignKey(fm => fm.UserId)
+                .HasPrincipalKey(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade); 
+
+            entity.HasOne(fm => fm.Movie)
+                .WithMany(m => m.FavoriteMovies)
+                .HasForeignKey(fm => fm.MovieId)
+                .OnDelete(DeleteBehavior.Cascade); 
+        });
     }
 }

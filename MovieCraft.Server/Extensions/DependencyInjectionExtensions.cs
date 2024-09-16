@@ -14,6 +14,8 @@ using MovieCraft.Application.Mappings;
 using MovieCraft.Infrastructure.Persistence.Repositories;
 using MovieCraft.Infrastructure.Repositories;
 using MovieCraft.Infrastructure.Services;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 
 namespace MovieCraft.Server.Extensions;
 
@@ -85,5 +87,31 @@ public static class DependencyInjectionExtensions
         builder.Services.AddScoped<IMovieRepository, MovieRepository>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IFavoriteMovieRepository, FavoriteMovieRepository>();
+    }
+
+    public static void AddRateLimitingServices(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddRateLimiter(options =>
+        {
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: "global",
+                    factory: partition => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 100,
+                        Window = TimeSpan.FromSeconds(10),
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                        QueueLimit = 2
+                    }));
+
+            options.AddTokenBucketLimiter("basic", opt =>
+            {
+                opt.TokenLimit = 100;
+                opt.TokensPerPeriod = 10;
+                opt.ReplenishmentPeriod = TimeSpan.FromSeconds(10);
+                opt.QueueLimit = 2;
+                opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+            });
+        });
     }
 }

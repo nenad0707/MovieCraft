@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Identity.Web.Resource;
 using MovieCraft.Application.DTOs;
@@ -30,6 +31,7 @@ public class MoviesController : ControllerBase
         _memoryCache = memoryCache;
     }
 
+    [EnableRateLimiting("basic")]
     [HttpGet("popular")]
     public async Task<IActionResult> GetPopularMovies()
     {

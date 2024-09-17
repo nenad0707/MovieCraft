@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
+using MovieCraft.Application.DTOs;
 using MovieCraft.Application.Features.FavoriteMovies.Commands;
 using MovieCraft.Application.Features.FavoriteMovies.Queries;
 
@@ -24,14 +25,33 @@ public class FavoritesController : ControllerBase
 
 
     [HttpPost("{userId}")]
-    public async Task<IActionResult> AddFavoriteMovie(string userId, [FromBody] int movieId)
+    public async Task<IActionResult> AddFavoriteMovie(string userId, [FromBody] AddFavoriteMovieDto dto)
     {
-        _logger.LogInformation("Adding a movie to the user's favorite list.");
-        await _mediator.Send(new AddFavoriteMovieCommand { UserId = userId, MovieId = movieId });
-        return NoContent();
+        try
+        {
+            _logger.LogInformation("Adding a movie to the user's favorite list.");
+            await _mediator.Send(new AddFavoriteMovieCommand
+            {
+                UserId = userId,
+                MovieId = dto.MovieId
+            });
+            return NoContent();
+        }
+        catch (FluentValidation.ValidationException ex)
+        {
+            _logger.LogWarning("Validation failed: {Errors}", ex.Errors);
+            return BadRequest(new { Errors = ex.Errors });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while adding a favorite movie.");
+            return StatusCode(500, "An error occurred while adding the favorite movie.");
+        }
     }
 
-   
+
+
+
     [HttpGet("{userId}")]
     public async Task<IActionResult> GetFavoriteMovies(string userId)
     {

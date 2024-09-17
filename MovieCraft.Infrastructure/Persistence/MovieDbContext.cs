@@ -39,11 +39,12 @@ public class MovieDbContext : DbContext
         {
             entity.ToTable("Users");
 
-            entity.HasIndex(u => u.UserId).IsUnique();
+            entity.HasIndex(u => u.UserId)
+                .IsUnique();
 
             entity.Property(u => u.UserId)
                 .IsRequired()
-                .HasMaxLength(450); 
+                .HasMaxLength(50); 
 
             entity.Property(u => u.Name)
                 .IsRequired()

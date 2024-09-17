@@ -16,6 +16,7 @@ using MovieCraft.Infrastructure.Repositories;
 using MovieCraft.Infrastructure.Services;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
+using Microsoft.Extensions.Options;
 
 namespace MovieCraft.Server.Extensions;
 
@@ -25,30 +26,28 @@ public static class DependencyInjectionExtensions
     {
         builder.Services.Configure<PapertrailSettings>(builder.Configuration.GetSection("Papertrail"));
 
-        // Add services to the container.
-        var papertrailSettings = new PapertrailSettings();
-        builder.Configuration.GetSection("Papertrail").Bind(papertrailSettings);
+        builder.Host.UseSerilog((hostingContext, services, loggerConfiguration) =>
+        {
+            var papertrailSettings = services.GetRequiredService<IOptions<PapertrailSettings>>().Value;
 
-        var syslogFormat = "{Timestamp:yyyy-MM-ddTHH:mm:ssZ} [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}";
-        var syslogFormatter = new MessageTemplateTextFormatter(syslogFormat, null);
-        var papertrailUri = $"tls://{papertrailSettings.Host}:{papertrailSettings.Port}";
+            var syslogFormat = "{Timestamp:yyyy-MM-ddTHH:mm:ssZ} [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}";
+            var syslogFormatter = new MessageTemplateTextFormatter(syslogFormat, null);
+            var papertrailUri = $"tls://{papertrailSettings.Host}:{papertrailSettings.Port}";
 
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-            .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
-            .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            .WriteTo.Console(
-            outputTemplate: syslogFormat,
-            theme: AnsiConsoleTheme.Literate
-        )
-            .WriteTo.TCPSink(
-                papertrailUri,
-                textFormatter: syslogFormatter)
-            .CreateLogger();
-
-        builder.Host.UseSerilog();
+            loggerConfiguration
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+                .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.Console(
+                    outputTemplate: syslogFormat,
+                    theme: AnsiConsoleTheme.Literate
+                )
+                .WriteTo.TCPSink(
+                    papertrailUri,
+                    textFormatter: syslogFormatter);
+        });
     }
 
     public static void AddAuthenticationServices(this WebApplicationBuilder builder)

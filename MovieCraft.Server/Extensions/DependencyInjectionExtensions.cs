@@ -17,6 +17,9 @@ using MovieCraft.Infrastructure.Services;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 using Microsoft.Extensions.Options;
+using FluentValidation;
+using MediatR;
+using MediatR.Extensions.FluentValidation.AspNetCore;
 
 namespace MovieCraft.Server.Extensions;
 
@@ -77,6 +80,12 @@ public static class DependencyInjectionExtensions
         // Add MeadiatR and AutoMapper
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetPopularMoviesQuery).Assembly));
         builder.Services.AddAutoMapper(typeof(MovieProfile));
+
+        // Add FluentValidation validators
+        builder.Services.AddValidatorsFromAssembly(typeof(GetPopularMoviesQuery).Assembly);
+
+        // Add FluentValidation MediatR pipeline behavior
+        builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         // Add TMDb service
         builder.Services.Configure<TmdbSettings>(builder.Configuration.GetSection("TMDbSettings"));

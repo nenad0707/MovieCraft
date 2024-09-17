@@ -2,7 +2,6 @@
 
 namespace MovieCraft.Shared.DTOs;
 
-
 public class AddMovieDto
 {
     [Required(ErrorMessage = "Title is required.")]

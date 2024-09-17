@@ -50,9 +50,10 @@ public class UsersController : ControllerBase
 
         try
         {
+
             _logger.LogInformation("Synchronizing user.");
             await _mediator.Send(command);
-            return Ok("User synchronized.");
+            return CreatedAtAction(nameof(GetUserById), new { userId = userDto.UserId }, userDto);
         }
         catch (Exception ex)
         {

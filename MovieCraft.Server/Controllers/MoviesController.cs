@@ -8,6 +8,7 @@ using MovieCraft.Application.DTOs;
 using MovieCraft.Application.Features.Movies.Commands;
 using MovieCraft.Application.Features.Movies.Queries;
 using MovieCraft.Shared.DTOs;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace MovieCraft.Server.Controllers;
 
@@ -66,11 +67,6 @@ public class MoviesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddMovie([FromBody] AddMovieDto addMovieDto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         _logger.LogInformation("Adding a new movie.");
 
         var addMovieCommand = new AddMovieCommand
@@ -81,12 +77,24 @@ public class MoviesController : ControllerBase
             PosterPath = addMovieDto.PosterPath,
             TmdbId = addMovieDto.TmdbId ?? throw new ArgumentNullException(nameof(addMovieDto.TmdbId))
         };
+        try
+        {
+            await _mediator.Send(addMovieCommand);
 
-        await _mediator.Send(addMovieCommand);
+            _logger.LogInformation("Invalidating popular movies cache.");
+            _memoryCache.Remove(PopularMoviesCacheKey);
 
-        _logger.LogInformation("Invalidating popular movies cache.");
-        _memoryCache.Remove(PopularMoviesCacheKey);
-
-        return NoContent(); 
+            return NoContent();
+        }
+        catch (FluentValidation.ValidationException ex)
+        {
+            _logger.LogWarning("Validation failed: {Errors}", ex.Errors);
+            return BadRequest(new { Errors = ex.Errors });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while adding a movie.");
+            return StatusCode(500, "An error occurred while adding the movie.");
+        }
     }
 }

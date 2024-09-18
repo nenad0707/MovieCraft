@@ -2,8 +2,11 @@
 
 namespace MovieCraft.Shared.DTOs;
 
-public class AddMovieDto
+public class FavoriteMovieDto
 {
+    [Required]
+    public int MovieId { get; set; }
+
     [Required(ErrorMessage = "Title is required.")]
     [StringLength(200, ErrorMessage = "Title can have a maximum of 200 characters.")]
     public string Title { get; set; } = default!;
@@ -16,8 +19,4 @@ public class AddMovieDto
 
     [StringLength(500, ErrorMessage = "Poster path can have a maximum of 500 characters.")]
     public string PosterPath { get; set; } = default!;
-
-    [Required(ErrorMessage = "TmdbId is required.")]
-    [Range(1, int.MaxValue, ErrorMessage = "TmdbId must be a positive number.")]
-    public int? TmdbId { get; set; }
 }

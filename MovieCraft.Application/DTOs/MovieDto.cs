@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MovieCraft.Application.DTOs;
+﻿namespace MovieCraft.Application.DTOs;
 
 public class MovieDto
 {

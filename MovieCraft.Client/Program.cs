@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MovieCraft.Client;
+using MovieCraft.Client.Services;
+using MovieCraft.Server.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -12,6 +14,7 @@ builder.Services.AddHttpClient("MovieCraft.ServerAPI", client => client.BaseAddr
 
 // Supply HttpClient instances that include access tokens when making requests to the server project
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("MovieCraft.ServerAPI"));
+builder.Services.AddScoped<IMovieService, MovieService>();
 
 builder.Services.AddMsalAuthentication(options =>
 {

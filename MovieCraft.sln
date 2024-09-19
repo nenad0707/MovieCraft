@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Server", "MovieCraft.Server\MovieCraft.Server.csproj", "{6EE1B5C8-4F09-4878-8373-9977F7FD4E98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieCraft.Server", "MovieCraft.Server\MovieCraft.Server.csproj", "{6EE1B5C8-4F09-4878-8373-9977F7FD4E98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Shared", "MovieCraft.Shared\MovieCraft.Shared.csproj", "{D9196845-AED7-4B3C-855A-5462CDD5E0D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieCraft.Shared", "MovieCraft.Shared\MovieCraft.Shared.csproj", "{D9196845-AED7-4B3C-855A-5462CDD5E0D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Client", "MovieCraft.Client\MovieCraft.Client.csproj", "{AF0C337A-98EE-42FF-8DA1-A4927302751D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieCraft.Client", "MovieCraft.Client\MovieCraft.Client.csproj", "{AF0C337A-98EE-42FF-8DA1-A4927302751D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Domain", "MovieCraft.Domain\MovieCraft.Domain.csproj", "{0AE9698C-C58D-4302-B3AE-809FD49536BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieCraft.Domain", "MovieCraft.Domain\MovieCraft.Domain.csproj", "{0AE9698C-C58D-4302-B3AE-809FD49536BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Application", "MovieCraft.Application\MovieCraft.Application.csproj", "{A31B3A31-E929-4179-9A84-97117F69B4DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieCraft.Application", "MovieCraft.Application\MovieCraft.Application.csproj", "{A31B3A31-E929-4179-9A84-97117F69B4DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieCraft.Infrastructure", "MovieCraft.Infrastructure\MovieCraft.Infrastructure.csproj", "{CFDEAA09-FAC5-446B-8A72-788943648EF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieCraft.Infrastructure", "MovieCraft.Infrastructure\MovieCraft.Infrastructure.csproj", "{CFDEAA09-FAC5-446B-8A72-788943648EF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

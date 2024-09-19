@@ -1,0 +1,34 @@
+﻿@page "/popular"
+@using MovieCraft.Client.Services
+@using MovieCraft.Shared.DTOs
+@inject IMovieService MovieService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+
+<h3>Popular Movies</h3>
+
+@if (popularMovies == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        @foreach (var movie in popularMovies)
+        {
+            <div class="col-md-3">
+                <MovieCard Movie=movie />
+            </div>
+        }
+    </div>
+}
+
+
+@code {
+    private List<MovieDto>? popularMovies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        popularMovies = await MovieService.GetPopularMoviesAsync();
+    }
+}

@@ -8,7 +8,7 @@ using MovieCraft.Application.DTOs;
 using MovieCraft.Application.Features.Movies.Commands;
 using MovieCraft.Application.Features.Movies.Queries;
 using MovieCraft.Shared.DTOs;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using MovieDto = MovieCraft.Application.DTOs.MovieDto;
 
 namespace MovieCraft.Server.Controllers;
 

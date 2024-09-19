@@ -17,6 +17,9 @@ public class AddMovieDto
     [StringLength(500, ErrorMessage = "Poster path can have a maximum of 500 characters.")]
     public string PosterPath { get; set; } = default!;
 
+    [StringLength(500, ErrorMessage = "Backdrop path can have a maximum of 500 characters.")] // Dodaj ovo
+    public string BackdropPath { get; set; } = default!;
+
     [Required(ErrorMessage = "TmdbId is required.")]
     [Range(1, int.MaxValue, ErrorMessage = "TmdbId must be a positive number.")]
     public int? TmdbId { get; set; }

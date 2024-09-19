@@ -31,5 +31,4 @@ public class MovieService : IMovieService
         var response = await _httpClient.PostAsJsonAsync($"api/favorites/{userId}", movieId);
         response.EnsureSuccessStatusCode();
     }
-
 }

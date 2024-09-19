@@ -22,5 +22,8 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
 
         builder.Property(m => m.PosterPath)
             .HasMaxLength(500);
+
+        builder.Property(m => m.BackdropPath)
+            .HasMaxLength(500);
     }
 }

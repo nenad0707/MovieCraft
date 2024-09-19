@@ -29,7 +29,8 @@ public class GetUserFavoritesQueryHandler : IRequestHandler<GetUserFavoritesQuer
             Title = fm.Movie.Title,
             Overview = fm.Movie.Overview,
             ReleaseDate = fm.Movie.ReleaseDate,
-            PosterPath = fm.Movie.PosterPath
+            PosterPath = fm.Movie.PosterPath,
+            BackdropPath = fm.Movie.BackdropPath
         });
     }
 }

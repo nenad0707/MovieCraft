@@ -24,7 +24,8 @@ namespace MovieCraft.Infrastructure.Services
                 Title = movie.Title,
                 Overview = movie.Overview,
                 ReleaseDate = movie.ReleaseDate,
-                PosterPath = movie.PosterPath
+                PosterPath = movie.PosterPath,
+                BackdropPath = movie.BackdropPath
             }).ToList();
         }
     }

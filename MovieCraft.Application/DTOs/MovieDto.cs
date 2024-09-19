@@ -7,4 +7,5 @@ public class MovieDto
     public string Overview { get; set; } = default!;
     public DateTime? ReleaseDate { get; set; }
     public string PosterPath { get; set; } = default!;
+    public string BackdropPath { get; set; } = default!;
 }

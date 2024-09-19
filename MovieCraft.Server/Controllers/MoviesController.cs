@@ -75,6 +75,7 @@ public class MoviesController : ControllerBase
             Overview = addMovieDto.Overview,
             ReleaseDate = addMovieDto.ReleaseDate,
             PosterPath = addMovieDto.PosterPath,
+            BackdropPath = addMovieDto.BackdropPath,
             TmdbId = addMovieDto.TmdbId ?? throw new ArgumentNullException(nameof(addMovieDto.TmdbId))
         };
         try

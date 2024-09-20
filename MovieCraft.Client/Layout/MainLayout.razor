@@ -21,24 +21,24 @@
 </div>
 
 @code {
-    private bool isUserSynced = false; // Postavljena zastavica koja osigurava da se sinhronizacija izvrši samo jednom
+    private bool isUserSynced = false;
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
 
-        // Samo ako je korisnik prijavljen i nije već sinhronizovan, obavi proveru
+       
         if (user.Identity!.IsAuthenticated && !isUserSynced)
         {
             var userId = user.FindFirst(c => c.Type == "sub")?.Value;
 
-            if (!await UserExistsInDatabase(userId))
+            if (!await UserExistsInDatabase(userId!))
             {
-                await SyncUserToDatabase(userId, user.Identity.Name);
+                await SyncUserToDatabase(userId!, user.Identity.Name!);
             }
 
-            isUserSynced = true;  // Obeležavamo da je korisnik sinhronizovan
+            isUserSynced = true; 
         }
     }
 
@@ -49,7 +49,7 @@
             var httpClient = HttpClientFactory.CreateClient("MovieCraft.ServerAPI");
             var response = await httpClient.GetAsync($"api/users/{userId}");
 
-            return response.IsSuccessStatusCode;  // Ako korisnik postoji u bazi, nema potrebe za sinhronizacijom
+            return response.IsSuccessStatusCode; 
         }
         catch (Exception ex)
         {

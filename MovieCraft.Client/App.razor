@@ -1,5 +1,8 @@
-﻿@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject PopularMoviesState PopularMoviesState
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using MovieCraft.Client.Services
+@inject UserState UserState
+@inject PopularMoviesState PopularMoviesState 
+
 <CascadingAuthenticationState>
     @if (isSplashVisible)
     {
@@ -19,7 +22,7 @@
                 {
                     <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                         <NotAuthorized>
-                            @if (context.User.Identity?.IsAuthenticated != true)
+                            @if (!isUserLoggedIn)
                             {
                                 <RedirectToLogin />
                             }
@@ -41,33 +44,29 @@
     }
 </CascadingAuthenticationState>
 
-
 @code {
     private bool isSplashVisible = true;
     private bool isUserLoggedIn;
 
-    [Inject]
-    private NavigationManager? NavigationManager { get; set; }
+  
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            isUserLoggedIn = authState.User.Identity!.IsAuthenticated;
+            await UserState.LoadUserAsync(); 
+            isUserLoggedIn = UserState.CurrentUser != null;
+            
+            await PopularMoviesState.LoadPopularMoviesAsync(isUserLoggedIn); 
 
-           
-            await PopularMoviesState.LoadPopularMoviesAsync(isUserLoggedIn);
-
-            await Task.Delay(5000);
-
+            await Task.Delay(2000); 
             isSplashVisible = false;
 
-            NavigationManager!.NavigateTo("/popular-movies");
+           
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error loading popular movies: {ex.Message}");
+            Console.WriteLine($"Error loading data: {ex.Message}");
             isSplashVisible = false;
         }
     }

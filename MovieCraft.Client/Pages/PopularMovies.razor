@@ -16,7 +16,7 @@ else if (!movies.Any())
 else
 {
     <div class="movies-grid">
-        @foreach (var movie in PopularMoviesState.PopularMovies)
+        @foreach (var movie in PopularMoviesState.PopularMovies!)
         {
             <div class="movie-card">
                 <img src="@($"https://image.tmdb.org/t/p/w500{movie.PosterPath}")" alt="@movie.Title" class="movie-poster" />

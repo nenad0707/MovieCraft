@@ -48,7 +48,9 @@
     private bool isSplashVisible = true;
     private bool isUserLoggedIn;
 
-  
+    [Inject]
+     private NavigationManager NavigationManager { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -61,6 +63,7 @@
 
             await Task.Delay(2000); 
             isSplashVisible = false;
+            NavigationManager.NavigateTo("/popular-movies");
 
            
         }

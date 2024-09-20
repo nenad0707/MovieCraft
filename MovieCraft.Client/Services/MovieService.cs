@@ -1,34 +1,34 @@
-﻿using MovieCraft.Client.Services;
-using MovieCraft.Shared.DTOs;
+﻿using MovieCraft.Shared.DTOs;
 using System.Net.Http.Json;
 
-namespace MovieCraft.Server.Services;
-
-public class MovieService : IMovieService
+namespace MovieCraft.Client.Services
 {
-
-    private readonly HttpClient _httpClient;
-
-    public MovieService(HttpClient httpClient)
+    public class MovieService
     {
-        _httpClient = httpClient;
-    }
+        private readonly IHttpClientFactory _httpClientFactory;
 
-    public async Task<List<MovieDto>> GetPopularMoviesAsync()
-    {
-        var popularMovies = await _httpClient.GetFromJsonAsync<List<MovieDto>>("api/movies/popular");
-        return popularMovies ?? new List<MovieDto>();
-    }
+        public MovieService(IHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
 
-    public async Task<MovieDto> GetMovieByIdAsync(int tmdbId)
-    {
-        var movie = await _httpClient.GetFromJsonAsync<MovieDto>($"api/movies/{tmdbId}");
-        return movie ?? throw new Exception("Movie not found.");
-    }
+        public async Task<List<MovieDto>> GetPopularMoviesAsync(bool isLoggedIn)
+        {
+            HttpClient httpClient;
 
-    public async Task AddFavoriteMovieAsync(string userId, int movieId)
-    {
-        var response = await _httpClient.PostAsJsonAsync($"api/favorites/{userId}", movieId);
-        response.EnsureSuccessStatusCode();
+           
+            if (isLoggedIn)
+            {
+                httpClient = _httpClientFactory.CreateClient("MovieCraft.ServerAPI");  
+            }
+            else
+            {
+                httpClient = _httpClientFactory.CreateClient("AnonymousServerAPI");  
+            }
+
+            var movies = await httpClient.GetFromJsonAsync<IEnumerable<MovieDto>>("api/movies/popular");
+
+            return movies?.ToList() ?? new List<MovieDto>();
+        }
     }
 }

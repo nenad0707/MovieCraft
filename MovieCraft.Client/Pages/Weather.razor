@@ -1,7 +1,7 @@
 ﻿@page "/weather"
 @using Microsoft.AspNetCore.Authorization
 @using MovieCraft.Shared
-@inject HttpClient Http
+@inject IHttpClientFactory ClientFactory
 
 @attribute [Authorize]
 
@@ -45,6 +45,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("weatherforecast");
+        var httpClient = ClientFactory.CreateClient("MovieCraft.ServerAPI");
+
+        forecasts = await httpClient.GetFromJsonAsync<WeatherForecast[]>("weatherforecast");
     }
 }

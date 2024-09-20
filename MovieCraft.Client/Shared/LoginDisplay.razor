@@ -2,8 +2,7 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using MovieCraft.Shared.DTOs
 @inject NavigationManager Navigation
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject HttpClient HttpClient
+
 
 <AuthorizeView>
     <Authorized>
@@ -19,35 +18,5 @@
     public void BeginLogOut()
     {
         Navigation.NavigateToLogout("authentication/logout");
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Console.WriteLine("OnInitializedAsync called.");
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-       
-        if (user.Identity!.IsAuthenticated)
-        {
-
-            var userId = user.FindFirst(c => c.Type == "sub")?.Value;
-            var userName = user.Identity.Name; 
-
-            var syncUser = new UserDto
-                {
-                    UserId = userId!,
-                    Name = userName!
-                };
-
-            var response = await HttpClient.PostAsJsonAsync("api/users/sync", syncUser);
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("User successfully synchronized.");
-            }
-            else
-            {
-                Console.WriteLine("Failed to synchronize user.");
-            }
-        }
     }
 }

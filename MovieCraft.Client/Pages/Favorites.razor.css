@@ -1,0 +1,26 @@
+﻿.movies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.movie-card {
+    width: 200px;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+    .movie-card img {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    .movie-card h4 {
+        margin-top: 0.5rem;
+    }
+
+    .movie-card p {
+        font-size: 0.9rem;
+    }

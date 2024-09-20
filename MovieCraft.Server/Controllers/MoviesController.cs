@@ -34,6 +34,7 @@ public class MoviesController : ControllerBase
 
     [EnableRateLimiting("basic")]
     [HttpGet("popular")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetPopularMovies()
     {
         _logger.LogInformation("Handling request for popular movies.");

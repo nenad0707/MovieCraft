@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MovieCraft.Client;
 using MovieCraft.Client.Services;
-using MovieCraft.Server.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -12,9 +12,18 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddHttpClient("MovieCraft.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
     .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
-// Supply HttpClient instances that include access tokens when making requests to the server project
-builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("MovieCraft.ServerAPI"));
-builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddHttpClient("AnonymousServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+
+
+builder.Services.AddScoped<MovieService>(sp =>
+{
+    var clientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var navigationManager = sp.GetRequiredService<NavigationManager>();
+    return new MovieService(clientFactory);
+});
+
+
+builder.Services.AddScoped<PopularMoviesState>();
 
 builder.Services.AddMsalAuthentication(options =>
 {

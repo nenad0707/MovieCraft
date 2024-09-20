@@ -36,6 +36,12 @@ public class UsersController : ControllerBase
     {
         _logger.LogInformation("Fetching user data for a specific user.");
         var user = await _mediator.Send(new GetUserByIdQuery { UserId = userId });
+
+        if (user == null)
+        {
+            return NotFound(); // Return 404 if user is not found
+        }
+
         return Ok(user);
     }
 

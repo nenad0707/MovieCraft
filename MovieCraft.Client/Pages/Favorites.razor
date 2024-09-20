@@ -1,23 +1,22 @@
-﻿@page "/popular"
-@using MovieCraft.Client.Services
+﻿@page "/favorite"
 @using MovieCraft.Shared.DTOs
-@inject IMovieService MovieService
-@inject AuthenticationStateProvider AuthenticationStateProvider
-
+@inject PopularMoviesState PopularMoviesState
 
 <h3>Popular Movies</h3>
 
-@if (popularMovies == null)
+@if (movies == null)
 {
-    <p><em>Loading...</em></p>
+    <p>Loading movies...</p>
 }
 else
 {
-    <div class="row">
-        @foreach (var movie in popularMovies)
+    <div class="movies-grid">
+        @foreach (var movie in movies)
         {
-            <div class="col-md-3">
-                <MovieCard Movie=movie />
+            <div class="movie-card">
+                <img src="@($"https://image.tmdb.org/t/p/w500{movie.PosterPath}")" alt="@movie.Title" />
+                <h4>@movie.Title</h4>
+                <p>@movie.Overview</p>
             </div>
         }
     </div>
@@ -25,10 +24,11 @@ else
 
 
 @code {
-    private List<MovieDto>? popularMovies;
+    private IEnumerable<MovieDto> movies = new List<MovieDto>();
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        popularMovies = await MovieService.GetPopularMoviesAsync();
+       
+        movies = PopularMoviesState.PopularMovies;
     }
 }

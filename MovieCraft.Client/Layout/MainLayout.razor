@@ -1,7 +1,6 @@
-﻿@using MovieCraft.Shared.DTOs
-@inherits LayoutComponentBase
-@inject IHttpClientFactory HttpClientFactory
-@inject AuthenticationStateProvider AuthenticationStateProvider
+﻿@inherits LayoutComponentBase
+@inject UserState UserState
+
 
 <div class="page">
     <div class="sidebar">
@@ -21,68 +20,15 @@
 </div>
 
 @code {
-    private bool isUserSynced = false;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-       
-        if (user.Identity!.IsAuthenticated && !isUserSynced)
+    @code {
+        protected override void OnInitialized()
         {
-            var userId = user.FindFirst(c => c.Type == "sub")?.Value;
-
-            if (!await UserExistsInDatabase(userId!))
-            {
-                await SyncUserToDatabase(userId!, user.Identity.Name!);
-            }
-
-            isUserSynced = true; 
+            UserState.OnChange += StateHasChanged;
         }
-    }
 
-    private async Task<bool> UserExistsInDatabase(string userId)
-    {
-        try
+        public void Dispose()
         {
-            var httpClient = HttpClientFactory.CreateClient("MovieCraft.ServerAPI");
-            var response = await httpClient.GetAsync($"api/users/{userId}");
-
-            return response.IsSuccessStatusCode; 
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error checking if user exists in the database: {ex.Message}");
-            return false;
-        }
-    }
-
-    private async Task SyncUserToDatabase(string userId, string userName)
-    {
-        try
-        {
-            var syncUser = new UserDto
-                {
-                    UserId = userId!,
-                    Name = userName!
-                };
-
-            var httpClient = HttpClientFactory.CreateClient("MovieCraft.ServerAPI");
-            var response = await httpClient.PostAsJsonAsync("api/users/sync", syncUser);
-
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("User successfully synchronized.");
-            }
-            else
-            {
-                Console.WriteLine("Failed to synchronize user.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error syncing user to the database: {ex.Message}");
+            UserState.OnChange -= StateHasChanged;
         }
     }
 }

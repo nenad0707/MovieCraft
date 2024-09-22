@@ -1,16 +1,11 @@
 ﻿@inherits LayoutComponentBase
 @inject UserState UserState
 
-
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
+    <NavMenu />
     <main>
-        <div class="top-row px-4 auth">
+        <div class="top-bar">
             <LoginDisplay />
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
 
         <article class="content px-4">
@@ -20,15 +15,13 @@
 </div>
 
 @code {
-    @code {
-        protected override void OnInitialized()
-        {
-            UserState.OnChange += StateHasChanged;
-        }
+    protected override void OnInitialized()
+    {
+        UserState.OnChange += StateHasChanged;
+    }
 
-        public void Dispose()
-        {
-            UserState.OnChange -= StateHasChanged;
-        }
+    public void Dispose()
+    {
+        UserState.OnChange -= StateHasChanged;
     }
 }

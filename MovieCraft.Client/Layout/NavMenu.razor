@@ -1,45 +1,53 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">MovieCraft.Client</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+﻿<nav class="@NavClass">
+    <div class="nav-brand">
+        <img src="images/logo.jpg" alt="...">
+        <div class="info">
+            <h2>MovieCraft</h2>
+            <p>Your Movie Hub</p>
+        </div>
     </div>
-</div>
+    <ul class="nav-list-top">
+        <li class="nav-item">
+            <NavLink href="" Match="NavLinkMatch.All">
+                <i class="bx bxs-dashboard"></i>
+                <span>Home</span>
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink href="counter">
+                <i class="bx bx-bar-chart-alt-2"></i>
+                <span>Counter</span>
+            </NavLink>
+        </li>
+        <!-- Ostali navigacioni linkovi -->
+    </ul>
+    <ul class="nav-list-bottom">
+        <li class="nav-item">
+            <NavLink href="popular-movies">
+                <i class="bx bx-cog"></i>
+                <span>Popular Movies</span>
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink href="weather">
+                <i class="bx bx-phone"></i>
+                <span>Weather</span>
+            </NavLink>
+        </li>
+    </ul>
+</nav>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="popular-movies">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Popular
-            </NavLink>
-        </div>
-    </nav>
-</div>
+<button class="nav-toggle" @onclick="ToggleNavMenu">
+    <span class="navbar-toggler-icon"></span>
+</button>
 
 @code {
-    private bool collapseNavMenu = true;
+    private bool isNavOpen = false;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string NavClass => isNavOpen ? "nav-open" : "";
 
     private void ToggleNavMenu()
     {
-        collapseNavMenu = !collapseNavMenu;
+        isNavOpen = !isNavOpen;
     }
 }

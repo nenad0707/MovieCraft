@@ -30,12 +30,17 @@ public class UserState
 
         if (user.Identity?.IsAuthenticated ?? false)
         {
-            var userId = user.FindFirst(c => c.Type == "sub")?.Value;
+            var userId = user.FindFirst(c => c.Type == "sub")?.Value; 
             if (!string.IsNullOrEmpty(userId))
             {
                 CurrentUser = await _httpClient.GetFromJsonAsync<UserDto>($"api/users/{userId}");
                 NotifyStateChanged();
             }
+        }
+        else
+        {
+            CurrentUser = null;
+            NotifyStateChanged();
         }
     }
 

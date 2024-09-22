@@ -6,7 +6,7 @@ public class PopularMoviesState
 {
     private readonly MovieService _movieService;
 
-    public IEnumerable<MovieDto> PopularMovies { get; private set; }
+    public IEnumerable<MovieDto>? PopularMovies { get; private set; }
 
     public event Action? OnChange;
 
@@ -15,7 +15,6 @@ public class PopularMoviesState
         _movieService = movieService;
     }
 
-  
     public async Task LoadPopularMoviesAsync(bool isLoggedIn)
     {
         if (PopularMovies == null || !PopularMovies.Any())

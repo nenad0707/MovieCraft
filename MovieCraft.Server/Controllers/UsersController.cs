@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Identity.Web.Resource;
 using MovieCraft.Application.Features.Users.Commands;
 using MovieCraft.Application.Features.Users.Queries;
@@ -16,11 +17,15 @@ public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly ILogger<UsersController> _logger;
+    private readonly IMemoryCache _memoryCache;
 
-    public UsersController(IMediator mediator, ILogger<UsersController> logger)
+    private const string UserCacheKeyPrefix = "user_";
+
+    public UsersController(IMediator mediator, ILogger<UsersController> logger, IMemoryCache memoryCache)
     {
         _mediator = mediator;
         _logger = logger;
+        _memoryCache = memoryCache;
     }
 
     [HttpGet]
@@ -35,11 +40,29 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> GetUserById(string userId)
     {
         _logger.LogInformation("Fetching user data for a specific user.");
+
+        string cacheKey = $"{UserCacheKeyPrefix}{userId}";
+       
+        if (_memoryCache.TryGetValue<UserDto>(cacheKey, out var cachedUser))
+        {
+            _logger.LogInformation($"Returning cached data for userId: {userId}");
+            Response.Headers.Append("X-Cache","HIT");
+            return Ok(cachedUser);
+        }
+        _logger.LogInformation($"Cache miss for userId: {userId}. Fetching from database.");
+
         var user = await _mediator.Send(new GetUserByIdQuery { UserId = userId });
 
-        if (user == null)
+        if (user is not null)
         {
-            return NotFound(); // Return 404 if user is not found
+            _memoryCache.Set(cacheKey, user, TimeSpan.FromMinutes(5));
+            _logger.LogInformation($"Caching data for userId: {userId}");
+            Response.Headers.Append("X-Cache", "MISS");
+        }
+
+        if (user is null)
+        {
+            return NotFound(); // return 404 if user is not found
         }
 
         return Ok(user);
@@ -59,6 +82,9 @@ public class UsersController : ControllerBase
 
             _logger.LogInformation("Synchronizing user.");
             await _mediator.Send(command);
+            string cacheKey = $"{UserCacheKeyPrefix}{userDto.UserId}";
+            _memoryCache.Set(cacheKey,userDto, TimeSpan.FromMinutes(5));
+            _logger.LogInformation("Synchronizing user and updating cache.");
             return CreatedAtAction(nameof(GetUserById), new { userId = userDto.UserId }, userDto);
         }
         catch (Exception ex)

@@ -49,7 +49,7 @@
     private bool isUserLoggedIn;
 
     [Inject]
-     private NavigationManager NavigationManager { get; set; }
+    private NavigationManager? NavigationManager { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -57,13 +57,13 @@
         try
         {
             await UserState.LoadUserAsync(); 
-            isUserLoggedIn = UserState.CurrentUser != null;
+            isUserLoggedIn = UserState.CurrentUser is not null;
             
             await PopularMoviesState.LoadPopularMoviesAsync(isUserLoggedIn); 
 
             await Task.Delay(2000); 
             isSplashVisible = false;
-            NavigationManager.NavigateTo("/popular-movies");
+            NavigationManager?.NavigateTo("/popular-movies");
 
            
         }

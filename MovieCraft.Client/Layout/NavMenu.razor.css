@@ -17,20 +17,16 @@
 */
 
 nav {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 90px;
-    height: 100vh;
+    height: 100%;
     text-align: center;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, .06);
     box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-right: 1px solid rgba(255, 255, 255, .15);
-    transition: width .4s;
-    z-index: 2;
+    transition: .4s;
 }
 
     nav ul {
@@ -45,7 +41,7 @@ nav {
 
 
     nav:hover {
-        width: 300px;
+        width: 250px;
     }
 
     nav .nav-brand img {

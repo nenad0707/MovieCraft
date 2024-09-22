@@ -8,18 +8,18 @@
 
 main {
     flex: 1;
-    margin-left: 90px;
-    transition: margin-left 0.4s;
+  /*  margin-left: 90px;*/
+   /* transition: margin-left 0.4s;
     overflow: auto;
     background: rgba(255, 255, 255, 0.1); 
     backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);*/
 }
 
 
-nav:hover ~ main {
+/*nav:hover ~ main {
     margin-left: 300px;
-}
+}*/
 
 .top-bar {
     display: flex;

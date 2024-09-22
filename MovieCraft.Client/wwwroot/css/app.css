@@ -6,8 +6,15 @@
 }
 
 html, body {
-    background-color:transparent; /*#1a1a1a*/
+    /*background-color:transparent;*/ /*#1a1a1a*/
     color: #ffffff;
+}
+
+body {
+    background-image: url('../images/wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 /*
 h1:focus {

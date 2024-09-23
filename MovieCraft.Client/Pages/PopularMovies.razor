@@ -2,27 +2,28 @@
 @using MovieCraft.Shared.DTOs
 @implements IDisposable
 @inject PopularMoviesState PopularMoviesState
+@inject BackgroundState BackgroundState
 
 <h3>Popular Movies</h3>
 
-@if (movies == null)
+@if (PopularMoviesState.PopularMovies == null)
 {
     <p>Loading movies...</p>
 }
-else if (!movies.Any())
+else if (!PopularMoviesState.PopularMovies.Any())
 {
     <p>No popular movies found.</p>
 }
 else
 {
     <div class="movies-grid">
-        @foreach (var movie in PopularMoviesState.PopularMovies!)
+        @foreach (var movie in PopularMoviesState.PopularMovies)
         {
-            <div class="movie-card">
+            <div class="movie-card" @onclick="() => SetBackground(movie.BackdropPath)">
                 <img src="@($"https://image.tmdb.org/t/p/w500{movie.PosterPath}")" alt="@movie.Title" class="movie-poster" />
                 <div class="movie-details">
                     <h4>@movie.Title</h4>
-                    <p class="release-date">@movie.ReleaseDate?.ToString("dd.MM.yyyy")</p>
+                    <p class="release-date">@movie.ReleaseDate?.ToShortDateString()</p>
                     <p class="movie-overview">@movie.Overview</p>
                 </div>
             </div>
@@ -37,13 +38,16 @@ else
 
     protected override void OnInitialized()
     {
-        movies = PopularMoviesState.PopularMovies;
-
         PopularMoviesState.OnChange += StateHasChanged;
     }
 
     public void Dispose()
     {
         PopularMoviesState.OnChange -= StateHasChanged;
+    }
+
+    private void SetBackground(string backdropPath)
+    {
+        BackgroundState.BackgroundImageUrl = $"https://image.tmdb.org/t/p/original{backdropPath}";
     }
 }

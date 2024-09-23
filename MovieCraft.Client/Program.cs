@@ -13,6 +13,7 @@ builder.Services.AddHttpClient("MovieCraft.ServerAPI", client => client.BaseAddr
 
 builder.Services.AddHttpClient("AnonymousServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 
+builder.Services.AddSingleton<BackgroundState>();
 builder.Services.AddScoped<MovieService>();
 builder.Services.AddScoped<PopularMoviesState>();
 builder.Services.AddScoped<UserState>();

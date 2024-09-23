@@ -1,7 +1,8 @@
 ﻿@inherits LayoutComponentBase
 @inject UserState UserState
+@inject BackgroundState BackgroundState
 
-<div class="page">
+<div class="page" style="background-image: url('@BackgroundState.BackgroundImageUrl');">
     <NavMenu />
     <main>
         <div class="top-bar">
@@ -18,10 +19,12 @@
     protected override void OnInitialized()
     {
         UserState.OnChange += StateHasChanged;
+        BackgroundState.OnChange += StateHasChanged;
     }
 
     public void Dispose()
     {
         UserState.OnChange -= StateHasChanged;
+        BackgroundState.OnChange -= StateHasChanged;
     }
 }

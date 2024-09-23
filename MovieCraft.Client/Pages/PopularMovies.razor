@@ -22,7 +22,7 @@ else
                 <img src="@($"https://image.tmdb.org/t/p/w500{movie.PosterPath}")" alt="@movie.Title" class="movie-poster" />
                 <div class="movie-details">
                     <h4>@movie.Title</h4>
-                    <p class="release-date">@movie.ReleaseDate?.ToShortDateString()</p>
+                    <p class="release-date">@movie.ReleaseDate?.ToString("dd.MM.yyyy")</p>
                     <p class="movie-overview">@movie.Overview</p>
                 </div>
             </div>

@@ -20,7 +20,7 @@ builder.Services.AddScoped<UserState>();
 
 builder.Services.AddMsalAuthentication(options =>
 {
-    builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
+    builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);
     options.ProviderOptions.DefaultAccessTokenScopes.Add("https://nenadorg.onmicrosoft.com/e3c55284-c67e-495f-a42d-5fc3766d9317/access_as_user");
 });
 

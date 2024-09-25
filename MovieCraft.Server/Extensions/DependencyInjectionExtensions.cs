@@ -62,6 +62,7 @@ public static class DependencyInjectionExtensions
 
     public static void AddStandardServices(this WebApplicationBuilder builder)
     {
+        builder.Configuration.AddEnvironmentVariables();
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
         builder.Services.AddMemoryCache();

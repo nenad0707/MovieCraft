@@ -2,7 +2,7 @@
 
 public class BackgroundState
 {
-    private string _backgroundImageUrl = "https://wallpapers.com/images/high/batman-ben-affleck-movie-hmg3hz6ajq6u5c1p.webp";
+    private string _backgroundImageUrl = "/images/Batman.jpg";
 
     public string BackgroundImageUrl
     {

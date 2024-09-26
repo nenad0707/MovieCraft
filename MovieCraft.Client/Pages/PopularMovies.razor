@@ -22,7 +22,7 @@ else
             <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/original{movie.BackdropPath}")" />
             <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w500{movie.PosterPath}")" />
             <div class="movie-card" @onclick="() => SetBackground(movie.BackdropPath)">
-                <img src="@($"https://image.tmdb.org/t/p/w500{movie.PosterPath}")" alt="@movie.Title" class="movie-poster" loading="lazy" />
+                <img src="@($"https://image.tmdb.org/t/p/w500{movie.PosterPath}")" alt="@movie.Title" class="movie-poster"  />
                 <div class="movie-details">
                     <h4>@movie.Title</h4>
                     <p class="release-date">@movie.ReleaseDate?.ToShortDateString()</p>

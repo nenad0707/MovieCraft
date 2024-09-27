@@ -1,0 +1,35 @@
+name: 🚀 Build, publish, and deploy MovieCraft to SmarterASP.NET
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        name: 🔄 Checkout repository
+
+      - name: 🏗️ Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0
+
+      - name: 📦 Install dependencies
+        run: dotnet restore
+
+      - name: 🏗️ Build project
+        run: dotnet build --configuration Release --no-restore
+
+      - name: 🚀 Publish project
+        run: dotnet publish --configuration Release --output ./publish
+
+      - name: 🌍 Deploy to SmarterASP.NET using Web Deploy
+        uses: talunzhang/auto-web-deploy@v1.0.1
+        with:
+          website-name: ${{ secrets.WEBSITE_NAME }}
+          server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
+          server-username: ${{ secrets.WEBSITE_USERNAME }}
+          server-password: ${{ secrets.WEBSITE_PASSWORD }}
+          source-path: "./publish/"

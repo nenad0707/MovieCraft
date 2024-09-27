@@ -2,20 +2,17 @@
     display: flex;
     flex-direction: row;
     height: 100vh;
-    background-image: url('../images/wallpaper.jpg');
+    transition: background-image 0.5s ease-in-out;
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
-
 
 main {
     flex: 1;
-      padding: 0;
-     transition: margin-left 0.4s;
+    padding: 0;
     overflow: auto;
 }
-
 
 .top-bar {
     display: flex;
@@ -27,3 +24,4 @@ main {
 .content {
     color: #ffffff;
 }
+

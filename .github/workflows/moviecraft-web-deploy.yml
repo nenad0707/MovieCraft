@@ -23,7 +23,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: 🚀 Publish project
-        run: dotnet publish --configuration Release --output ./publish
+        run: dotnet publish --configuration Release --output publish
 
       - name: 🌍 Deploy to SmarterASP.NET using Web Deploy
         uses: talunzhang/auto-web-deploy@v1.0.1
@@ -32,4 +32,4 @@ jobs:
           server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
           server-username: ${{ secrets.WEBSITE_USERNAME }}
           server-password: ${{ secrets.WEBSITE_PASSWORD }}
-          source-path: "./publish/"
+          source-path: "publish"

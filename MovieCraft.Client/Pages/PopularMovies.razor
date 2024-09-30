@@ -17,7 +17,7 @@ else if (!PopularMoviesState.PopularMovies.Any())
 else
 {
     <div class="movies-grid">
-        @foreach (var movie in PopularMoviesState.PopularMovies)
+        @foreach (var movie in movies!)
         {
             <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w1280{movie.BackdropPath}")" />
             /*
@@ -42,6 +42,7 @@ else
 
     protected override void OnInitialized()
     {
+        movies = PopularMoviesState.PopularMovies;
         PopularMoviesState.OnChange += StateHasChanged;
     }
 

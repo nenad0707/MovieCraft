@@ -23,9 +23,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: 🚀 Publish project
-        run: |
-          echo '<configuration><system.webServer><aspNetCore processPath="dotnet" arguments=".\MovieCraft.Server.dll" stdoutLogEnabled="false" hostingModel="outofprocess" /></system.webServer></configuration>' > publish/web.config
-          dotnet publish --configuration Release --output publish
+        run: dotnet publish --configuration Release --output publish
 
       - name: 🌍 Deploy to SmarterASP.NET using Web Deploy
         uses: talunzhang/auto-web-deploy@v1.0.1

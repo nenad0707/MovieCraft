@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using MovieCraft.Infrastructure.Persistence;
 using MovieCraft.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,17 @@ builder.AddRateLimitingServices();
 
 
 var app = builder.Build();
+
+// Apply migrations only in Docker container
+if (Environment.GetEnvironmentVariable("RUN_MIGRATIONS") == "true")
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<MovieDbContext>();
+        dbContext.Database.Migrate();
+    }
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

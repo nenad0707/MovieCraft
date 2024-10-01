@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  moviecraft-db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    user: "0"
+    environment:
+      SA_PASSWORD: ${DB_SA_PASSWORD}
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - moviecraft_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "pidof sqlservr || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  moviecraft-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - RUN_MIGRATIONS=true
+      - ConnectionStrings__DefaultConnection=Server=moviecraft-db;Database=MovieDb;User Id=sa;Password=${DB_SA_PASSWORD};TrustServerCertificate=True
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localhost.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${SSL_CERT_PASSWORD}
+      - AzureAdB2C__Instance=${AzureAdB2C_Instance}
+      - AzureAdB2C__Domain=${AzureAdB2C_Domain}
+      - AzureAdB2C__ClientId=${AzureAdB2C_ClientId}
+      - AzureAdB2C__Scopes=${AzureAdB2C_Scopes}
+      - AzureAdB2C__SignUpSignInPolicyId=${AzureAdB2C_SignUpSignInPolicyId}
+      - Papertrail__Host=${Papertrail_Host}
+      - Papertrail__Port=${Papertrail_Port}
+      - TMDbSettings__ApiKey=${TMDbSettings_ApiKey}
+    ports:
+      - "7005:443" # HTTPS port
+      - "7004:80" # HTTP port
+    depends_on:
+      moviecraft-db:
+        condition: service_healthy
+    volumes:
+      - ./https:/https
+
+volumes:
+  moviecraft_data:

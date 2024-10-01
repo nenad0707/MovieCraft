@@ -20,9 +20,9 @@ else
         @foreach (var movie in movies!)
         {
             <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w1280{movie.BackdropPath}")" />
-            /*
-            <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" /> 
-            */
+            
+            @* <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" />  *@
+            
             <div class="movie-card" @onclick="() => SetBackground(movie.BackdropPath)">
                 <img src="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" alt="@movie.Title" class="movie-poster" loading="lazy" />
                 <div class="movie-details">

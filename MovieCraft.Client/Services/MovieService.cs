@@ -12,19 +12,21 @@ namespace MovieCraft.Client.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<List<MovieDto>> GetPopularMoviesAsync(bool isLoggedIn)
+        public async Task<List<MovieDto>> GetPopularMoviesAsync()
         {
             HttpClient httpClient;
 
-           
-            if (isLoggedIn)
-            {
-                httpClient = _httpClientFactory.CreateClient("MovieCraft.ServerAPI");  
-            }
-            else
-            {
-                httpClient = _httpClientFactory.CreateClient("AnonymousServerAPI");  
-            }
+
+            //if (isLoggedIn)
+            //{
+            //    httpClient = _httpClientFactory.CreateClient("MovieCraft.ServerAPI");  
+            //}
+            //else
+            //{
+            //    httpClient = _httpClientFactory.CreateClient("AnonymousServerAPI");  
+            //}
+
+            httpClient = _httpClientFactory.CreateClient("AnonymousServerAPI");
 
             var movies = await httpClient.GetFromJsonAsync<IEnumerable<MovieDto>>("api/movies/popular");
 

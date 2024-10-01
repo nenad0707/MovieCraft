@@ -15,11 +15,11 @@ public class PopularMoviesState
         _movieService = movieService;
     }
 
-    public async Task LoadPopularMoviesAsync(bool isLoggedIn)
+    public async Task LoadPopularMoviesAsync()
     {
         if (PopularMovies == null || !PopularMovies.Any())
         {
-            PopularMovies = await _movieService.GetPopularMoviesAsync(isLoggedIn);
+            PopularMovies = await _movieService.GetPopularMoviesAsync();
             NotifyStateChanged();
         }
     }

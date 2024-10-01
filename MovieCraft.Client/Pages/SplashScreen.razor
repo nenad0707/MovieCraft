@@ -1,4 +1,24 @@
-﻿<div class="splash-screen">
+﻿@inject PopularMoviesState PopularMoviesState
+
+<div class="splash-screen">
     <img src="images/wallpaper.jpg" alt="Background" class="background-image" />
     <h1 class="animated-text">MovieCraft</h1>
+
+    @if (PopularMoviesState.PopularMovies is not null)
+
+    {
+        @foreach (var movie in PopularMoviesState.PopularMovies)
+
+        {
+            <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w1280{movie.BackdropPath}")" />
+        }
+    }
 </div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await PopularMoviesState.LoadPopularMoviesAsync();
+    }
+
+}

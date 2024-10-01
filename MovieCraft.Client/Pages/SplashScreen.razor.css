@@ -20,7 +20,7 @@
 .animated-text {
     font-size: 3rem;
     color: white;
-    animation: fadeIn 2s ease-in-out infinite;
+    animation: fadeIn 4s ease-in-out infinite;
 }
 
 @keyframes fadeIn {

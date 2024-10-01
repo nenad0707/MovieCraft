@@ -19,14 +19,15 @@
                 {
                     <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                         <NotAuthorized>
-                            @if (!isUserLoggedIn)
+                           @*  @if (!isUserLoggedIn)
                             {
                                 <RedirectToLogin />
                             }
                             else
                             {
                                 <p role="alert">You are not authorized to access this resource.</p>
-                            }
+                            } *@
+                            <RedirectToLogin />
                         </NotAuthorized>
                     </AuthorizeRouteView>
                 }
@@ -43,7 +44,7 @@
 
 @code {
     private bool isSplashVisible = true;
-    private bool isUserLoggedIn;
+    // private bool isUserLoggedIn;
 
     [Inject]
     private NavigationManager? NavigationManager { get; set; }
@@ -53,11 +54,11 @@
     {
         try
         {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            isUserLoggedIn = authState.User.Identity!.IsAuthenticated;
+            // var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            // isUserLoggedIn = authState.User.Identity!.IsAuthenticated;
 
            
-            await PopularMoviesState.LoadPopularMoviesAsync(isUserLoggedIn);
+            await PopularMoviesState.LoadPopularMoviesAsync();
 
             await Task.Delay(1000);
 

@@ -19,10 +19,7 @@ else
     <div class="movies-grid">
         @foreach (var movie in movies!)
         {
-            @*  <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w1280{movie.BackdropPath}")" /> *@
-
-            @* <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" />  *@
-
+            <img style="display:none" src="@($"https://image.tmdb.org/t/p/w1280{movie.BackdropPath}")" alt="@movie.Title" class="background-image" />
             <div class="movie-card" @onclick="() => SetBackground(movie.BackdropPath)">
                 <img src="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")"
                      alt="@movie.Title"

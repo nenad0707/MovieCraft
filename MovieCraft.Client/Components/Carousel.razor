@@ -1,0 +1,64 @@
+﻿@inject PopularMoviesState PopularMoviesState
+@inject BackgroundState BackgroundState
+@implements IDisposable
+@inject IJSRuntime JS
+
+
+@if (PopularMoviesState.PopularMovies == null)
+{
+    <p>Loading movies...</p>
+}
+else if (!PopularMoviesState.PopularMovies.Any())
+{
+    <p>No popular movies found.</p>
+}
+else
+{
+    <div class="carousel-box">
+        <div class="carousel">
+            @if (movies != null)
+            {
+                @foreach (var movie in movies)
+                {
+                    @* <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w1280{movie.BackdropPath}")" /> *@
+                    @* <img style="display:none" src="@($"https://image.tmdb.org/t/p/w1280{movie.BackdropPath}")" alt="@movie.Title" /> *@
+                    <div class="carousel-item" @onclick="() => SetBackground(movie.BackdropPath)">
+                        <img src="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")"
+                             alt="@movie.Title" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+
+
+
+@code {
+    private IEnumerable<MovieDto>? movies;
+
+    protected override void OnInitialized()
+    {
+        movies = PopularMoviesState.PopularMovies;
+        PopularMoviesState.OnChange += StateHasChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("initCarousel");
+        }
+    }
+
+    public void Dispose()
+    {
+        PopularMoviesState.OnChange -= StateHasChanged;
+    }
+
+    public void SetBackground(string backdropPath)
+    {
+        BackgroundState.BackgroundImageUrl = $"https://image.tmdb.org/t/p/w1280{backdropPath}";
+    }
+
+}

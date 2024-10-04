@@ -22,7 +22,7 @@
 .carousel .carousel-item img {
     max-width: 235px;
     border-radius: 10px;
-    transform: translateX(8px) translateY(-100px);
+  
     object-fit: cover;
     object-position: center;
     -webkit-tap-highlight-color: transparent;

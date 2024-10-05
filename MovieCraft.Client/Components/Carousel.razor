@@ -20,7 +20,7 @@ else
                 @foreach (var movie in movies!)
                 {
                     <div class="swiper-slide" @onclick="() => SetBackground(movie.BackdropPath)">
-                        <img src="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" alt="@movie.Title" />
+                        <img src="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" alt="@movie.Title" loading="lazy"/>
                     </div>
                 }
             </div>

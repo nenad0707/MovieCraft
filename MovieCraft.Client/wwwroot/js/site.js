@@ -15,6 +15,7 @@
         },
         loop: true,
         simulateTouch: true,
-        navigation: false
+        navigation: false,
+        slideToClickedSlide: true,
     });
 };

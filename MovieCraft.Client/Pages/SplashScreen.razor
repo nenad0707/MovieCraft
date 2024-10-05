@@ -11,7 +11,7 @@
         @foreach (var movie in PopularMoviesState.PopularMovies)
 
         {
-            <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w1280{movie.BackdropPath}")" />
+            <link rel="preload" href="@($"https://image.tmdb.org/t/p/w1280{movie.BackdropPath}")" as="image" />
             @*   <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w348{movie.PosterPath}")"  />*@
         }
     }

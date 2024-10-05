@@ -7,6 +7,7 @@
     box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5); /* Shadow effect */
     border-radius: 10px;
     padding: 10px;
+    backdrop-filter: blur(10px);
 }
 
 /* Swiper container */
@@ -31,20 +32,19 @@
     transition: transform 0.3s ease; 
  
     /* Box shadow effect behind the slide */
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.6);
 }
 
-   
+
     .swiper-slide img {
         max-width: 235px;
         border-radius: 10px;
-        /* Move the image upwards */
-        /*transform: translateX(8px) translateY(-100px);*/
         object-fit: cover;
         object-position: center;
+        transition: transform 0.3s ease;
     }
 
-       
+
         .swiper-slide img:hover {
             transform: scale(1.05);
             transition: transform 0.3s ease;
@@ -52,7 +52,8 @@
 
 
 .swiper-slide-active img {
-    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.9);
+    transform: scale(1.1);
 }
 
 
@@ -72,7 +73,6 @@
 
         .swiper-slide img {
             max-width: 140px;
-            /*transform: translateY(-90px);*/
         }
 }
 
@@ -93,6 +93,5 @@
 
         .swiper-slide img {
             max-width: 90px;
-            /*transform: translateY(-80px);*/
         }
 }

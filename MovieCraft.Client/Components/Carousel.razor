@@ -32,6 +32,8 @@ else
 
 @code {
     private IEnumerable<MovieDto>? movies;
+
+    private bool swiperInitialized = false;
  
     protected override void OnInitialized()
     {
@@ -41,7 +43,11 @@ else
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await JS.InvokeVoidAsync("initSwiper");
+        if (!swiperInitialized)
+        {
+            await JS.InvokeVoidAsync("initSwiper");
+            swiperInitialized = true;
+        }
     }
 
     public void Dispose()

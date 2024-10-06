@@ -1,7 +1,33 @@
 ﻿@page "/"
-
+@using MovieCraft.Shared.DTOs
 
 <PageTitle>Home</PageTitle>
 
+<div class="container-fluid home-container">
+    <div class="row">
+       
+        <div class="col-12">
+            <div class="carousel-container">
+                <Carousel OnMovieSelected="OnMovieSelected" />
+            </div>
+        </div>
+       
+        @if (selectedMovie != null)
+        {
+            <div class="col-12">
+                <div class="movie-details-container">
+                    <MovieDetails Movie="selectedMovie" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
-<Carousel/>
+@code {
+    private MovieDto? selectedMovie;
+
+    void OnMovieSelected(MovieDto movie)
+    {
+        selectedMovie = movie;
+    }
+}

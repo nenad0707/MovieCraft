@@ -8,6 +8,7 @@
     border-radius: 10px;
     padding: 10px;
     backdrop-filter: blur(10px);
+    overflow: hidden;
 }
 
 /* Swiper container */

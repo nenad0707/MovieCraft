@@ -1,0 +1,25 @@
+﻿.carousel-container {
+    position: relative;
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.movie-details-container {
+    position: relative;
+    margin-top: -100px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+@media (max-width: 991px) {
+    .carousel-container,
+    .movie-details-container {
+        margin-top: 20px;
+        justify-content: center;
+    }
+
+    .movie-details-container {
+        order: -1;
+    }
+}

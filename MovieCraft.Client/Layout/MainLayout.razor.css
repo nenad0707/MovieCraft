@@ -6,11 +6,12 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    overflow: hidden;
 }
+
 
 main {
     flex: 1;
-    padding: 0;
     overflow: auto;
 }
 
@@ -24,4 +25,3 @@ main {
 .content {
     color: #ffffff;
 }
-

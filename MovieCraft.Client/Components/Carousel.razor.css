@@ -1,27 +1,27 @@
-﻿/* Glavni okvir oko Carousel-a */
+﻿
 .carousel-box {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.4); /* Tamnija pozadina */
-    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5); /* Senka */
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     padding: 10px;
     backdrop-filter: blur(10px);
-    overflow: hidden; /* Sprečava da slike "izlaze" izvan granica */
+    overflow: hidden; 
     width: 100%;
 }
 
-/* Swiper container */
+
 .swiper-container {
     width: 90%;
-    height: 300px; /* Smanjena visina za desktop */
+    height: 300px; 
     perspective: 1500px;
 }
 
-/* Pojedinačni slajd */
+
 .swiper-slide {
-    width: 120px !important; /* Smanjena širina slajda */
+    width: 120px !important; 
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -31,7 +31,7 @@
 }
 
     .swiper-slide img {
-        max-width: 100px; /* Smanjena veličina slika */
+        max-width: 100px; 
         border-radius: 10px;
         object-fit: cover;
         object-position: center;
@@ -48,7 +48,7 @@
     transform: scale(1.1);
 }
 
-/* Manje promene za mobilne uređaje */
+
 @media (max-width: 991px) {
     .carousel-box {
         max-width: 750px;

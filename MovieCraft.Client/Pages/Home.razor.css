@@ -3,13 +3,12 @@
     margin-top: 40px; 
     display: flex;
     justify-content: flex-end;
-    width: 66.67%; 
+   
 }
 
 .movie-details-container {
     position: relative;
-    margin-top: 40px; 
-    width: 33.33%; 
+    margin-top: 80px;  
     display: flex;
     justify-content: center; 
     align-items: center; 

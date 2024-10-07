@@ -1,25 +1,21 @@
 ﻿@page "/"
 
-
 <PageTitle>Home</PageTitle>
 
 <div class="container-fluid home-container">
     <div class="row">
-       
-        <div class="col-12">
-            <div class="carousel-container">
-                <Carousel OnMovieSelected="OnMovieSelected" />
-            </div>
+        <!-- MovieDetails - 50% za desktop -->
+        <div class="col-lg-6 col-md-12 movie-details-container">
+            @if (selectedMovie != null)
+            {
+                <MovieDetails Movie="selectedMovie" />
+            }
         </div>
-       
-        @if (selectedMovie != null)
-        {
-            <div class="col-12">
-                <div class="movie-details-container">
-                    <MovieDetails Movie="selectedMovie" />
-                </div>
-            </div>
-        }
+
+        <!-- Carousel - 50% za desktop -->
+        <div class="col-lg-6 col-md-12 carousel-container">
+            <Carousel OnMovieSelected="OnMovieSelected" />
+        </div>
     </div>
 </div>
 

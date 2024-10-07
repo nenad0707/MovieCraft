@@ -1,66 +1,57 @@
-﻿/* Main frame around the carousel */
+﻿/* Glavni okvir oko Carousel-a */
 .carousel-box {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.4); /* Darker background */
-    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    background: rgba(0, 0, 0, 0.4); /* Tamnija pozadina */
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5); /* Senka */
     border-radius: 10px;
     padding: 10px;
     backdrop-filter: blur(10px);
-    overflow: hidden;
+    overflow: hidden; /* Sprečava da slike "izlaze" izvan granica */
+    width: 100%;
 }
 
 /* Swiper container */
 .swiper-container {
     width: 90%;
-    height: 380px;
+    height: 300px; /* Smanjena visina za desktop */
     perspective: 1500px;
 }
 
-/* Wrapper for slides */
-.swiper-wrapper {
-    /* No additional styling unless desired */
-}
-
-/* Individual slide */
+/* Pojedinačni slajd */
 .swiper-slide {
-    width: 150px !important; /* Override for fixed slide width */
+    width: 120px !important; /* Smanjena širina slajda */
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: transform 0.3s ease;
-    /* Box shadow effect behind the slide */
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.6);
 }
 
-
     .swiper-slide img {
-        max-width: 140px;
+        max-width: 100px; /* Smanjena veličina slika */
         border-radius: 10px;
         object-fit: cover;
         object-position: center;
         transition: transform 0.3s ease;
     }
 
-
         .swiper-slide img:hover {
             transform: scale(1.05);
             transition: transform 0.3s ease;
         }
-
 
 .swiper-slide-active img {
     box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.9);
     transform: scale(1.1);
 }
 
-
+/* Manje promene za mobilne uređaje */
 @media (max-width: 991px) {
     .carousel-box {
         max-width: 750px;
-        background-color: rgba(0, 0, 0, 0.3);
     }
 
     .swiper-container {
@@ -76,11 +67,9 @@
         }
 }
 
-
 @media (max-width: 600px) {
     .carousel-box {
         max-width: 350px;
-        background-color: rgba(0, 0, 0, 0.3);
     }
 
     .swiper-container {

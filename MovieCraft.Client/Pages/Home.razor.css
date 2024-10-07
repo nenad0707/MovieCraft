@@ -1,21 +1,20 @@
-﻿.carousel-container {
+﻿/* MovieDetails i Carousel pored jednog drugog na desktopu, svaka zauzima 50% */
+.carousel-container {
     position: relative;
     margin-top: 20px;
     display: flex;
-    justify-content: flex-end; 
-    width: 40%; 
-    margin-left: auto;
+    justify-content: center;
+    width: 50%; /* Zauzima 50% prostora za desktop */
 }
 
 .movie-details-container {
     position: relative;
     margin-top: 30px;
-    width: 50%;
+    width: 50%; /* Zauzima 50% prostora za desktop */
     display: flex;
     justify-content: flex-start;
     align-self: flex-start;
-    overflow-y: hidden; 
-    max-height: none; 
+    overflow-y: hidden;
 }
 
 @media (max-width: 991px) {
@@ -23,22 +22,22 @@
     .movie-details-container {
         margin-top: 20px;
         justify-content: center;
-        width: 90%;
+        width: 100%; /* Na manjim ekranima zauzima punu širinu */
     }
 
     .movie-details-container {
-        order: -1;
+        order: -1; /* MovieDetails iznad Carousel-a na manjim ekranima */
         margin-top: 10px;
     }
 }
 
 @media (max-width: 600px) {
     .carousel-container {
-        width: 90%; 
+        width: 100%; /* Puna širina za mobilne uređaje */
     }
 
     .movie-details-container {
-        width: 90%;
+        width: 100%;
         margin-top: 10px;
     }
 }

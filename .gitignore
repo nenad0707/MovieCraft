@@ -364,3 +364,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /MovieCraft.Client/wwwroot/appsettings.Development.json
 /.gitignore
+/MovieCraft.Client/Properties/serviceDependencies.json
+/MovieCraft.Client/Properties/serviceDependencies.local.json

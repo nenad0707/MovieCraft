@@ -119,6 +119,7 @@ nav:hover .nav-item span {
     .nav-toggle i {
         font-size: 30px;
         color: #ffffff;
+        text-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
         transition: color .4s;
     }
 

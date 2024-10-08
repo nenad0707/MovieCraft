@@ -1,96 +1,101 @@
 ﻿nav {
     width: 90px;
     height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
     text-align: center;
     overflow: hidden;
     background: rgba(255, 255, 255, .06);
     box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border-right: 1px solid rgba(255, 255, 255, .15);
-    transition: .4s;
+    transition: width .4s;
+    z-index: 1000;
 }
 
-    nav ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    nav li {
-        list-style-type: none;
-    }
-
-
+/* Hover efekat za veće ekrane */
+@media (min-width: 769px) {
     nav:hover {
         width: 250px;
     }
+}
 
-    nav .nav-brand img {
-        width: 50px;
-        border-radius: 50%;
-        margin-top: 15px;
-        transition: width .4s, margin-top .4s;
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    list-style-type: none;
+}
+
+/* Stilovi za logotip i informacije */
+nav .nav-brand img {
+    width: 50px;
+    border-radius: 50%;
+    margin-top: 15px;
+    transition: width .4s, margin-top .4s;
+}
+
+nav:hover .nav-brand img {
+    width: 120px;
+    margin-top: 30px;
+}
+
+nav .nav-brand .info {
+    text-align: center;
+    opacity: 0;
+    transition: opacity .4s;
+    color: #ffffff;
+}
+
+nav:hover .nav-brand .info {
+    opacity: 1;
+    transition-delay: .2s;
+}
+
+/* Stilovi za navigacione stavke */
+nav .nav-item {
+    cursor: pointer;
+    padding: 0 25px;
+    height: 80px;
+    line-height: 80px;
+    text-align: left;
+    transition: background .4s;
+}
+
+    nav .nav-item i {
+        margin-right: 6px;
+        font-size: 26px;
+        color: #dddddd;
+        transform: translateY(5px);
+        transition: color .4s;
     }
 
-    nav:hover .nav-brand img {
-        width: 120px;
-        margin-top: 30px;
-    }
+nav:hover .nav-item i {
+    color: #f4c402;
+}
 
-    nav .nav-brand .info {
-        text-align: center;
-        opacity: 0;
-        transition: opacity .4s;
-        color: #ffffff;
-    }
+nav .nav-item span {
+    color: #ffffff;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity .4s;
+}
 
-    nav:hover .nav-brand .info {
-        opacity: 1;
-        transition-delay: .2s;
-    }
+nav:hover .nav-item span {
+    opacity: 1;
+    transition-delay: .2s;
+}
 
-    nav .nav-item {
-        cursor: pointer;
-        padding: 0 25px;
-        height: 80px;
-        line-height: 80px;
-        text-align: left;
-        transition: background .4s;
-    }
-
-     
-
-
-        nav .nav-item i {
-            margin-right: 6px;
-            font-size: 26px;
-            color: #dddddd;
-            transform: translateY(5px);
-            transition: color .4s;
-        }
-
-    nav:hover .nav-item i {
-        color: #f4c402;
-    }
-
-    nav .nav-item span {
-        color: #ffffff;
-        font-size: 18px;
-        opacity: 0;
-        transition: opacity .4s;
-    }
-
-    nav:hover .nav-item span {
-        opacity: 1;
-        transition-delay: .2s;
-    }
-
+/* Stilovi za linkove */
 ::deep .nav-item a,
 ::deep .nav-item a:hover,
 ::deep .nav-item a.active {
-    text-decoration: none; 
-    border-bottom: none; 
+    text-decoration: none;
+    border-bottom: none;
     color: inherit;
 }
 
@@ -99,8 +104,7 @@
     color: #f4c402;
 }
 
-
-
+/* Stilovi za hamburger ikonicu */
 .nav-toggle {
     display: none;
     position: fixed;
@@ -108,45 +112,74 @@
     left: 15px;
     background: transparent;
     border: none;
-    z-index: 3;
+    z-index: 2000;
+    cursor: pointer;
 }
 
-.navbar-toggler-icon {
-    margin-right: 6px;
-    font-size: 26px;
-    color: #dddddd;
-    transform: translateY(5px);
-    transition: color .4s;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-    .navbar-toggler-icon:hover{
-        color: #f4c402;
+    .nav-toggle i {
+        font-size: 30px;
+        color: #ffffff;
+        transition: color .4s;
     }
 
+        .nav-toggle i:hover {
+            color: #f4c402;
+        }
 
-    @media (max-width: 768px) {
-        nav {
-        left: -300px;
+/* Overlay stilovi */
+.overlay {
+    display: none;
+}
+
+    .overlay.show {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+/* Ponašanje na malim ekranima */
+@media (max-width: 768px) {
+    nav {
+        width: 250px;
+        left: -250px;
         transition: left 0.3s;
     }
 
         nav.nav-open {
-            left: 0; 
+            left: 0;
         }
 
     .nav-toggle {
         display: block;
     }
 
-    main {
-        margin-left: 0;
+    /* Prilagođavanje logotipa */
+    nav .nav-brand img {
+        width: 80px;
+        margin-top: 20px;
     }
 
-    nav:hover ~ main {
-        margin-left: 0;
+    nav .nav-brand .info {
+        display: none;
     }
+
+    /* Prilagođavanje navigacionih stavki */
+    nav .nav-item {
+        height: 60px;
+        line-height: 60px;
+    }
+
+        nav .nav-item i {
+            font-size: 24px;
+        }
+
+        nav .nav-item span {
+            font-size: 16px;
+            opacity: 1;
+        }
 }
-

@@ -1,25 +1,22 @@
 ﻿nav {
-    width: 90px;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
+    height: 100vh;
     text-align: center;
     overflow: hidden;
-    background: rgba(255, 255, 255, .06);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
-    border-right: 1px solid rgba(255, 255, 255, .15);
-    transition: width .4s;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    transition: width 0.4s;
     z-index: 1000;
+    width: 90px;
 }
 
-/* Hover efekat za veće ekrane */
 @media (min-width: 769px) {
     nav:hover {
         width: 250px;
     }
 }
+
 
 nav ul {
     list-style-type: none;
@@ -31,12 +28,13 @@ nav li {
     list-style-type: none;
 }
 
-/* Stilovi za logotip i informacije */
+
+
 nav .nav-brand img {
     width: 50px;
     border-radius: 50%;
     margin-top: 15px;
-    transition: width .4s, margin-top .4s;
+    transition: width 0.4s, margin-top 0.4s;
 }
 
 nav:hover .nav-brand img {
@@ -47,23 +45,22 @@ nav:hover .nav-brand img {
 nav .nav-brand .info {
     text-align: center;
     opacity: 0;
-    transition: opacity .4s;
+    transition: opacity 0.4s;
     color: #ffffff;
 }
 
 nav:hover .nav-brand .info {
     opacity: 1;
-    transition-delay: .2s;
+    transition-delay: 0.2s;
 }
 
-/* Stilovi za navigacione stavke */
 nav .nav-item {
     cursor: pointer;
     padding: 0 25px;
     height: 80px;
     line-height: 80px;
     text-align: left;
-    transition: background .4s;
+    transition: background 0.4s;
 }
 
     nav .nav-item i {
@@ -71,7 +68,7 @@ nav .nav-item {
         font-size: 26px;
         color: #dddddd;
         transform: translateY(5px);
-        transition: color .4s;
+        transition: color 0.4s;
     }
 
 nav:hover .nav-item i {
@@ -82,29 +79,29 @@ nav .nav-item span {
     color: #ffffff;
     font-size: 18px;
     opacity: 0;
-    transition: opacity .4s;
+    transition: opacity 0.4s;
 }
 
 nav:hover .nav-item span {
     opacity: 1;
-    transition-delay: .2s;
+    transition-delay: 0.2s;
 }
 
-/* Stilovi za linkove */
-::deep .nav-item a,
-::deep .nav-item a:hover,
-::deep .nav-item a.active {
+
+::deep.nav-item a,
+::deep.nav-item a:hover,
+::deep.nav-item a.active {
     text-decoration: none;
     border-bottom: none;
     color: inherit;
 }
 
-::deep .nav-item:hover {
+.nav-item:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: #f4c402;
 }
 
-/* Stilovi za hamburger ikonicu */
+
 .nav-toggle {
     display: none;
     position: fixed;
@@ -120,14 +117,13 @@ nav:hover .nav-item span {
         font-size: 30px;
         color: #ffffff;
         text-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
-        transition: color .4s;
+        transition: color 0.4s;
     }
 
         .nav-toggle i:hover {
             color: #f4c402;
         }
 
-/* Overlay stilovi */
 .overlay {
     display: none;
 }
@@ -143,11 +139,13 @@ nav:hover .nav-item span {
         z-index: 999;
     }
 
-/* Ponašanje na malim ekranima */
 @media (max-width: 768px) {
     nav {
-        width: 250px;
+        position: fixed;
+        top: 0;
         left: -250px;
+        width: 250px;
+        height: 100%;
         transition: left 0.3s;
     }
 
@@ -159,7 +157,6 @@ nav:hover .nav-item span {
         display: block;
     }
 
-    /* Prilagođavanje logotipa */
     nav .nav-brand img {
         width: 80px;
         margin-top: 20px;
@@ -169,7 +166,6 @@ nav:hover .nav-item span {
         display: none;
     }
 
-    /* Prilagođavanje navigacionih stavki */
     nav .nav-item {
         height: 60px;
         line-height: 60px;

@@ -1,0 +1,68 @@
+﻿@using MovieCraft.Shared.DTOs
+@inject PopularMoviesState PopularMoviesState
+@inject BackgroundState BackgroundState
+@implements IDisposable
+@inject IJSRuntime JS
+
+@if (PopularMoviesState.PopularMovies == null)
+{
+    <p>Loading movies...</p>
+}
+else if (!PopularMoviesState.PopularMovies.Any())
+{
+    <p>No popular movies found.</p>
+}
+else
+{
+    <div class="carousel-box">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                @foreach (var movie in movies!)
+                {
+                    <div class="swiper-slide" @onclick="() => HandleMovieSelected(movie)">
+                        <img src="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" alt="@movie.Title" loading="lazy" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private IEnumerable<MovieDto>? movies;
+    private bool swiperInitialized = false;
+
+    [Parameter]
+    public EventCallback<MovieDto> OnMovieSelected { get; set; }
+
+    protected override void OnInitialized()
+    {
+        movies = PopularMoviesState.PopularMovies;
+        PopularMoviesState.OnChange += StateHasChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!swiperInitialized)
+        {
+            await JS.InvokeVoidAsync("initSwiper");
+            swiperInitialized = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        PopularMoviesState.OnChange -= StateHasChanged;
+    }
+
+    private void HandleMovieSelected(MovieDto movie)
+    {
+        SetBackground(movie.BackdropPath);
+        OnMovieSelected.InvokeAsync(movie);
+    }
+
+    private void SetBackground(string backdropPath)
+    {
+        BackgroundState.BackgroundImageUrl = $"https://image.tmdb.org/t/p/w1280{backdropPath}";
+    }
+}

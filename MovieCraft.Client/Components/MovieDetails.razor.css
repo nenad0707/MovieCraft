@@ -1,0 +1,95 @@
+﻿.movie-details {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 20px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    max-height: 300px;
+    overflow-y: auto;
+    opacity: 0;
+}
+
+    .movie-details.animate {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.5s forwards;
+    }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.movie-details h2 {
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+    .movie-details h2:hover {
+        color: #f4c402;
+    }
+
+.movie-details::-webkit-scrollbar {
+    width: 8px;
+}
+
+.movie-details::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+}
+
+.movie-details::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.action-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #f4c402;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .btn i {
+        margin-right: 8px;
+        font-size: 20px;
+    }
+
+    .btn:hover {
+        background-color: #d4a402;
+    }
+
+.add-to-favorites {
+    background-color: #e74c3c;
+}
+
+    .add-to-favorites:hover {
+        background-color: #c0392b;
+    }
+
+
+@media (max-width: 991px) {
+    .movie-details {
+        max-height: 200px;
+    }
+}
+
+@media (max-width: 600px) {
+    .movie-details {
+        max-height: 250px;
+    }
+}

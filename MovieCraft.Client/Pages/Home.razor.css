@@ -1,0 +1,41 @@
+﻿.carousel-container {
+    position: relative;
+    margin-top: 40px; 
+    display: flex;
+    justify-content: flex-end;
+   
+}
+
+.movie-details-container {
+    position: relative;
+    margin-top: 80px;  
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    overflow-y: hidden;
+}
+
+@media (max-width: 991px) {
+    .carousel-container,
+    .movie-details-container {
+        margin-top: 20px;
+        justify-content: center;
+        width: 100%; 
+    }
+
+    .movie-details-container {
+        order: -1; 
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .carousel-container {
+        width: 100%; 
+    }
+
+    .movie-details-container {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

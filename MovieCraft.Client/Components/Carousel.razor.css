@@ -1,0 +1,85 @@
+﻿.carousel-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5); 
+    border-radius: 10px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    width: 100%;
+}
+
+
+.swiper-container {
+    width: 100%;
+    height: 400px;
+    perspective: 1500px;
+}
+
+
+.swiper-slide {
+    width: 180px !important; 
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+}
+
+    .swiper-slide img {
+        max-width: 160px; 
+        border-radius: 10px;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.3s ease;
+    }
+
+        .swiper-slide img:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+.swiper-slide-active img {
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.9);
+    transform: scale(1.1);
+}
+
+@media (max-width: 991px) {
+    .carousel-box {
+        max-width: 750px;
+    }
+
+    .swiper-container {
+        height: 300px;
+    }
+
+    .swiper-slide {
+        width: 150px !important;
+    }
+
+        .swiper-slide img {
+            max-width: 140px;
+        }
+}
+
+@media (max-width: 600px) {
+    .carousel-box {
+        max-width: 350px;
+    }
+
+    .swiper-container {
+        height: 250px;
+    }
+
+    .swiper-slide {
+        width: 100px !important;
+    }
+
+        .swiper-slide img {
+            max-width: 90px;
+        }
+}

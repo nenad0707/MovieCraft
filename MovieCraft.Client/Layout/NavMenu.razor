@@ -19,7 +19,6 @@
                 <span>Counter</span>
             </NavLink>
         </li>
-     
     </ul>
     <ul class="nav-list-bottom">
         <li class="nav-item">
@@ -37,8 +36,10 @@
     </ul>
 </nav>
 
+<div class="overlay @(isNavOpen ? "show" : "")" @onclick="ToggleNavMenu"></div>
+
 <button class="nav-toggle" @onclick="ToggleNavMenu">
-    <span class="navbar-toggler-icon"></span>
+    <i class="bx bx-menu"></i>
 </button>
 
 @code {

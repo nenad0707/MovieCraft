@@ -1,0 +1,54 @@
+﻿
+
+
+@if (Movie != null)
+{
+    <div class="@($"movie-details {animationClass}")">
+        <h2>@Movie.Title</h2>
+        <p>Release Date: @(Movie.ReleaseDate?.ToString("dd.MM.yyyy"))</p>
+        <p>@Movie.Overview</p>
+    </div>
+
+   @*  <div class="action-buttons">
+        <button class="btn add-to-favorites" @onclick="AddToFavorites">
+            <i class="bx bx-heart"></i>
+            Favorites
+        </button>
+        <button class="btn watch-trailer" @onclick="WatchTrailer">
+            <i class="bx bx-play-circle"></i>
+            Trailer
+        </button>
+    </div> *@
+}
+
+
+@code {
+    [Parameter]
+    public MovieDto Movie { get; set; } = default!;
+
+    private string animationClass = "";
+
+    protected override void OnParametersSet()
+    {
+        animationClass = ""; 
+        StateHasChanged(); 
+
+       
+        Task.Delay(1).ContinueWith(_ =>
+        {
+            animationClass = "animate";
+            InvokeAsync(StateHasChanged);
+        });
+    }
+
+    // private void WatchTrailer()
+    // {
+    //    // todo
+    // }
+
+    // private void AddToFavorites()
+    // {
+    //    // todo
+    // }
+
+}

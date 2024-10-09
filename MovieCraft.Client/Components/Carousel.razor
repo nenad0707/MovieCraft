@@ -1,5 +1,4 @@
-﻿@using MovieCraft.Shared.DTOs
-@inject PopularMoviesState PopularMoviesState
+﻿@inject PopularMoviesState PopularMoviesState
 @inject BackgroundState BackgroundState
 @implements IDisposable
 @inject IJSRuntime JS
@@ -20,7 +19,7 @@ else
                 @foreach (var movie in movies!)
                 {
                     <div class="swiper-slide" @onclick="() => HandleMovieSelected(movie)">
-                        <img src="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" alt="@movie.Title" loading="lazy" />
+                        <img src="@(ImageHelper.GetPosterUrl(movie.PosterPath))" alt="@movie.Title" loading="lazy" />
                     </div>
                 }
             </div>

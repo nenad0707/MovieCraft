@@ -1,5 +1,4 @@
 ﻿window.initSwiper = function () {
-    console.log('initSwiper function called');
     var swiper = new Swiper('.swiper-container', {
         effect: 'coverflow',
         grabCursor: true,

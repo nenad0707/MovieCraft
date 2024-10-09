@@ -8,9 +8,13 @@
     max-height: 300px;
     overflow-y: auto;
     opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s forwards;
 }
+
+    .movie-details.animate {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.5s forwards;
+    }
 
 @keyframes fadeInUp {
     to {

@@ -3,7 +3,7 @@
 
 @if (Movie != null)
 {
-    <div class="movie-details">
+    <div class="@($"movie-details {animationClass}")">
         <h2>@Movie.Title</h2>
         <p>Release Date: @(Movie.ReleaseDate?.ToString("dd.MM.yyyy"))</p>
         <p>@Movie.Overview</p>
@@ -26,6 +26,20 @@
     [Parameter]
     public MovieDto Movie { get; set; } = default!;
 
+    private string animationClass = "";
+
+    protected override void OnParametersSet()
+    {
+        animationClass = ""; 
+        StateHasChanged(); 
+
+       
+        Task.Delay(1).ContinueWith(_ =>
+        {
+            animationClass = "animate";
+            InvokeAsync(StateHasChanged);
+        });
+    }
 
     // private void WatchTrailer()
     // {

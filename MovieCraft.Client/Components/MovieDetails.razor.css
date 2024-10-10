@@ -4,7 +4,6 @@
     border-radius: 10px;
     padding: 20px;
     color: #fff;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
     max-height: 300px;
     overflow-y: auto;
     opacity: 0;
@@ -45,51 +44,32 @@
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.action-buttons {
-    margin-top: 15px;
-    display: flex;
-    gap: 10px;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 15px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #f4c402;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-    .btn i {
-        margin-right: 8px;
-        font-size: 20px;
-    }
-
-    .btn:hover {
-        background-color: #d4a402;
-    }
-
-.add-to-favorites {
-    background-color: #e74c3c;
-}
-
-    .add-to-favorites:hover {
-        background-color: #c0392b;
-    }
-
-
 @media (max-width: 991px) {
     .movie-details {
-        max-height: 200px;
+        max-height: 180px;
+        padding: 15px;
     }
+
+        .movie-details h2 {
+            font-size: 1.5rem;
+        }
+
+        .movie-details p {
+            font-size: 0.9rem;
+        }
 }
 
 @media (max-width: 600px) {
     .movie-details {
-        max-height: 250px;
+        max-height: 160px;
+        padding: 10px;
     }
+
+        .movie-details h2 {
+            font-size: 1.25rem;
+        }
+
+        .movie-details p {
+            font-size: 0.8rem;
+        }
 }

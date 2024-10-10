@@ -4,21 +4,32 @@
 
 <div class="container-fluid">
     <div class="row">
+       
         <div class="col-lg-4 col-md-12 movie-details-container">
             @if (selectedMovie != null)
             {
                 <MovieDetails Movie="selectedMovie" />
+             
+                <div class="d-none d-lg-block">
+                    <ActionButtons />
+                </div>
             }
         </div>
+      
         <div class="col-lg-8 col-md-12 carousel-container">
             <Carousel OnMovieSelected="OnMovieSelected" />
         </div>
-       
     </div>
+  
+    @if (selectedMovie != null)
+    {
+        <div class="row d-block d-lg-none">
+            <div class="col-12 action-buttons-container">
+                <ActionButtons />
+            </div>
+        </div>
+    }
 </div>
-
-
-
 
 @code {
     private MovieDto? selectedMovie;

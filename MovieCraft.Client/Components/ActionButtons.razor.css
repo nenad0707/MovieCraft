@@ -1,11 +1,11 @@
 ﻿.action-buttons {
-    margin-top: 15px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     text-align: center;
     align-items: center;
     gap: 10px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     width: 100%;
 }
 

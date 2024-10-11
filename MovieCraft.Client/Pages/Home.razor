@@ -3,37 +3,19 @@
 <PageTitle>Home</PageTitle>
 
 <div class="container-fluid">
-    <div class="row d-lg-none">
-        <div class="col-12 carousel-container">
-            <Carousel OnMovieSelected="OnMovieSelected" />
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-4 col-md-12 movie-details-container">
+    <div class="row align-items-start">
+        <div class="col-lg-4 col-md-12 order-lg-1 order-2 d-flex flex-column justify-content-end movie-details-container">
             @if (selectedMovie != null)
             {
                 <MovieDetails Movie="selectedMovie" />
-                <div class="action-buttons-container d-none d-lg-block">
-                    <ActionButtons />
-                </div>
+                <ActionButtons />
             }
         </div>
 
-        <div class="col-lg-8 col-md-12 carousel-container d-none d-lg-block">
+        <div class="col-lg-8 col-md-12 order-lg-2 order-1 carousel-container">
             <Carousel OnMovieSelected="OnMovieSelected" />
         </div>
     </div>
-
-   
-    @if (selectedMovie != null)
-    {
-        <div class="row d-block d-lg-none">
-            <div class="col-12 action-buttons-container">
-                <ActionButtons />
-            </div>
-        </div>
-    }
 </div>
 
 @code {

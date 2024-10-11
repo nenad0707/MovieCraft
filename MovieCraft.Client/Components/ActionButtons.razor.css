@@ -2,8 +2,11 @@
     margin-top: 15px;
     display: flex;
     justify-content: center;
+    text-align: center;
+    align-items: center;
     gap: 10px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .btn {

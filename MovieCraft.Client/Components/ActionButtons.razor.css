@@ -57,6 +57,13 @@
         background-color: #2980b9;
     }
 
+@media (min-width: 992px) {
+    .action-buttons {
+        justify-content: center;
+        width: 100%; 
+    }
+}
+
 
 @media (max-width: 600px) {
     .btn {

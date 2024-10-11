@@ -59,6 +59,12 @@
         }
 }
 
+@media (min-width: 992px) {
+    .movie-details {
+        width: 100%;
+    }
+}
+
 @media (max-width: 600px) {
     .movie-details {
         max-height: 160px;

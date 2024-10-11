@@ -6,12 +6,11 @@
     <h1 class="animated-text">MovieCraft</h1>
 
     @if (PopularMoviesState.PopularMovies is not null)
-
     {
         @foreach (var movie in PopularMoviesState.PopularMovies)
 
         {
-            <link rel="preload" href="@($"https://image.tmdb.org/t/p/w1280{movie.BackdropPath}")" as="image" />
+            <link rel="preload" href="@(ImageHelper.GetBackdropUrl(movie.BackdropPath))" as="image" />
             @*   <link rel="preload" as="image" href="@($"https://image.tmdb.org/t/p/w348{movie.PosterPath}")"  />*@
         }
     }

@@ -2,81 +2,92 @@
     margin-top: 20px;
     display: flex;
     justify-content: center;
-    text-align: center;
     align-items: center;
     gap: 10px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap; 
     width: 100%;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-.btn {
+.action-buttons__button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 10px 15px;
     font-size: 16px;
-    color: #fff;
-    background-color: #f4c402;
+    color: #ffffff; 
+    background-color: #f4c402; 
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     width: 150px;
     text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    position: relative; 
 }
 
-    .btn i {
+    .action-buttons__button i {
         margin-right: 8px;
         font-size: 20px;
+        text-shadow: none;
+        color: inherit; 
     }
 
-    .btn:hover {
-        background-color: #d4a402;
-        box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.9);
+    .action-buttons__button:hover {
+        background-color: #d4a402; 
+        box-shadow: 0 0px 15px rgba(255, 255, 255, 0.9), 0 4px 6px rgba(0, 0, 0, 0.3);
     }
 
-        .btn:hover i {
+        .action-buttons__button:hover i {
             transform: scale(1.1);
             transition: transform 0.3s ease;
         }
 
-    .btn:active {
+    .action-buttons__button:active {
         transform: scale(0.98);
     }
 
-.add-to-favorites {
-    background-color: #e74c3c;
+.action-buttons__button--favorite {
+    background-color: #8c2a1a; 
+    color: #ffffff; 
 }
 
-    .add-to-favorites:hover {
-        background-color: #c0392b;
+    .action-buttons__button--favorite:hover {
+        background-color: #6d2214;
     }
 
-.watch-trailer {
-    background-color: #3498db;
+.action-buttons__button--trailer {
+    background-color: #1e4c7a;
+    color: #ffffff; 
 }
 
-    .watch-trailer:hover {
-        background-color: #2980b9;
+    .action-buttons__button--trailer:hover {
+        background-color: #16435c; 
     }
 
 @media (min-width: 992px) {
     .action-buttons {
         justify-content: center;
-        width: 100%; 
+        width: 100%;
     }
 }
 
-
 @media (max-width: 600px) {
-    .btn {
+    .action-buttons__button {
         padding: 8px 12px;
         font-size: 14px;
         width: 130px;
     }
 
-        .btn i {
+        .action-buttons__button i {
             margin-right: 6px;
             font-size: 18px;
         }
+}
+
+.action-buttons__button:focus {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
 }

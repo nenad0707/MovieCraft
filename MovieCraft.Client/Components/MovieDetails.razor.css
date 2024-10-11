@@ -7,29 +7,44 @@
     overflow-y: auto;
     opacity: 0;
     height: 250px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-    .movie-details.animate {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 0.5s forwards;
-    }
+.movie-details--animate {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.5s forwards;
+}
 
 @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-.movie-details h2 {
+.movie-details__title {
     margin-bottom: 10px;
     transition: color 0.3s ease;
 }
 
-    .movie-details h2:hover {
+    .movie-details__title:hover {
         color: #f4c402;
     }
+
+.movie-details__release-date {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.movie-details__description {
+    margin-bottom: 0;
+}
 
 .movie-details::-webkit-scrollbar {
     width: 8px;
@@ -48,15 +63,26 @@
     .movie-details {
         max-height: 180px;
         padding: 15px;
+        opacity: 1; 
     }
 
-        .movie-details h2 {
-            font-size: 1.5rem;
-        }
+    .movie-details--animate {
+        opacity: 1;
+        transform: translateY(0);
+        animation: none;
+    }
 
-        .movie-details p {
-            font-size: 0.9rem;
-        }
+    .movie-details__title {
+        font-size: 24px;
+    }
+
+    .movie-details__release-date {
+        font-size: 16px;
+    }
+
+    .movie-details__description {
+        font-size: 16px;
+    }
 }
 
 @media (min-width: 992px) {
@@ -71,11 +97,22 @@
         padding: 10px;
     }
 
-        .movie-details h2 {
-            font-size: 1.25rem;
-        }
+    .movie-details__title {
+        font-size: 20px;
+    }
 
-        .movie-details p {
-            font-size: 0.8rem;
-        }
+    .movie-details__release-date {
+        font-size: 14px;
+    }
+
+    .movie-details__description {
+        font-size: 14px;
+    }
+
+  
+    .movie-details--animate {
+        opacity: 1;
+        transform: translateY(0);
+        animation: none;
+    }
 }

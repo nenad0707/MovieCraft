@@ -126,7 +126,7 @@ nav .nav-item i {
     margin-right: 5px; 
     font-size: 26px;
     color: var(--nav-icon-color);
-   /* transform: translateY(5px);*/
+    transform: translateY(5px);
     transition: color 0.4s;
     text-shadow: -1px -1px 0 var(--text-shadow-color), 1px -1px 0 var(--text-shadow-color), -1px 1px 0 var(--text-shadow-color), 1px 1px 0 var(--text-shadow-color);
 }
@@ -231,15 +231,15 @@ nav:hover .nav-item span {
     }
 
     nav .nav-item {
+        padding-left: 10px;
         height: 60px;
         line-height: 60px;
-        margin: 5px 10px; 
+        margin: 5px 10px;
     }
 
         nav .nav-item i {
             font-size: 24px;
-            transform: none; 
-            margin-right: 10px; 
+            margin-right: 10px;
         }
 
         nav .nav-item span {
@@ -252,7 +252,7 @@ nav:hover .nav-item span {
         justify-content: flex-start; 
     }
 
-        nav.nav-open .nav-item a {
+        nav.nav-open .nav-item ::deep a {
             justify-content: flex-start; 
         }
 

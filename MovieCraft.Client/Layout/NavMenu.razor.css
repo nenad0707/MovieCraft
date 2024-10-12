@@ -82,7 +82,7 @@ nav .nav-brand .info p {
 
 nav .nav-item {
     cursor: pointer;
-    padding: 0 25px;
+    padding: 0 20px;
     height: 80px;
     display: flex;
     align-items: center; 
@@ -111,7 +111,7 @@ nav .nav-item a {
 }
 
 nav .nav-item i {
-    margin-right: 10px; 
+    margin-right: 5px; 
     font-size: 26px;
     color: var(--nav-icon-color);
     transform: translateY(5px);

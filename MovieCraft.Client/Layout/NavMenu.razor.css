@@ -6,7 +6,7 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
     border-right: 1px solid var(--nav-border);
-    transition: .4s;
+    transition: .4s width;
     z-index: 1000;
     width: 90px;
     display: flex;

@@ -61,23 +61,35 @@ nav:hover .nav-brand img {
 nav .nav-brand .info {
     text-align: center;
     opacity: 0;
-    transition: opacity 0.4s;
-    color: var(--nav-text-color);
-    text-shadow: 0 1px 3px var(--text-shadow-color);
+    transition: opacity 0.4s, transform 0.3s ease-in-out;
+    color: var( --nav-text-color); 
+    text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5), 
+    0px 8px 12px rgba(255, 255, 255, 0.2);
 }
 
 nav:hover .nav-brand .info {
     opacity: 1;
+    transform: scale(1.05); 
     transition-delay: 0.2s;
 }
 
 nav .nav-brand .info h2,
 nav .nav-brand .info p {
     margin: 5px 0;
-    font-size: 1.5em; 
-    color: var(--nav-text-color);
-    text-shadow: -2px -2px 0 var(--text-shadow-color), 2px -2px 0 var(--text-shadow-color), -2px 2px 0 var(--text-shadow-color), 2px 2px 0 var(--text-shadow-color);
-    font-weight: bold;
+    font-size: 1.5em;
+    color: var( --nav-text-color);
+    text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5), 
+    0px 8px 12px rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+nav .nav-brand .info p {
+    font-size: 1em;
+}
+
+nav:hover .nav-brand .info h2,
+nav:hover .nav-brand .info p {
+    transform: scale(1.1); 
 }
 
 nav .nav-item {

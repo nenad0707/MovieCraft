@@ -1,4 +1,6 @@
 ﻿@page "/"
+@inject PopularMoviesState PopularMoviesState
+@inject BackgroundState BackgroundState
 
 <PageTitle>Home</PageTitle>
 
@@ -15,7 +17,12 @@
         </div>
 
         <div class="col-lg-8 col-md-12 order-lg-2 order-1 carousel-container">
-            <Carousel OnMovieSelected="OnMovieSelected" />
+            <Carousel TItem="MovieDto" Items="PopularMoviesState.PopularMovies" OnItemSelected="OnMovieSelected">
+                <ItemTemplate Context="movie">
+                    <img src="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" alt="@movie.Title" loading="lazy" />
+                </ItemTemplate>
+            </Carousel>
+
         </div>
     </div>
 </div>
@@ -26,5 +33,16 @@
     void OnMovieSelected(MovieDto movie)
     {
         selectedMovie = movie;
+        SetBackground(movie.BackdropPath);
+    }
+
+    protected override void OnInitialized()
+    {
+        PopularMoviesState.OnChange += StateHasChanged;
+    }
+
+    private void SetBackground(string backdropPath)
+    {
+        BackgroundState.BackgroundImageUrl = $"https://image.tmdb.org/t/p/w1280{backdropPath}";
     }
 }

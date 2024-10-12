@@ -1,4 +1,15 @@
-﻿* {
+﻿:root {
+    --nav-text-color: #ffffff;
+    --nav-icon-color: #dddddd;
+    --nav-hover-color: #f4c402;
+    --nav-background: rgba(255, 255, 255, 0.06);
+    --nav-border: rgba(255, 255, 255, 0.15);
+    --text-shadow-color: rgba(0, 0, 0, 0.8);
+    --nav-item-bg: rgba(0, 0, 0, 0.5);
+    --nav-item-bg-hover: rgba(255, 255, 255, 0.1);
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;

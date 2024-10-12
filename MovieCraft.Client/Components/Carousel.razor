@@ -1,26 +1,21 @@
-﻿@using MovieCraft.Shared.DTOs
-@inject PopularMoviesState PopularMoviesState
-@inject BackgroundState BackgroundState
-@implements IDisposable
-@inject IJSRuntime JS
+﻿@typeparam TItem
 
-@if (PopularMoviesState.PopularMovies == null)
+@if (Items == null || !Items.Any())
 {
-    <p>Loading movies...</p>
-}
-else if (!PopularMoviesState.PopularMovies.Any())
-{
-    <p>No popular movies found.</p>
+    <p>Loading...</p>
 }
 else
 {
     <div class="carousel-box">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                @foreach (var movie in movies!)
+                @foreach (var item in Items)
                 {
-                    <div class="swiper-slide" @onclick="() => HandleMovieSelected(movie)">
-                        <img src="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" alt="@movie.Title" loading="lazy" />
+                    <div class="swiper-slide" @onclick="() => HandleItemSelected(item)">
+                        <div class="carousel-slide">
+                            @ItemTemplate(item)
+                            <div class="carousel-overlay"></div>
+                        </div>
                     </div>
                 }
             </div>
@@ -29,40 +24,31 @@ else
 }
 
 @code {
-    private IEnumerable<MovieDto>? movies;
-    private bool swiperInitialized = false;
+    [Parameter]
+    public IEnumerable<TItem>? Items { get; set; }
 
     [Parameter]
-    public EventCallback<MovieDto> OnMovieSelected { get; set; }
+    public EventCallback<TItem> OnItemSelected { get; set; }
 
-    protected override void OnInitialized()
-    {
-        movies = PopularMoviesState.PopularMovies;
-        PopularMoviesState.OnChange += StateHasChanged;
-    }
+    [Parameter]
+    public RenderFragment<TItem> ItemTemplate { get; set; } = default!;
+
+    private bool swiperInitialized = false;
+
+    [Inject]
+    private IJSRuntime JS { get; set; } = default!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!swiperInitialized)
+        if (firstRender && Items != null && Items.Any() && !swiperInitialized)
         {
             await JS.InvokeVoidAsync("initSwiper");
             swiperInitialized = true;
         }
     }
 
-    public void Dispose()
+    private async Task HandleItemSelected(TItem item)
     {
-        PopularMoviesState.OnChange -= StateHasChanged;
-    }
-
-    private void HandleMovieSelected(MovieDto movie)
-    {
-        SetBackground(movie.BackdropPath);
-        OnMovieSelected.InvokeAsync(movie);
-    }
-
-    private void SetBackground(string backdropPath)
-    {
-        BackgroundState.BackgroundImageUrl = $"https://image.tmdb.org/t/p/w1280{backdropPath}";
+        await OnItemSelected.InvokeAsync(item);
     }
 }

@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject PopularMoviesState PopularMoviesState
 @inject BackgroundState BackgroundState
+@inject UserState UserState
 
 <PageTitle>Home</PageTitle>
 
@@ -11,7 +12,7 @@
             {
                 <MovieDetails Movie="selectedMovie" />
                 <div class="action-buttons-container">
-                    <ActionButtons />
+                    <ActionButtons TmdbId="selectedMovie.TmdbId" />
                 </div>
             }
         </div>
@@ -33,12 +34,15 @@
     void OnMovieSelected(MovieDto movie)
     {
         selectedMovie = movie;
+        Console.WriteLine($"Selected movie TmdbId: {movie.TmdbId}");
         SetBackground(movie.BackdropPath);
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         PopularMoviesState.OnChange += StateHasChanged;
+      
+        await UserState.LoadUserAsync();
     }
 
     private void SetBackground(string backdropPath)

@@ -28,4 +28,10 @@ public class FavoriteMovieRepository : IFavoriteMovieRepository
             .Where(fm => fm.UserId == userId)
             .ToListAsync();
     }
+
+    public async Task<FavoriteMovie?> GetFavoriteMovieAsync(string userId, int movieId)
+    {
+        return await _dbContext.FavoriteMovies
+            .FirstOrDefaultAsync(fm => fm.UserId == userId && fm.MovieId == movieId);
+    }
 }

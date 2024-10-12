@@ -10,13 +10,24 @@
 </div>
 
 @code {
+    [Parameter] public int TmdbId { get; set; } 
+    [Inject] private MovieService MovieService { get; set; } = default!;
+    [Inject] private UserState UserState { get; set; } = default!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+
     private void WatchTrailer()
     {
         // todo
     }
 
-    private void AddToFavorites()
+    private async void AddToFavorites()
     {
-        // todo
+        if (UserState.CurrentUser == null)
+        {
+            NavigationManager.NavigateTo("authentication/login");
+            return;
+        }
+
+        await MovieService.AddToFavorites(TmdbId);
     }
 }

@@ -49,9 +49,6 @@ public class FavoritesController : ControllerBase
         }
     }
 
-
-
-
     [HttpGet("{userId}")]
     public async Task<IActionResult> GetFavoriteMovies(string userId)
     {

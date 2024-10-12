@@ -2,13 +2,17 @@
     height: 100vh;
     text-align: center;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--nav-background);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
-    border-right: 1px solid rgba(255, 255, 255, 0.15);
-    transition: width 0.4s;
+    border-right: 1px solid var(--nav-border);
+    transition: .4s;
     z-index: 1000;
     width: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
 }
 
 @media (min-width: 769px) {
@@ -17,18 +21,30 @@
     }
 }
 
+nav .nav-list-top,
+nav .nav-list-bottom {
+    position: absolute;
+    width: 100%;
+}
+
+nav .nav-list-top {
+    top: 32%;
+}
+
+nav .nav-list-bottom {
+    bottom: 0;
+}
 
 nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    width: 100%;
 }
 
 nav li {
     list-style-type: none;
 }
-
-
 
 nav .nav-brand img {
     width: 50px;
@@ -46,7 +62,8 @@ nav .nav-brand .info {
     text-align: center;
     opacity: 0;
     transition: opacity 0.4s;
-    color: #ffffff;
+    color: var(--nav-text-color);
+    text-shadow: 0 1px 3px var(--text-shadow-color);
 }
 
 nav:hover .nav-brand .info {
@@ -54,39 +71,70 @@ nav:hover .nav-brand .info {
     transition-delay: 0.2s;
 }
 
+nav .nav-brand .info h2,
+nav .nav-brand .info p {
+    margin: 5px 0;
+    font-size: 1.5em; 
+    color: var(--nav-text-color);
+    text-shadow: -2px -2px 0 var(--text-shadow-color), 2px -2px 0 var(--text-shadow-color), -2px 2px 0 var(--text-shadow-color), 2px 2px 0 var(--text-shadow-color);
+    font-weight: bold;
+}
+
 nav .nav-item {
     cursor: pointer;
     padding: 0 25px;
     height: 80px;
-    line-height: 80px;
-    text-align: left;
-    transition: background 0.4s;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    background: var(--nav-item-bg);
+    border-radius: 8px; 
+    margin: 5px 10px; 
+    transition: background 0.4s, color 0.4s, justify-content 0.4s;
+    color: var(--nav-text-color);
+    text-shadow: -1px -1px 0 var(--text-shadow-color), 1px -1px 0 var(--text-shadow-color), -1px 1px 0 var(--text-shadow-color), 1px 1px 0 var(--text-shadow-color);
 }
 
-    nav .nav-item i {
-        margin-right: 6px;
-        font-size: 26px;
-        color: #dddddd;
-        transform: translateY(5px);
-        transition: color 0.4s;
-    }
+nav.nav-open .nav-item,
+nav:hover .nav-item {
+    justify-content: flex-start;
+}
+
+nav .nav-item a {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+nav .nav-item i {
+    margin-right: 10px; 
+    font-size: 26px;
+    color: var(--nav-icon-color);
+    transform: translateY(5px);
+    transition: color 0.4s;
+    text-shadow: -1px -1px 0 var(--text-shadow-color), 1px -1px 0 var(--text-shadow-color), -1px 1px 0 var(--text-shadow-color), 1px 1px 0 var(--text-shadow-color);
+}
 
 nav:hover .nav-item i {
-    color: #f4c402;
+    color: var(--nav-hover-color);
 }
 
 nav .nav-item span {
-    color: #ffffff;
+    color: var(--nav-text-color);
     font-size: 18px;
     opacity: 0;
-    transition: opacity 0.4s;
+    transition: opacity 0.4s, color 0.4s;
+    text-shadow: -1px -1px 0 var(--text-shadow-color), 1px -1px 0 var(--text-shadow-color), -1px 1px 0 var(--text-shadow-color), 1px 1px 0 var(--text-shadow-color);
 }
 
 nav:hover .nav-item span {
     opacity: 1;
     transition-delay: 0.2s;
 }
-
 
 ::deep.nav-item a,
 ::deep.nav-item a:hover,
@@ -97,10 +145,14 @@ nav:hover .nav-item span {
 }
 
 .nav-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #f4c402;
+    background-color: var(--nav-item-bg-hover); 
+    color: var(--nav-hover-color);
 }
 
+    .nav-item:hover i,
+    .nav-item:hover span {
+        color: var(--nav-hover-color);
+    }
 
 .nav-toggle {
     display: none;
@@ -115,13 +167,13 @@ nav:hover .nav-item span {
 
     .nav-toggle i {
         font-size: 30px;
-        color: #ffffff;
-        text-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
+        color: var(--nav-text-color);
+        text-shadow: 0 3px 6px var(--text-shadow-color);
         transition: color 0.4s;
     }
 
         .nav-toggle i:hover {
-            color: #f4c402;
+            color: var(--nav-hover-color);
         }
 
 .overlay {
@@ -169,14 +221,30 @@ nav:hover .nav-item span {
     nav .nav-item {
         height: 60px;
         line-height: 60px;
+        margin: 5px 10px; 
     }
 
         nav .nav-item i {
             font-size: 24px;
+            transform: none; 
+            margin-right: 10px; 
         }
 
         nav .nav-item span {
             font-size: 16px;
             opacity: 1;
+        }
+
+   
+    nav.nav-open .nav-item {
+        justify-content: flex-start; 
+    }
+
+        nav.nav-open .nav-item a {
+            justify-content: flex-start; 
+        }
+
+        nav.nav-open .nav-item i {
+            margin-right: 10px; 
         }
 }

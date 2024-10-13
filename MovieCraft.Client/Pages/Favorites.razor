@@ -55,6 +55,7 @@
     protected override async Task OnInitializedAsync()
     {
         FavoriteMoviesState.OnChange += StateHasChanged;
+        await UserState.LoadUserAsync();
         await FavoriteMoviesState.LoadFavoriteMoviesAsync();
     }
 

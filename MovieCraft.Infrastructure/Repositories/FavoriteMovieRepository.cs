@@ -34,4 +34,10 @@ public class FavoriteMovieRepository : IFavoriteMovieRepository
         return await _dbContext.FavoriteMovies
             .FirstOrDefaultAsync(fm => fm.UserId == userId && fm.MovieId == movieId);
     }
+
+    public async Task RemoveFavoriteMovie(FavoriteMovie favoriteMovie)
+    {
+        _dbContext.FavoriteMovies.Remove(favoriteMovie);
+        await _dbContext.SaveChangesAsync();
+    }
 }

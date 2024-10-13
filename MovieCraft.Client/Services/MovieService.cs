@@ -50,5 +50,28 @@ namespace MovieCraft.Client.Services
             return "Movie added to favorites successfully.";
         }
 
+        public async Task<List<FavoriteMovieDto>> GetFavoriteMoviesAsync(string userId)
+        {
+            HttpClient httpClient = _httpClientFactory.CreateClient("MovieCraft.ServerAPI");
+            var favoriteMovies = await httpClient.GetFromJsonAsync<IEnumerable<FavoriteMovieDto>>($"api/favorites/{userId}");
+            return favoriteMovies?.ToList() ?? new List<FavoriteMovieDto>();
+        }
+
+        public async Task RemoveFromFavoritesAsync(int tmdbId)
+        {
+            if (_userState.CurrentUser == null)
+            {
+                throw new UnauthorizedAccessException("User is not logged in.");
+            }
+
+            var userId = _userState.CurrentUser.UserId;
+            var httpClient = _httpClientFactory.CreateClient("MovieCraft.ServerAPI");
+            var response = await httpClient.DeleteAsync($"api/favorites/{userId}/{tmdbId}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Failed to remove movie from favorites.");
+            }
+        }
     }
 }

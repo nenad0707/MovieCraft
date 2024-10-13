@@ -1,34 +1,74 @@
-﻿@page "/favorite"
-@using MovieCraft.Shared.DTOs
-@inject PopularMoviesState PopularMoviesState
+﻿@page "/favorites"
 
-<h3>Popular Movies</h3>
+@attribute [Authorize]
+@inject FavoriteMoviesState FavoriteMoviesState
+@inject UserState UserState
+@inject MovieService MovieService
 
-@if (movies == null)
-{
-    <p>Loading movies...</p>
-}
-else
-{
-    <div class="movies-grid">
-        @foreach (var movie in movies)
+<PageTitle>Favorites</PageTitle>
+
+<div class="container-fluid favorite-movies-container">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <input type="text" class="form-control search-bar" placeholder="Search your favorite movies..." @bind="searchQuery" @bind:event="oninput" />
+        </div>
+    </div>
+    <div class="row">
+        @if (filteredFavoriteMovies != null && filteredFavoriteMovies.Any())
         {
-            <div class="movie-card">
-                <img src="@($"https://image.tmdb.org/t/p/w500{movie.PosterPath}")" alt="@movie.Title" />
-                <h4>@movie.Title</h4>
-                <p>@movie.Overview</p>
+            @foreach (var favoriteMovie in filteredFavoriteMovies)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="favorite-movie-card">
+        //await _favoriteMovieRepository.SaveChangesAsync();
+                        <img src="@ImageHelper.GetPosterUrl(favoriteMovie.PosterPath)" alt="@favoriteMovie.Title" loading="lazy" />
+                        <div class="favorite-movie-title">@favoriteMovie.Title</div>
+                        <div class="favorite-movie-overlay">
+                            <div class="favorite-movie-info">
+                                <p>@favoriteMovie.Overview</p>
+                                <p><strong>Release Date:</strong> @favoriteMovie.ReleaseDate?.ToString("yyyy-MM-dd")</p>
+                            </div>
+                            <button class="btn btn-icon btn-remove" @onclick:stopPropagation="true" @onclick="() => RemoveFromFavorites(favoriteMovie)" aria-label="Remove from Favorites">
+                                <i class='bx bx-trash'></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                    <p>No favorite movies or no search results.</p>
             </div>
         }
     </div>
-}
-
+</div>
 
 @code {
-    private IEnumerable<MovieDto> movies = new List<MovieDto>();
+    private string searchQuery = "";
 
-    protected override void OnInitialized()
+    private IEnumerable<FavoriteMovieDto>? filteredFavoriteMovies =>
+        string.IsNullOrWhiteSpace(searchQuery)
+            ? FavoriteMoviesState.FavoriteMovies
+            : FavoriteMoviesState.FavoriteMovies?.Where(m => m.Title.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+
+    protected override async Task OnInitializedAsync()
     {
-       
-        movies = PopularMoviesState.PopularMovies!;
+        FavoriteMoviesState.OnChange += StateHasChanged;
+        await FavoriteMoviesState.LoadFavoriteMoviesAsync();
+    }
+
+    private async Task RemoveFromFavorites(FavoriteMovieDto favoriteMovie)
+    {
+        try
+        {
+            await MovieService.RemoveFromFavoritesAsync(favoriteMovie.MovieId);
+            await FavoriteMoviesState.LoadFavoriteMoviesAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error removing favorite movie: {ex.Message}");
+        }
     }
 }

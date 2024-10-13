@@ -16,6 +16,7 @@ builder.Services.AddHttpClient("AnonymousServerAPI", client => client.BaseAddres
 builder.Services.AddSingleton<BackgroundState>();
 builder.Services.AddScoped<MovieService>();
 builder.Services.AddScoped<PopularMoviesState>();
+builder.Services.AddScoped<FavoriteMoviesState>();
 builder.Services.AddScoped<UserState>();
 
 builder.Services.AddMsalAuthentication(options =>

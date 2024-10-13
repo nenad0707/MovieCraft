@@ -54,6 +54,27 @@ public class FavoritesController : ControllerBase
         }
     }
 
+    [HttpDelete("{userId}/{movieId}")]
+    public async Task<IActionResult> RemoveFavoriteMovie(string userId, int movieId)
+    {
+        try
+        {
+            _logger.LogInformation("Removing a movie from the user's favorite list.");
+            await _mediator.Send(new RemoveFavoriteMovieCommand
+            {
+                UserId = userId,
+                MovieId = movieId
+            });
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while removing a favorite movie.");
+            return StatusCode(500, "An error occurred while removing the favorite movie.");
+        }
+    }
+
+
     [HttpGet("{userId}")]
     public async Task<IActionResult> GetFavoriteMovies(string userId)
     {

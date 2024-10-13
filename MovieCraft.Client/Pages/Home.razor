@@ -34,7 +34,6 @@
     void OnMovieSelected(MovieDto movie)
     {
         selectedMovie = movie;
-        Console.WriteLine($"Selected movie TmdbId: {movie.TmdbId}");
         SetBackground(movie.BackdropPath);
     }
 

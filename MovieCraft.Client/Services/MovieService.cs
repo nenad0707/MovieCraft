@@ -1,4 +1,5 @@
 ﻿using MovieCraft.Shared.DTOs;
+using System.Net;
 using System.Net.Http.Json;
 
 namespace MovieCraft.Client.Services
@@ -24,7 +25,7 @@ namespace MovieCraft.Client.Services
             return movies?.ToList() ?? new List<MovieDto>();
         }
 
-        public async Task AddToFavorites(int tmdbId)
+        public async Task<string> AddToFavorites(int tmdbId)
         {
             if (_userState.CurrentUser == null)
             {
@@ -37,10 +38,17 @@ namespace MovieCraft.Client.Services
             var httpClient = _httpClientFactory.CreateClient("MovieCraft.ServerAPI");
             var response = await httpClient.PostAsJsonAsync($"api/favorites/{userId}", dto);
 
-            if (!response.IsSuccessStatusCode)
+            if (response.StatusCode == HttpStatusCode.Conflict)
             {
-                throw new Exception("Failed to add movie to favorites.");
+                return "This movie is already in your favorites.";
             }
+            else if (!response.IsSuccessStatusCode)
+            {
+                return "Failed to add movie to favorites.";
+            }
+
+            return "Movie added to favorites successfully.";
         }
+
     }
 }

@@ -1,4 +1,13 @@
-﻿<div class="action-buttons">
+﻿@inject MovieService MovieService
+@inject UserState UserState
+@inject NavigationManager NavigationManager
+
+@if (message != null)
+{
+    <div class="alert alert-info">@message</div>
+}
+
+<div class="action-buttons">
     <button class="btn action-buttons__button action-buttons__button--trailer" @onclick="WatchTrailer" aria-label="Watch Trailer" data-tooltip="Watch Trailer">
         <i class="bx bx-play-circle"></i>
         <span>Trailer</span>
@@ -9,11 +18,12 @@
     </button>
 </div>
 
+
+
 @code {
+    private string? message;
     [Parameter] public int TmdbId { get; set; } 
-    [Inject] private MovieService MovieService { get; set; } = default!;
-    [Inject] private UserState UserState { get; set; } = default!;
-    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+  
 
     private void WatchTrailer()
     {
@@ -28,6 +38,12 @@
             return;
         }
 
-        await MovieService.AddToFavorites(TmdbId);
+        message = await MovieService.AddToFavorites(TmdbId);
+
+        StateHasChanged();
+
+        await Task.Delay(3000);
+        message = null;
+        StateHasChanged();
     }
 }

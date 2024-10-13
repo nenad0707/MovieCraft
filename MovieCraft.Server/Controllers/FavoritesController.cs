@@ -37,6 +37,11 @@ public class FavoritesController : ControllerBase
             });
             return NoContent();
         }
+        catch (InvalidOperationException ex)  
+        {
+            _logger.LogWarning(ex.Message); 
+            return Conflict(new { Message = ex.Message });
+        }
         catch (FluentValidation.ValidationException ex)
         {
             _logger.LogWarning("Validation failed: {Errors}", ex.Errors);

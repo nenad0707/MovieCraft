@@ -32,7 +32,7 @@ public class FavoriteMovieRepository : IFavoriteMovieRepository
     public async Task<FavoriteMovie?> GetFavoriteMovieAsync(string userId, int movieId)
     {
         return await _dbContext.FavoriteMovies
-            .FirstOrDefaultAsync(fm => fm.UserId == userId && fm.MovieId == movieId);
+       .FirstOrDefaultAsync(fm => fm.UserId == userId && fm.MovieId == movieId);
     }
 
     public async Task RemoveFavoriteMovie(FavoriteMovie favoriteMovie)

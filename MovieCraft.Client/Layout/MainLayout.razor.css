@@ -16,7 +16,7 @@ main {
 .top-bar {
     position: sticky;
     top: 0;
-    z-index: 1200;
+    z-index: 500;
     display: flex;
     justify-content: flex-end;
     align-items: center;

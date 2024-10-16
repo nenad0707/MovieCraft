@@ -8,7 +8,7 @@
 .search-bar-container {
     position: sticky;
     top: 70px; 
-    z-index: 1100;
+    z-index: 900;
     background: transparent; 
     padding: 10px 0;
 }

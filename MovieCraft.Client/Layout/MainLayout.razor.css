@@ -14,11 +14,34 @@ main {
 }
 
 .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1200;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 10px 20px;
+    background: var( --nav-background);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+@media (max-width: 576px) {
+    .top-bar {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .top-bar {
+        padding: 10px;
+    }
+
+        .top-bar .btn-icon {
+            font-size: 20px;
+        }
+}
+
 
 .content {
     color: #ffffff;

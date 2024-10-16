@@ -1,16 +1,20 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@using MovieCraft.Shared.DTOs
 @inject NavigationManager Navigation
-
 
 <AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity?.Name!
-        <button class="nav-link btn btn-link" @onclick="BeginLogOut">Log out</button>
+        <div class="user-info">
+            <span>Hello, @context.User.Identity?.Name!</span>
+            <button class="btn-icon" @onclick="BeginLogOut" aria-label="Log out">
+                <i class='bx bx-log-out'></i>
+            </button>
+        </div>
     </Authorized>
     <NotAuthorized>
-        <a href="authentication/login">Log in</a>
+        <button class="btn-icon" @onclick="BeginLogIn" aria-label="Log in">
+            <i class='bx bx-log-in'></i>
+        </button>
     </NotAuthorized>
 </AuthorizeView>
 
@@ -18,5 +22,10 @@
     public void BeginLogOut()
     {
         Navigation.NavigateToLogout("authentication/logout");
+    }
+
+    public void BeginLogIn()
+    {
+        Navigation.NavigateTo("authentication/login");
     }
 }

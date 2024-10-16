@@ -3,7 +3,11 @@
 @inject UserState UserState
 @inject BackgroundState BackgroundState
 
-<div class="page" style="background-image: url('@BackgroundState.BackgroundImageUrl');">
+<div class="background-container">
+    <div class="background-image current" style="background-image: url('@BackgroundState.BackgroundImageUrl');"></div>
+    <div class="background-image next"></div>
+</div>
+<div class="page">
     <NavMenu />
     <main>
         <div class="top-bar">
@@ -20,12 +24,17 @@
     protected override void OnInitialized()
     {
         UserState.OnChange += StateHasChanged;
-        BackgroundState.OnChange += StateHasChanged;
+        BackgroundState.OnChange += UpdateBackground;
+    }
+
+    private void UpdateBackground()
+    {
+        StateHasChanged();
     }
 
     public void Dispose()
     {
         UserState.OnChange -= StateHasChanged;
-        BackgroundState.OnChange -= StateHasChanged;
+        BackgroundState.OnChange -= UpdateBackground;
     }
 }

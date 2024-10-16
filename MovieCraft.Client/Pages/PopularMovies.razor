@@ -1,4 +1,4 @@
-﻿@page "/popular-movies"
+﻿@* @page "/popular-movies"
 @using MovieCraft.Shared.DTOs
 @implements IDisposable
 @inject PopularMoviesState PopularMoviesState
@@ -51,8 +51,9 @@ else
         PopularMoviesState.OnChange -= StateHasChanged;
     }
 
-    private void SetBackground(string backdropPath)
+    private async Task SetBackground(string backdropPath)
     {
-        BackgroundState.BackgroundImageUrl = $"https://image.tmdb.org/t/p/w1280{backdropPath}";
+        await BackgroundState.SetBackgroundAsync(movie.BackdropPath);
     }
 }
+ *@

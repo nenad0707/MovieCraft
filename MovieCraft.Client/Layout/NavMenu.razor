@@ -1,4 +1,7 @@
-﻿<nav class="@NavClass">
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager Navigation
+
+<nav class="@NavClass">
     <div class="nav-brand">
         <img src="./images/Logo.svg" alt="logo">
         <div class="info">
@@ -25,18 +28,37 @@
                 <span>Popular Movies</span>
             </NavLink>
         </li>
-        <li class="nav-item">
-            <NavLink href="weather">
-                <i class='bx bx-shower'></i>
-                <span>Weather</span>
-            </NavLink>
-        </li>
-        <li class="nav-item">
-            <NavLink href="favorites">
-                <i class='bx bx-heart'></i>
-                <span>Favorite Movies</span>
-            </NavLink>
-        </li>
+
+        <AuthorizeView>
+            <Authorized>
+                <li class="nav-item">
+                    <NavLink href="weather">
+                        <i class='bx bx-shower'></i>
+                        <span>Weather</span>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="favorites">
+                        <i class='bx bx-heart'></i>
+                        <span>Favorite Movies</span>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="" @onclick="BeginLogOut">
+                        <i class='bx bx-log-out'></i>
+                        <span>Log Out</span>
+                    </NavLink>
+                </li>
+            </Authorized>
+            <NotAuthorized>
+                <li class="nav-item">
+                    <NavLink href="authentication/login">
+                        <i class='bx bx-log-in'></i>
+                        <span>Log In</span>
+                    </NavLink>
+                </li>
+            </NotAuthorized>
+        </AuthorizeView>
     </ul>
 </nav>
 
@@ -54,5 +76,10 @@
     private void ToggleNavMenu()
     {
         isNavOpen = !isNavOpen;
+    }
+
+    public void BeginLogOut()
+    {
+        Navigation.NavigateToLogout("authentication/logout");
     }
 }

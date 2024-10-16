@@ -5,6 +5,14 @@
     padding-top: 70px; 
 }
 
+.search-bar-container {
+    position: sticky;
+    top: 70px; 
+    z-index: 1100;
+    background: transparent; 
+    padding: 10px 0;
+}
+
 .search-bar-inner {
     position: sticky;
     max-width: 600px; 

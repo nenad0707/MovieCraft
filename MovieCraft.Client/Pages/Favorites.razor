@@ -7,9 +7,11 @@
 <PageTitle>Favorites</PageTitle>
 
 <div class="container-fluid favorites-page">
-    <div class="search-bar-inner">
-        <input type="text" class="form-control search-bar-input" placeholder="Search your favorite movies..." @bind="searchQuery" @bind:event="oninput" />
-        <i class='bx bx-search-alt search-icon'></i>
+    <div class="search-bar-container">
+        <div class="search-bar-inner">
+            <input type="text" class="form-control search-bar-input" placeholder="Search your favorite movies..." @bind="searchQuery" @bind:event="oninput" />
+            <i class='bx bx-search-alt search-icon'></i>
+        </div>
     </div>
     <div class="favorite-movies-container">
         <div class="row">

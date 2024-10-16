@@ -220,6 +220,7 @@ nav.nav-open .nav-item span {
         width: 250px;
         height: 100%;
         transition: left 0.3s;
+        z-index:1500;
     }
 
         nav.nav-open {

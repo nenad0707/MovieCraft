@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject PopularMoviesState PopularMoviesState
 @inject BackgroundState BackgroundState
+@inject UserState UserState
 
 <PageTitle>Home</PageTitle>
 
@@ -11,7 +12,7 @@
             {
                 <MovieDetails Movie="selectedMovie" />
                 <div class="action-buttons-container">
-                    <ActionButtons />
+                    <ActionButtons TmdbId="selectedMovie.TmdbId" />
                 </div>
             }
         </div>
@@ -19,7 +20,7 @@
         <div class="col-lg-8 col-md-12 order-lg-2 order-1 carousel-container">
             <Carousel TItem="MovieDto" Items="PopularMoviesState.PopularMovies" OnItemSelected="OnMovieSelected">
                 <ItemTemplate Context="movie">
-                    <img src="@($"https://image.tmdb.org/t/p/w342{movie.PosterPath}")" alt="@movie.Title" loading="lazy" />
+                    <img src="@ImageHelper.GetPosterUrl(movie.PosterPath)" alt="@movie.Title" loading="lazy" />
                 </ItemTemplate>
             </Carousel>
 
@@ -36,13 +37,15 @@
         SetBackground(movie.BackdropPath);
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         PopularMoviesState.OnChange += StateHasChanged;
+      
+        await UserState.LoadUserAsync();
     }
 
     private void SetBackground(string backdropPath)
     {
-        BackgroundState.BackgroundImageUrl = $"https://image.tmdb.org/t/p/w1280{backdropPath}";
+        BackgroundState.BackgroundImageUrl = ImageHelper.GetBackdropUrl(backdropPath);
     }
 }

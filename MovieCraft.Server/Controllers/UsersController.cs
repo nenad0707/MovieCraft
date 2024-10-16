@@ -71,26 +71,33 @@ public class UsersController : ControllerBase
     [HttpPost("sync")]
     public async Task<IActionResult> SyncUser([FromBody] UserDto userDto)
     {
-        var command = new SaveUserCommand
-        {
-            UserId = userDto.UserId,
-            Name = userDto.Name
-        };
+        var existingUser = await _mediator.Send(new GetUserByIdQuery { UserId = userDto.UserId });
 
-        try
+        if (existingUser is null)
         {
+            var command = new SaveUserCommand
+            {
+                UserId = userDto.UserId,
+                Name = userDto.Name
+            };
 
-            _logger.LogInformation("Synchronizing user.");
-            await _mediator.Send(command);
-            string cacheKey = $"{UserCacheKeyPrefix}{userDto.UserId}";
-            _memoryCache.Set(cacheKey,userDto, TimeSpan.FromMinutes(5));
-            _logger.LogInformation("Synchronizing user and updating cache.");
-            return CreatedAtAction(nameof(GetUserById), new { userId = userDto.UserId }, userDto);
+            try
+            {
+                _logger.LogInformation("Synchronizing user.");
+                await _mediator.Send(command);
+                string cacheKey = $"{UserCacheKeyPrefix}{userDto.UserId}";
+                _memoryCache.Set(cacheKey, userDto, TimeSpan.FromMinutes(5));
+                _logger.LogInformation("User synchronized and cache updated.");
+                return CreatedAtAction(nameof(GetUserById), new { userId = userDto.UserId }, userDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while synchronizing user.");
+                return StatusCode(500, "An error occurred while synchronizing the user.");
+            }
         }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while synchronizing user.");
-            return StatusCode(500, "An error occurred while synchronizing the user.");
-        }
+
+        return Ok(existingUser);
     }
+
 }

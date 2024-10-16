@@ -18,3 +18,20 @@
         slideToClickedSlide: true,
     });
 };
+
+window.removeSplashScreen = () => {
+    const splash = document.getElementById('splash-screen');
+    if (splash) {
+        splash.style.opacity = '0';
+        splash.style.pointerEvents = 'none';
+        setTimeout(() => splash.remove(), 500);
+    }
+};
+
+window.preloadImage = (url) => {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => resolve(true);
+    });
+};

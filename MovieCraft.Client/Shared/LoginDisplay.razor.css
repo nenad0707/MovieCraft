@@ -1,0 +1,35 @@
+﻿.user-info {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    text-shadow: 0 3px 6px var(--text-shadow-color);
+}
+
+    .user-info span {
+        color: #fff;
+        margin-right: 10px;
+        font-size: 1rem;
+    }
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+    .btn-icon:hover {
+        color: #aaa;
+    }
+
+    .btn-icon i {
+        vertical-align: middle;
+    }
+
+@media (max-width: 576px) {
+    .btn-icon {
+        font-size: 20px;
+    }
+}

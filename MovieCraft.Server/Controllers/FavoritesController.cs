@@ -37,6 +37,11 @@ public class FavoritesController : ControllerBase
             });
             return NoContent();
         }
+        catch (InvalidOperationException ex)  
+        {
+            _logger.LogWarning(ex.Message); 
+            return Conflict(new { Message = ex.Message });
+        }
         catch (FluentValidation.ValidationException ex)
         {
             _logger.LogWarning("Validation failed: {Errors}", ex.Errors);
@@ -49,7 +54,25 @@ public class FavoritesController : ControllerBase
         }
     }
 
-
+    [HttpDelete("{userId}/{movieId}")]
+    public async Task<IActionResult> RemoveFavoriteMovie(string userId, int movieId)
+    {
+        try
+        {
+            _logger.LogInformation("Removing a movie from the user's favorite list.");
+            await _mediator.Send(new RemoveFavoriteMovieCommand
+            {
+                UserId = userId,
+                MovieId = movieId
+            });
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while removing a favorite movie.");
+            return StatusCode(500, "An error occurred while removing the favorite movie.");
+        }
+    }
 
 
     [HttpGet("{userId}")]

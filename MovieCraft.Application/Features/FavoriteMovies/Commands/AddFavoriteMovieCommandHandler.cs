@@ -24,24 +24,33 @@ public class AddFavoriteMovieCommandHandler : IRequestHandler<AddFavoriteMovieCo
     public async Task<Unit> Handle(AddFavoriteMovieCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation($"Adding movie with TmdbId {request.MovieId} to favorites for user with Id {request.UserId}.");
+
+      
         var user = await _userRepository.GetByUserIdAsync(request.UserId);
-
-        _logger.LogInformation($"Fetching movie with TmdbId {request.MovieId} from the database.");
-        var movie = await _movieRepository.GetByTmdbIdAsync(request.MovieId);
-
         if (user == null)
         {
             throw new ArgumentNullException(nameof(user), "User not found.");
         }
 
+      
+        var movie = await _movieRepository.GetByTmdbIdAsync(request.MovieId);
         if (movie == null)
         {
             throw new ArgumentNullException(nameof(movie), "Movie not found.");
         }
 
+        
+        var existingFavorite = await _favoriteMovieRepository.GetFavoriteMovieAsync(user.UserId, movie.Id);
+        if (existingFavorite != null)
+        {
+            _logger.LogWarning($"Movie with Id {movie.Id} is already in favorites for user {user.UserId}.");
+            throw new InvalidOperationException("This movie is already in your favorites.");
+        }
+
+        
         var favoriteMovie = new FavoriteMovie
         {
-            UserId = user.UserId, 
+            UserId = user.UserId,
             MovieId = movie.Id
         };
 

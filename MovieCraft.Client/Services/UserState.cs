@@ -30,10 +30,30 @@ public class UserState
 
         if (user.Identity?.IsAuthenticated ?? false)
         {
-            var userId = user.FindFirst(c => c.Type == "sub")?.Value; 
+            var userId = user.FindFirst(c => c.Type == "sub")?.Value;
             if (!string.IsNullOrEmpty(userId))
             {
-                CurrentUser = await _httpClient.GetFromJsonAsync<UserDto>($"api/users/{userId}");
+                try
+                {
+                    
+                    CurrentUser = await _httpClient.GetFromJsonAsync<UserDto>($"api/users/{userId}");
+                }
+                catch (HttpRequestException)
+                {
+                    
+                    var newUser = new UserDto
+                    {
+                        UserId = userId,
+                        Name = user.Identity.Name
+                    };
+
+                    var response = await _httpClient.PostAsJsonAsync("api/users/sync", newUser);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        CurrentUser = newUser;
+                    }
+                }
+
                 NotifyStateChanged();
             }
         }
@@ -43,6 +63,7 @@ public class UserState
             NotifyStateChanged();
         }
     }
+
 
     private void NotifyStateChanged() => OnChange?.Invoke();
 }

@@ -1,14 +1,14 @@
 ﻿.user-info {
     display: flex;
     align-items: center;
-    margin-top:5px;
+    margin-top: 5px;
+    text-shadow: 0 3px 6px var(--text-shadow-color);
 }
 
     .user-info span {
         color: #fff;
         margin-right: 10px;
         font-size: 1rem;
-        text-shadow: 0 3px 6px var(--text-shadow-color);
     }
 
 .btn-icon {

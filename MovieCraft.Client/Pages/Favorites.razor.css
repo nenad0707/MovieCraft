@@ -1,23 +1,23 @@
 ﻿.favorites-page {
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding-top: 70px; 
 }
 
 .search-bar-container {
     position: sticky;
-    top: 70px; 
+    top: 70px;
     z-index: 900;
-    background: transparent; 
+    background: transparent;
     padding: 10px 0;
+    width: 100%;
 }
 
 .search-bar-inner {
     position: sticky;
     top: 70px;
     z-index: 900;
-    max-width: 800px; 
+    max-width: 500px; 
     width: 100%;
     margin: 10px auto 20px auto;
 }
@@ -56,6 +56,7 @@
     width: 100%;
     max-width: 1200px;
     padding: 20px;
+    margin: 0 auto;
 }
 
 .row {
@@ -146,8 +147,9 @@
 
 @media (max-width: 576px) {
     .search-bar-inner {
-        max-width: 95%; 
+        max-width: 100%;
         margin: 0 auto;
+        padding: 0 10px;
     }
 
     .search-bar-input {

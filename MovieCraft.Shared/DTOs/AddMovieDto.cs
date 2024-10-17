@@ -23,4 +23,7 @@ public class AddMovieDto
     [Required(ErrorMessage = "TmdbId is required.")]
     [Range(1, int.MaxValue, ErrorMessage = "TmdbId must be a positive number.")]
     public int? TmdbId { get; set; }
+    
+    [StringLength(500, ErrorMessage = "Trailer URL can have a maximum of 500 characters.")]
+    public string? TrailerUrl { get; set; }
 }

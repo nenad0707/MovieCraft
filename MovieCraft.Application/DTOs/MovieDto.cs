@@ -9,4 +9,5 @@ public class MovieDto
     public DateTime? ReleaseDate { get; set; }
     public string PosterPath { get; set; } = default!;
     public string BackdropPath { get; set; } = default!;
+    public string? TrailerUrl { get; set; }
 }

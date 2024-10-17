@@ -18,15 +18,30 @@ namespace MovieCraft.Infrastructure.Services
         public async Task<IEnumerable<MovieDto>> GetPopularMoviesAsync()
         {
             var movies = await _client.GetMoviePopularListAsync();
-            return movies.Results.Select(movie => new MovieDto
+            
+            var movieDtos = new List<MovieDto>();
+
+            foreach (var movie in movies.Results)
             {
-                Id = movie.Id,
-                Title = movie.Title,
-                Overview = movie.Overview,
-                ReleaseDate = movie.ReleaseDate,
-                PosterPath = movie.PosterPath,
-                BackdropPath = movie.BackdropPath
-            }).ToList();
+                var videos = await _client.GetMovieVideosAsync(movie.Id);
+               
+                var trailer = videos.Results.FirstOrDefault(v => v.Type == "Trailer" && v.Site == "YouTube");
+
+                var trailerUrl = trailer != null ? $"https://www.youtube.com/embed/{trailer.Key}" : null;
+
+                movieDtos.Add(new MovieDto
+                {
+                    Id = movie.Id,
+                    TmdbId = movie.Id, 
+                    Title = movie.Title,
+                    Overview = movie.Overview,
+                    ReleaseDate = movie.ReleaseDate,
+                    PosterPath = movie.PosterPath,
+                    BackdropPath = movie.BackdropPath,
+                    TrailerUrl = trailerUrl 
+                });
+            }
+            return movieDtos;
         }
     }
 }

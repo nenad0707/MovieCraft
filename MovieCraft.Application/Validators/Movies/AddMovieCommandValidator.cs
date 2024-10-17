@@ -30,6 +30,8 @@ public class AddMovieCommandValidator : AbstractValidator<AddMovieCommand>
             .MaximumLength(500)
                 .WithMessage("BackdropPath cannot exceed 500 characters.");
 
-
+        RuleFor(x => x.TrailerUrl)
+              .MaximumLength(500)
+              .WithMessage("Trailer URL cannot exceed 500 characters.");
     }
 }

@@ -12,7 +12,7 @@
             {
                 <MovieDetails Movie="selectedMovie" />
                 <div class="action-buttons-container">
-                    <ActionButtons TmdbId="selectedMovie.TmdbId" />
+                    <ActionButtons TmdbId="selectedMovie.TmdbId" OnTrailerRequested="ShowTrailer" />
                 </div>
             }
         </div>
@@ -23,13 +23,15 @@
                     <img src="@ImageHelper.GetPosterUrl(movie.PosterPath)" alt="@movie.Title" loading="lazy" />
                 </ItemTemplate>
             </Carousel>
-
         </div>
     </div>
 </div>
 
+<TrailerModal OnClose="HandleTrailerClose" TrailerUrl="@currentTrailerUrl" />
+
 @code {
     private MovieDto? selectedMovie;
+    private string? currentTrailerUrl;
 
     async Task OnMovieSelected(MovieDto movie)
     {
@@ -40,7 +42,21 @@
     protected override async Task OnInitializedAsync()
     {
         PopularMoviesState.OnChange += StateHasChanged;
-      
+
         await UserState.LoadUserAsync();
+    }
+
+    public void ShowTrailer(int tmdbId)
+    {
+        if (selectedMovie != null && selectedMovie.TmdbId == tmdbId)
+        {
+            currentTrailerUrl = selectedMovie.TrailerUrl;
+            StateHasChanged(); 
+        }
+    }
+
+    private void HandleTrailerClose()
+    {
+        currentTrailerUrl = null;
     }
 }

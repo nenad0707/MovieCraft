@@ -1,0 +1,28 @@
+﻿@if (IsVisible && !string.IsNullOrEmpty(TrailerUrl))
+{
+    <div class="modal-overlay" @onclick="CloseModal">
+        <div class="modal-content" @onclick:stopPropagation>
+            <button class="close-button" @onclick="CloseModal" aria-label="Close Trailer">
+                <i class='bx bx-x'></i> 
+            </button>
+
+            <iframe width="100%" height="100%" src="@TrailerUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+}
+
+
+@code {
+    [Parameter] 
+    public string? TrailerUrl { get; set; }
+    
+    [Parameter] 
+    public EventCallback OnClose { get; set; }
+
+    private bool IsVisible => !string.IsNullOrEmpty(TrailerUrl);
+
+    private async Task CloseModal()
+    {
+        await OnClose.InvokeAsync();
+    }
+}

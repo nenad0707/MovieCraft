@@ -22,12 +22,19 @@
 
 @code {
     private string? message;
-    [Parameter] public int TmdbId { get; set; } 
-  
+    [Parameter] 
+    public int TmdbId { get; set; } 
+   
+    [Parameter] 
+    public EventCallback<int> OnTrailerRequested { get; set; }
+
 
     private void WatchTrailer()
     {
-        // todo
+       if(OnTrailerRequested.HasDelegate)
+       {
+           OnTrailerRequested.InvokeAsync(TmdbId);
+       }
     }
 
     private async void AddToFavorites()

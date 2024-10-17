@@ -62,12 +62,6 @@ main {
     .top-bar {
         padding: 10px;
     }
-}
-
-@media (max-width: 576px) {
-    .top-bar {
-        padding: 10px;
-    }
 
         .top-bar .btn-icon {
             font-size: 20px;

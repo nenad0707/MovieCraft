@@ -31,10 +31,10 @@
 @code {
     private MovieDto? selectedMovie;
 
-    void OnMovieSelected(MovieDto movie)
+    async Task OnMovieSelected(MovieDto movie)
     {
         selectedMovie = movie;
-        SetBackground(movie.BackdropPath);
+        await BackgroundState.SetBackgroundAsync(movie.BackdropPath);
     }
 
     protected override async Task OnInitializedAsync()
@@ -42,10 +42,5 @@
         PopularMoviesState.OnChange += StateHasChanged;
       
         await UserState.LoadUserAsync();
-    }
-
-    private void SetBackground(string backdropPath)
-    {
-        BackgroundState.BackgroundImageUrl = ImageHelper.GetBackdropUrl(backdropPath);
     }
 }

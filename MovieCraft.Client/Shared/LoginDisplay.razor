@@ -6,14 +6,20 @@
     <Authorized>
         <div class="user-info">
             <span>Hello, @context.User.Identity?.Name!</span>
-            <button class="btn-icon" @onclick="BeginLogOut" aria-label="Log out">
-                <i class='bx bx-log-out'></i>
+            <button class="btn" @onclick="BeginLogOut" aria-label="Log out" title="Log out">
+                <div class="sign">
+                    <i class='bx bx-log-out'></i>
+                </div>
+                <div class="text">Logout</div>
             </button>
         </div>
     </Authorized>
     <NotAuthorized>
-        <button class="btn-icon" @onclick="BeginLogIn" aria-label="Log in">
-            <i class='bx bx-log-in'></i>
+        <button class="btn" @onclick="BeginLogIn" aria-label="Log in" title="Log in">
+            <div class="sign">
+                <i class='bx bx-log-in'></i>
+            </div>
+            <div class="text">Login</div>
         </button>
     </NotAuthorized>
 </AuthorizeView>

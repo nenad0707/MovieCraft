@@ -42,6 +42,8 @@
     protected override async Task OnInitializedAsync()
     {
         PopularMoviesState.OnChange += StateHasChanged;
+       
+        await PopularMoviesState.LoadPopularMoviesAsync();
 
         await UserState.LoadUserAsync();
     }

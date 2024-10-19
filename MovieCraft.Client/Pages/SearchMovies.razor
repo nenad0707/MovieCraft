@@ -79,14 +79,27 @@
             Navigation.NavigateTo("authentication/login");
             return;
         }
+        try
+        {
+            message = await MovieService.AddToFavoritesAsync(tmdbId);
+            searchQuery = string.Empty;
+            StateHasChanged();
 
-        message = await MovieService.AddToFavoritesAsync(tmdbId);
+            
+            movies = movies.Where(m => m.TmdbId != tmdbId).ToList();
+            StateHasChanged();
 
-        StateHasChanged();
-
-        await Task.Delay(3000);
-        message = null;
-        StateHasChanged();
+          
+            await Task.Delay(3000);
+            message = null;
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+          
+            message = $"Error: {ex.Message}";
+            StateHasChanged();
+        }
     }
 
 }

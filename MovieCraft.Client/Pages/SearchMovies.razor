@@ -1,0 +1,92 @@
+﻿@page "/search"
+@inject MovieService MovieService
+@inject UserState UserState
+@inject FavoriteMoviesState FavoriteMoviesState
+@inject NavigationManager Navigation
+
+<PageTitle>Search Movies</PageTitle>
+
+<div class="search-page">
+    <div class="search-bar-container">
+        <div class="search-bar-inner">
+            <input type="text" class="search-bar-input" placeholder="Search for movies..." @bind="searchQuery" @bind:event="oninput" />
+            <button @onclick="Search"><i class='bx bx-search-alt'></i></button>
+        </div>
+    </div>
+
+    @if (message != null)
+    {
+        <div class="alert alert-info">@message</div>
+    }
+
+    <div class="movie-grid">
+        @if (movies != null && movies.Any())
+        {
+            @foreach (var movie in movies)
+            {
+                <div class="movie-card" @onclick="() => FlipCard(movie.TmdbId)">
+                    <div class="movie-card-inner @(flippedMovieId == movie.TmdbId ? "flipped" : "")">
+                        <div class="movie-card-front">
+                            @if (!string.IsNullOrEmpty(movie.PosterPath))
+                            {
+                                <img src="@ImageHelper.GetPosterUrl(movie.PosterPath)" alt="@movie.Title" />
+                            }
+                            else
+                            {
+                             
+                                <img src="images/default-poster.png" alt="No Image Available" />
+                            }
+                        </div>
+                        <!-- Back of the card -->
+                        <div class="movie-card-back">
+                            <h2>@(string.IsNullOrEmpty(movie.Title) ? "Unknown Title" : movie.Title)</h2>
+                            <p>Release Date: @(movie.ReleaseDate?.ToString("yyyy-MM-dd") ?? "Unknown")</p>
+                            <button @onclick:stopPropagation="true" @onclick="() => AddToFavorites(movie.TmdbId)">
+                                <i class="bx bx-heart"></i> Add to Favorites
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            <p>No movies found for "@searchQuery".</p>
+        }
+    </div>
+</div>
+
+@code {
+    private string searchQuery = string.Empty;
+    private List<MovieDto> movies = new();
+    private int? flippedMovieId = null;
+    private string? message;
+
+    private async Task Search()
+    {
+        movies = await MovieService.SearchMoviesAsync(searchQuery);
+    }
+
+    private void FlipCard(int movieId)
+    {
+        flippedMovieId = flippedMovieId == movieId ? (int?)null : movieId;
+    }
+
+    private async Task AddToFavorites(int tmdbId)
+    {
+        if (UserState.CurrentUser == null)
+        {
+            Navigation.NavigateTo("authentication/login");
+            return;
+        }
+
+        message = await MovieService.AddToFavoritesAsync(tmdbId);
+
+        StateHasChanged();
+
+        await Task.Delay(3000);
+        message = null;
+        StateHasChanged();
+    }
+
+}

@@ -100,4 +100,17 @@ public class MoviesController : ControllerBase
             return StatusCode(500, "An error occurred while adding the movie.");
         }
     }
+    [HttpGet("search")]
+    [AllowAnonymous]
+    public async Task<IActionResult> SearchMovies([FromQuery] string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return BadRequest("Query parameter is required.");
+        }
+
+        _logger.LogInformation($"Searching for movies with query: {query}");
+        var movies = await _mediator.Send(new SearchMoviesQuery(query));
+        return Ok(movies);
+    }
 }

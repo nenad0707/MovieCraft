@@ -45,7 +45,7 @@
             return;
         }
 
-        message = await MovieService.AddToFavorites(TmdbId);
+        message = await MovieService.AddToFavoritesAsync(TmdbId);
 
         StateHasChanged();
 

@@ -69,7 +69,7 @@
         {
             await MovieService.RemoveFromFavoritesAsync(favoriteMovie.MovieId);
             await FavoriteMoviesState.LoadFavoriteMoviesAsync();
-            searchQuery = "";   
+            searchQuery = "";
         }
         catch (Exception ex)
         {

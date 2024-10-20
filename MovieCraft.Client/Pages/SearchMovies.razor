@@ -27,12 +27,12 @@
         <div class="alert alert-info">@message</div>
     }
 
-    <div class="movie-grid row justify-content-center g-3">
+    <div class="movie-grid">
         @if (movies != null && movies.Any())
         {
             @foreach (var movie in movies)
             {
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
+                <div class="mb-3 d-flex justify-content-center">
                     <MovieCard Movie="movie"
                                FlippedMovieId="@flippedMovieId"
                                OnAddToFavorites="AddToFavorites" />
@@ -47,6 +47,7 @@
         }
     </div>
 </div>
+
 
 
 @code {
@@ -78,21 +79,20 @@
             searchQuery = string.Empty;
             StateHasChanged();
 
-            
+
             movies = movies.Where(m => m.TmdbId != tmdbId).ToList();
             StateHasChanged();
 
-          
+
             await Task.Delay(3000);
             message = null;
             StateHasChanged();
         }
         catch (Exception ex)
         {
-          
+
             message = $"Error: {ex.Message}";
             StateHasChanged();
         }
     }
-
 }

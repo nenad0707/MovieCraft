@@ -7,13 +7,13 @@
             }
             else
             {
-                <img src="images/default-poster.png" alt="No Image Available" />
+                <img src="images/cinema.jpg" alt="No Image Available" />
             }
         </div>
         <!-- Back of the card -->
         <div class="movie-card-back">
             <h2>@(string.IsNullOrEmpty(Movie.Title) ? "Unknown Title" : Movie.Title)</h2>
-            <p>Release Date: @(Movie.ReleaseDate?.ToString("dd.mm.yyyy") ?? "Unknown")</p>
+            <p>Release Date: @(Movie.ReleaseDate?.ToString("dd.MM.yyyy") ?? "Unknown")</p>
             <button @onclick:stopPropagation="true"
                     @onclick="() => AddToFavorites(Movie.TmdbId)"
                     aria-label="Add to Favorites">

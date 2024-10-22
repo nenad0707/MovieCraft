@@ -3,6 +3,7 @@
 @inject FavoriteMoviesState FavoriteMoviesState
 @inject UserState UserState
 @inject MovieService MovieService
+@inject IToastService ToastService
 
 <PageTitle>Favorites</PageTitle>
 
@@ -70,9 +71,12 @@
             await MovieService.RemoveFromFavoritesAsync(favoriteMovie.MovieId);
             await FavoriteMoviesState.LoadFavoriteMoviesAsync();
             searchQuery = "";
+
+            ToastService.ShowSuccess("Movie successfully removed from favorites!");
         }
         catch (Exception ex)
         {
+            ToastService.ShowError("Failed to remove movie from favorites.");
             Console.WriteLine($"Error removing favorite movie: {ex.Message}");
         }
     }

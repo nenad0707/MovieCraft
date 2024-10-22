@@ -3,6 +3,7 @@
 @inject UserState UserState
 @inject BackgroundState BackgroundState
 
+
 <div class="background-container">
     <div class="background-image current" style="background-image: url('@BackgroundState.BackgroundImageUrl');"></div>
     <div class="background-image next"></div>
@@ -19,6 +20,17 @@
         </article>
     </main>
 </div>
+
+<BlazoredToasts Position="ToastPosition.TopRight"
+                Timeout="5"
+                ShowProgressBar="true"
+              >
+    <CloseButtonContent>
+        <div>
+            <i class="bx bx-x"></i>
+        </div>
+    </CloseButtonContent>
+</BlazoredToasts>
 
 @code {
     protected override void OnInitialized()

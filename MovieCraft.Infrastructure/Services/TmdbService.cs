@@ -15,19 +15,19 @@ namespace MovieCraft.Infrastructure.Services
             _client = new TMDbClient(tmdbSettings.Value.ApiKey);
         }
 
-        public async Task<IEnumerable<MovieDto>> GetPopularMoviesAsync()
+        public async Task<IEnumerable<MovieDto?>> GetPopularMoviesAsync()
         {
             var movies = await _client.GetMoviePopularListAsync();
-            return MapToMovieDtos(movies.Results);
+            return await MapToMovieDtos(movies.Results);
         }
 
         public async Task<IEnumerable<MovieDto>> SearchMoviesAsync(string query)
         {
-            var searchResult = await _client.SearchMovieAsync(query); 
-            return MapToMovieDtos(searchResult.Results);
+            var searchResult = await _client.SearchMovieAsync(query);
+            return await MapToMovieDtos(searchResult.Results);
         }
 
-      
+        
         public async Task<MovieDto?> GetMovieDetailsAsync(int tmdbId)
         {
             var movie = await _client.GetMovieAsync(tmdbId);
@@ -35,9 +35,7 @@ namespace MovieCraft.Infrastructure.Services
             if (movie == null)
                 return null;
 
-            var videos = await _client.GetMovieVideosAsync(movie.Id); 
-            var trailer = videos.Results.FirstOrDefault(v => v.Type == "Trailer" && v.Site == "YouTube");
-            var trailerUrl = trailer != null ? $"https://www.youtube.com/embed/{trailer.Key}" : null;
+            var trailerUrl = await GetVideoUrlAsync(movie.Id); 
 
             return new MovieDto
             {
@@ -52,12 +50,14 @@ namespace MovieCraft.Infrastructure.Services
             };
         }
 
-        private List<MovieDto> MapToMovieDtos(IEnumerable<TMDbLib.Objects.Search.SearchMovie> movies)
+        private async Task<List<MovieDto>> MapToMovieDtos(IEnumerable<TMDbLib.Objects.Search.SearchMovie> movies)
         {
             var movieDtos = new List<MovieDto>();
 
             foreach (var movie in movies)
             {
+                var trailerUrl = await GetVideoUrlAsync(movie.Id); 
+
                 movieDtos.Add(new MovieDto
                 {
                     Id = movie.Id,
@@ -67,11 +67,29 @@ namespace MovieCraft.Infrastructure.Services
                     ReleaseDate = movie.ReleaseDate,
                     PosterPath = movie.PosterPath,
                     BackdropPath = movie.BackdropPath,
-                    TrailerUrl = null
+                    TrailerUrl = trailerUrl 
                 });
             }
 
             return movieDtos;
         }
+
+        private async Task<string?> GetVideoUrlAsync(int movieId)
+        {
+            var videos = await _client.GetMovieVideosAsync(movieId);
+            
+            var trailer = videos.Results.FirstOrDefault(v => v.Type == "Trailer" && v.Site == "YouTube");
+
+            if (trailer != null)
+            {
+                return $"https://www.youtube.com/embed/{trailer.Key}";
+            }
+
+            var teaserOrClip = videos.Results.FirstOrDefault(v =>
+                (v.Type == "Teaser" || v.Type == "Clip") && v.Site == "YouTube");
+
+            return teaserOrClip != null ? $"https://www.youtube.com/embed/{teaserOrClip.Key}" : null;
+        }
+
     }
 }

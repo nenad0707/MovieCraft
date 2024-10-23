@@ -77,18 +77,10 @@ namespace MovieCraft.Infrastructure.Services
         private async Task<string?> GetVideoUrlAsync(int movieId)
         {
             var videos = await _client.GetMovieVideosAsync(movieId);
-            
-            var trailer = videos.Results.FirstOrDefault(v => v.Type == "Trailer" && v.Site == "YouTube");
+            var video = videos.Results.FirstOrDefault(v =>
+                (v.Type == "Trailer" || v.Type == "Teaser" || v.Type == "Clip") && v.Site == "YouTube");
 
-            if (trailer != null)
-            {
-                return $"https://www.youtube.com/embed/{trailer.Key}";
-            }
-
-            var teaserOrClip = videos.Results.FirstOrDefault(v =>
-                (v.Type == "Teaser" || v.Type == "Clip") && v.Site == "YouTube");
-
-            return teaserOrClip != null ? $"https://www.youtube.com/embed/{teaserOrClip.Key}" : null;
+            return video != null ? $"https://www.youtube.com/embed/{video.Key}" : null;
         }
 
     }

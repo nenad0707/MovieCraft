@@ -144,8 +144,8 @@ body .blazored-toast {
     width: 90% !important;
 }
 
-body .position-topright {
-    z-index:700 !important;
+body .blazored-toast-container {
+    z-index: 900 !important;
 }
 
 body .blazored-toast .blazored-toast-progressbar {

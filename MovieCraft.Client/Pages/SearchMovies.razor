@@ -6,22 +6,12 @@
 
 <PageTitle>Search Movies</PageTitle>
 
-
 <div class="search-page">
-    <div class="search-bar-container">
-        <div class="search-bar-inner">
-            <input type="text"
-                   class="search-bar-input form-control"
-                   placeholder="Search for movies..."
-                   @bind="searchQuery"
-                   @bind:event="oninput"
-                   aria-label="Search for movies" />
-            <button class="btn btn-custom" @onclick="Search" aria-label="Search">
-                <i class='bx bx-search-alt'></i>
-            </button>
-        </div>
-    </div>
-
+    <SearchInput @bind-Value="searchQuery"
+                 ShowSearchButton="true"
+                 DisableSearchButtonWhenEmpty="true"
+                 OnSearch="Search"
+                 Placeholder="Search for movies..." />
     @if (message != null)
     {
         <div class="alert alert-info">@message</div>
@@ -39,7 +29,7 @@
                 </div>
             }
         }
-        else if (!string.IsNullOrWhiteSpace(searchQuery))
+        else if (hasSearched)
         {
             <div class="col-12">
                 <p class="text-center">No movies found for "@searchQuery".</p>
@@ -48,17 +38,33 @@
     </div>
 </div>
 
-
-
 @code {
     private string searchQuery = string.Empty;
     private List<MovieDto> movies = new();
     private int? flippedMovieId = null;
     private string? message;
+    private bool hasSearched = false;
 
     private async Task Search()
     {
-        movies = await MovieService.SearchMoviesAsync(searchQuery);
+        hasSearched = true;
+
+        if (string.IsNullOrWhiteSpace(searchQuery))
+        {
+            message = "Please enter a search term.";
+            movies.Clear();
+            return;
+        }
+
+        try
+        {
+            movies = await MovieService.SearchMoviesAsync(searchQuery);
+            message = null; // Clear message if search is successful
+        }
+        catch (Exception ex)
+        {
+            message = $"Error during search: {ex.Message}";
+        }
     }
 
     private void FlipCard(int movieId)
@@ -76,13 +82,10 @@
         try
         {
             message = await MovieService.AddToFavoritesAsync(tmdbId);
-            searchQuery = string.Empty;
             StateHasChanged();
-
 
             movies = movies.Where(m => m.TmdbId != tmdbId).ToList();
             StateHasChanged();
-
 
             await Task.Delay(3000);
             message = null;
@@ -90,7 +93,6 @@
         }
         catch (Exception ex)
         {
-
             message = $"Error: {ex.Message}";
             StateHasChanged();
         }

@@ -8,12 +8,7 @@
 <PageTitle>Favorites</PageTitle>
 
 <div class="container-fluid favorites-page">
-    <div class="search-bar-container">
-        <div class="search-bar-inner">
-            <input type="text" class="form-control search-bar-input" placeholder="Search your favorite movies..." @bind="searchQuery" @bind:event="oninput" />
-            <i class='bx bx-search-alt search-icon'></i>
-        </div>
-    </div>
+    <SearchInput @bind-Value="searchQuery" Placeholder="Search your favorite movies..." />
     <div class="favorite-movies-container">
         <div class="row justify-content-center">
             @if (filteredFavoriteMovies != null && filteredFavoriteMovies.Any())
@@ -25,14 +20,17 @@
                             <img src="@ImageHelper.GetPosterUrl(favoriteMovie.PosterPath)" alt="@favoriteMovie.Title" />
                             <div class="favorite-movie-overlay">
                                 <div class="favorite-movie-actions">
-                                    <button class="btn btn-icon btn-remove" @onclick:stopPropagation="true" @onclick="() => RemoveFromFavorites(favoriteMovie)" aria-label="Remove from Favorites">
+                                    <button class="btn btn-icon btn-remove"
+                                            @onclick:stopPropagation="true"
+                                            @onclick="() => RemoveFromFavorites(favoriteMovie)"
+                                            aria-label="Remove from Favorites">
                                         <i class='bx bx-trash'></i>
                                     </button>
                                 </div>
                                 <div class="favorite-movie-info">
                                     <h5>@favoriteMovie.Title</h5>
                                     <p>@favoriteMovie.Overview</p>
-                                    <p><strong>Release Date:</strong> @favoriteMovie.ReleaseDate?.ToString("yyyy-MM-dd")</p>
+                                    <p><strong>Release Date:</strong> @favoriteMovie.ReleaseDate?.ToString("dd.MM.yyyy")</p>
                                 </div>
                             </div>
                         </div>

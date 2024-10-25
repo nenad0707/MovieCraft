@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Identity.Web.Resource;
-using MovieCraft.Application.DTOs;
 using MovieCraft.Application.Features.Movies.Commands;
 using MovieCraft.Application.Features.Movies.Queries;
 using MovieCraft.Shared.DTOs;
@@ -21,7 +20,7 @@ public class MoviesController : ControllerBase
     private readonly IMediator _mediator;
     private readonly ILogger<MoviesController> _logger;
     private readonly IMemoryCache _memoryCache;
-    
+
     private const string PopularMoviesCacheKey = "popularMovies";
 
     public MoviesController(IMediator mediator, ILogger<MoviesController> logger,

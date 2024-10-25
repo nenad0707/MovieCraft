@@ -59,7 +59,7 @@
         try
         {
             movies = await MovieService.SearchMoviesAsync(searchQuery);
-            message = null; // Clear message if search is successful
+            message = null;
         }
         catch (Exception ex)
         {

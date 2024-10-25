@@ -3,6 +3,7 @@
 @inject UserState UserState
 @inject FavoriteMoviesState FavoriteMoviesState
 @inject NavigationManager Navigation
+@inject IToastService ToastService
 
 <PageTitle>Search Movies</PageTitle>
 
@@ -12,10 +13,6 @@
                  DisableSearchButtonWhenEmpty="true"
                  OnSearch="Search"
                  Placeholder="Search for movies..." />
-    @if (message != null)
-    {
-        <div class="alert alert-info">@message</div>
-    }
 
     <div class="movie-grid">
         @if (movies != null && movies.Any())
@@ -38,39 +35,42 @@
     </div>
 </div>
 
-@code {
-    private string searchQuery = string.Empty;
-    private List<MovieDto> movies = new();
-    private int? flippedMovieId = null;
-    private string? message;
-    private bool hasSearched = false;
+@code {  
+   private string searchQuery = string.Empty;  
+   private List<MovieDto> movies = new();  
+   private int? flippedMovieId = null;  
+   private bool hasSearched = false;  
 
-    private async Task Search()
-    {
-        hasSearched = true;
+   private async Task Search()  
+   {  
+       hasSearched = true;  
 
-        if (string.IsNullOrWhiteSpace(searchQuery))
-        {
-            message = "Please enter a search term.";
-            movies.Clear();
-            return;
-        }
+       if (string.IsNullOrWhiteSpace(searchQuery))  
+       {  
+           ToastService.ShowError("Please enter a search term.");  
+           movies.Clear();  
+           return;  
+       }  
 
-        try
-        {
-            movies = await MovieService.SearchMoviesAsync(searchQuery);
-            message = null;
-        }
-        catch (Exception ex)
-        {
-            message = $"Error during search: {ex.Message}";
-        }
-    }
+       try  
+       {  
+           movies = await MovieService.SearchMoviesAsync(searchQuery);  
 
-    private void FlipCard(int movieId)
-    {
-        flippedMovieId = flippedMovieId == movieId ? (int?)null : movieId;
-    }
+           if (!movies.Any())  
+           {  
+               ToastService.ShowInfo($"No movies found for \"{searchQuery}\".");  
+           }  
+       }  
+       catch (Exception ex)  
+       {  
+           ToastService.ShowError($"Error during search: {ex.Message}");  
+       }  
+   }  
+
+   private void FlipCard(int movieId)  
+   {  
+       flippedMovieId = flippedMovieId == movieId ? (int?)null : movieId;  
+   }  
 
     private async Task AddToFavorites(int tmdbId)
     {
@@ -81,19 +81,20 @@
         }
         try
         {
-            message = await MovieService.AddToFavoritesAsync(tmdbId);
+            await MovieService.AddToFavoritesAsync(tmdbId);
             StateHasChanged();
 
             movies = movies.Where(m => m.TmdbId != tmdbId).ToList();
             StateHasChanged();
 
+            ToastService.ShowSuccess("Movie added to favorites!");
+
             await Task.Delay(3000);
-            message = null;
             StateHasChanged();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            message = $"Error: {ex.Message}";
+            ToastService.ShowError("Failed to add movie to favorites!");
             StateHasChanged();
         }
     }

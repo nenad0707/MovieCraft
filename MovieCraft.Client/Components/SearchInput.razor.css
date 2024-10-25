@@ -3,7 +3,7 @@
     max-width: 500px;
     margin: 0 auto;
     position: sticky;
-    z-index: 1000;
+    z-index: 800;
     top: 80px;
     margin-top: 40px; 
 }

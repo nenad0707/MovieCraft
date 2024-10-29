@@ -22,7 +22,8 @@
                 <div class="mb-3 d-flex justify-content-center">
                     <MovieCard Movie="movie"
                                FlippedMovieId="@flippedMovieId"
-                               OnAddToFavorites="AddToFavorites" />
+                               OnAddToFavorites="AddToFavorites"
+                               OnWatchTrailer="ShowTrailer" />
                 </div>
             }
         }
@@ -35,42 +36,48 @@
     </div>
 </div>
 
-@code {  
-   private string searchQuery = string.Empty;  
-   private List<MovieDto> movies = new();  
-   private int? flippedMovieId = null;  
-   private bool hasSearched = false;  
 
-   private async Task Search()  
-   {  
-       hasSearched = true;  
+<TrailerModal TrailerUrl="@currentTrailerUrl" OnClose="CloseTrailer" />
 
-       if (string.IsNullOrWhiteSpace(searchQuery))  
-       {  
-           ToastService.ShowError("Please enter a search term.");  
-           movies.Clear();  
-           return;  
-       }  
+@code {
+    private string searchQuery = string.Empty;
+    private List<MovieDto> movies = new();
+    private int? flippedMovieId = null;
+    private bool hasSearched = false;
 
-       try  
-       {  
-           movies = await MovieService.SearchMoviesAsync(searchQuery);  
+ 
+    private string? currentTrailerUrl = null;
 
-           if (!movies.Any())  
-           {  
-               ToastService.ShowInfo($"No movies found for \"{searchQuery}\".");  
-           }  
-       }  
-       catch (Exception)  
-       {  
-           ToastService.ShowError("An error occurred during the search. Please try again later.");  
-       }  
-   }
+    private async Task Search()
+    {
+        hasSearched = true;
 
-   private void FlipCard(int movieId)  
-   {  
-       flippedMovieId = flippedMovieId == movieId ? (int?)null : movieId;  
-   }  
+        if (string.IsNullOrWhiteSpace(searchQuery))
+        {
+            ToastService.ShowError("Please enter a search term.");
+            movies.Clear();
+            return;
+        }
+
+        try
+        {
+            movies = await MovieService.SearchMoviesAsync(searchQuery);
+
+            if (!movies.Any())
+            {
+                ToastService.ShowInfo($"No movies found for \"{searchQuery}\".");
+            }
+        }
+        catch (Exception)
+        {
+            ToastService.ShowError("An error occurred during the search. Please try again later.");
+        }
+    }
+
+    private void FlipCard(int movieId)
+    {
+        flippedMovieId = flippedMovieId == movieId ? (int?)null : movieId;
+    }
 
     private async Task AddToFavorites(int tmdbId)
     {
@@ -104,5 +111,23 @@
             ToastService.ShowError("Failed to add movie to favorites!");
             StateHasChanged();
         }
+    }
+
+    private void ShowTrailer(int tmdbId)
+    {
+        var movie = movies.FirstOrDefault(m => m.TmdbId == tmdbId);
+        if (movie != null && !string.IsNullOrEmpty(movie.TrailerUrl))
+        {
+            currentTrailerUrl = movie.TrailerUrl;
+        }
+        else
+        {
+            ToastService.ShowError("Trailer not available for this movie.");
+        }
+    }
+
+    private void CloseTrailer()
+    {
+        currentTrailerUrl = null;
     }
 }

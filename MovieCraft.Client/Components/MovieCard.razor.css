@@ -60,33 +60,81 @@
         margin-bottom: 15px;
     }
 
-    .movie-card-back button {
-        padding: 10px;
-        background-color: #f4c402;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: background-color 0.3s ease;
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    align-items: stretch; 
+}
+.btn-favorite, .btn-trailer {
+    position: relative; 
+    padding: 10px 15px;
+    padding-left: 55px; 
+    width: 100%; 
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1rem; 
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+    height: 40px;
+    white-space: nowrap;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); 
+}
+
+   
+    .btn-favorite i, .btn-trailer i {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2rem; 
+        width: 1.2rem; 
+        height: 1.2rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: white; 
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
 
-        .movie-card-back button:hover {
-            background-color: #d4a402;
-        }
+
+.btn-favorite {
+    background-color: #f4c402;
+}
+
+    .btn-favorite:hover {
+        background-color: #d4a402;
+    }
+
 
 .btn-trailer {
-    background-color: #f4c402;
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 20px;
-    display: inline-block;
-    margin-top: 10px;
+    background-color: #2196f3;
 }
 
     .btn-trailer:hover {
-        background-color: #d4a402;
+        background-color: #1976d2;
     }
+
+
+@media (max-width: 768px) {
+    .btn-favorite, .btn-trailer {
+        padding: 8px 12px; 
+        padding-left: 55px; 
+        font-size: 0.9rem; 
+        height: 35px; 
+    }
+
+        .btn-favorite i, .btn-trailer i {
+            font-size: 1rem; 
+            width: 1rem;
+            height: 1rem;
+            left: 17px;
+        }
+}

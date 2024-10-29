@@ -1,55 +1,8 @@
 ﻿.favorites-page {
     display: flex;
     flex-direction: column;
-    padding-top: 70px; 
-}
-
-.search-bar-container {
-    position: sticky;
-    top: 70px;
-    z-index: 900;
-    background: transparent;
-    padding: 10px 0;
+    align-items: center;
     width: 100%;
-}
-
-.search-bar-inner {
-    position: sticky;
-    top: 70px;
-    z-index: 900;
-    max-width: 500px; 
-    width: 100%;
-    margin: 10px auto 20px auto;
-}
-
-.search-bar-input {
-    width: 100%;
-    padding-right: 40px;
-    height: 45px;
-    background-color: #2c2c2c;
-    border: none;
-    border-radius: 20px;
-    color: #fff;
-    font-size: 1rem;
-}
-
-    .search-bar-input::placeholder {
-        color: #aaa;
-    }
-
-    .search-bar-input:focus {
-        outline: none;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-
-.search-icon {
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-    font-size: 24px;
-    color: #fff;
-    pointer-events: none;
 }
 
 .favorite-movies-container {
@@ -144,23 +97,7 @@
             font-size: 20px;
         }
 
-
 @media (max-width: 576px) {
-    .search-bar-inner {
-        max-width: 100%;
-        margin: 0 auto;
-        padding: 0 10px;
-    }
-
-    .search-bar-input {
-        font-size: 0.9rem;
-        height: 40px;
-    }
-
-    .search-icon {
-        font-size: 20px;
-    }
-
     .favorite-movie-info h5 {
         font-size: 0.9rem;
     }

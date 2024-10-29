@@ -6,37 +6,30 @@ namespace MovieCraft.Client.Services
 {
     public class MovieService
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-
+        private readonly HttpClient _anonymousClient;
+        private readonly HttpClient _serverClient;
         private readonly UserState _userState;
 
         public MovieService(IHttpClientFactory httpClientFactory, UserState userState)
         {
-            _httpClientFactory = httpClientFactory;
+            _anonymousClient = httpClientFactory.CreateClient("AnonymousServerAPI");
+            _serverClient = httpClientFactory.CreateClient("MovieCraft.ServerAPI");
             _userState = userState;
         }
 
         public async Task<List<MovieDto>> GetPopularMoviesAsync()
         {
-            HttpClient httpClient = _httpClientFactory.CreateClient("AnonymousServerAPI");
-
-            var movies = await httpClient.GetFromJsonAsync<IEnumerable<MovieDto>>("api/movies/popular");
-
+            var movies = await _anonymousClient.GetFromJsonAsync<IEnumerable<MovieDto>>("api/movies/popular").ConfigureAwait(false);
             return movies?.ToList() ?? new List<MovieDto>();
         }
 
-        public async Task<string> AddToFavorites(int tmdbId)
+        public async Task<string> AddToFavoritesAsync(int tmdbId)
         {
-            if (_userState.CurrentUser == null)
-            {
-                throw new UnauthorizedAccessException("User is not logged in.");
-            }
+            var userId = GetUserId();
 
-            var userId = _userState.CurrentUser.UserId;
             var dto = new AddFavoriteMovieDto { MovieId = tmdbId };
 
-            var httpClient = _httpClientFactory.CreateClient("MovieCraft.ServerAPI");
-            var response = await httpClient.PostAsJsonAsync($"api/favorites/{userId}", dto);
+            var response = await _serverClient.PostAsJsonAsync($"api/favorites/{userId}", dto).ConfigureAwait(false);
 
             if (response.StatusCode == HttpStatusCode.Conflict)
             {
@@ -50,28 +43,44 @@ namespace MovieCraft.Client.Services
             return "Movie added to favorites successfully.";
         }
 
+
         public async Task<List<FavoriteMovieDto>> GetFavoriteMoviesAsync(string userId)
         {
-            HttpClient httpClient = _httpClientFactory.CreateClient("MovieCraft.ServerAPI");
-            var favoriteMovies = await httpClient.GetFromJsonAsync<IEnumerable<FavoriteMovieDto>>($"api/favorites/{userId}");
+            var favoriteMovies = await _serverClient.GetFromJsonAsync<IEnumerable<FavoriteMovieDto>>($"api/favorites/{userId}").ConfigureAwait(false);
             return favoriteMovies?.ToList() ?? new List<FavoriteMovieDto>();
         }
 
         public async Task RemoveFromFavoritesAsync(int tmdbId)
+        {
+            var userId = GetUserId();
+
+            var response = await _serverClient.DeleteAsync($"api/favorites/{userId}/{tmdbId}").ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Failed to remove movie from favorites.");
+            }
+        }
+
+        public async Task<List<MovieDto>> SearchMoviesAsync(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                throw new ArgumentException("Query cannot be null or empty.", nameof(query));
+            }
+
+            var movies = await _anonymousClient.GetFromJsonAsync<IEnumerable<MovieDto>>($"api/movies/search?query={query}").ConfigureAwait(false);
+            return movies?.ToList() ?? new List<MovieDto>();
+        }
+
+        private string GetUserId()
         {
             if (_userState.CurrentUser == null)
             {
                 throw new UnauthorizedAccessException("User is not logged in.");
             }
 
-            var userId = _userState.CurrentUser.UserId;
-            var httpClient = _httpClientFactory.CreateClient("MovieCraft.ServerAPI");
-            var response = await httpClient.DeleteAsync($"api/favorites/{userId}/{tmdbId}");
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception("Failed to remove movie from favorites.");
-            }
+            return _userState.CurrentUser.UserId;
         }
     }
 }

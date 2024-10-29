@@ -27,16 +27,9 @@ public static class DependencyInjectionExtensions
 {
     public static void AddLoggingServices(this WebApplicationBuilder builder)
     {
-        builder.Services.Configure<PapertrailSettings>(builder.Configuration.GetSection("Papertrail"));
-
         builder.Host.UseSerilog((hostingContext, services, loggerConfiguration) =>
         {
-            var papertrailSettings = services.GetRequiredService<IOptions<PapertrailSettings>>().Value;
-
-            var syslogFormat = "{Timestamp:yyyy-MM-ddTHH:mm:ssZ} [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}";
-            var syslogFormatter = new MessageTemplateTextFormatter(syslogFormat, null);
-            var papertrailUri = $"tls://{papertrailSettings.Host}:{papertrailSettings.Port}";
-
+            
             loggerConfiguration
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
@@ -44,14 +37,12 @@ public static class DependencyInjectionExtensions
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console(
-                    outputTemplate: syslogFormat,
+                    outputTemplate: "{Timestamp:yyyy-MM-ddTHH:mm:ssZ} [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}",
                     theme: AnsiConsoleTheme.Literate
-                )
-                .WriteTo.TCPSink(
-                    papertrailUri,
-                    textFormatter: syslogFormatter);
+                );
         });
     }
+
 
     public static void AddAuthenticationServices(this WebApplicationBuilder builder)
     {

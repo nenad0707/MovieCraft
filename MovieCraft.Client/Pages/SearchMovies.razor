@@ -1,0 +1,108 @@
+﻿@page "/search"
+@inject MovieService MovieService
+@inject UserState UserState
+@inject FavoriteMoviesState FavoriteMoviesState
+@inject NavigationManager Navigation
+@inject IToastService ToastService
+
+<PageTitle>Search Movies</PageTitle>
+
+<div class="search-page">
+    <SearchInput @bind-Value="searchQuery"
+                 ShowSearchButton="true"
+                 DisableSearchButtonWhenEmpty="true"
+                 OnSearch="Search"
+                 Placeholder="Search for movies..." />
+
+    <div class="movie-grid">
+        @if (movies != null && movies.Any())
+        {
+            @foreach (var movie in movies)
+            {
+                <div class="mb-3 d-flex justify-content-center">
+                    <MovieCard Movie="movie"
+                               FlippedMovieId="@flippedMovieId"
+                               OnAddToFavorites="AddToFavorites" />
+                </div>
+            }
+        }
+        else if (hasSearched)
+        {
+            <div class="col-12">
+                <p class="text-center">No movies found for "@searchQuery".</p>
+            </div>
+        }
+    </div>
+</div>
+
+@code {  
+   private string searchQuery = string.Empty;  
+   private List<MovieDto> movies = new();  
+   private int? flippedMovieId = null;  
+   private bool hasSearched = false;  
+
+   private async Task Search()  
+   {  
+       hasSearched = true;  
+
+       if (string.IsNullOrWhiteSpace(searchQuery))  
+       {  
+           ToastService.ShowError("Please enter a search term.");  
+           movies.Clear();  
+           return;  
+       }  
+
+       try  
+       {  
+           movies = await MovieService.SearchMoviesAsync(searchQuery);  
+
+           if (!movies.Any())  
+           {  
+               ToastService.ShowInfo($"No movies found for \"{searchQuery}\".");  
+           }  
+       }  
+       catch (Exception)  
+       {  
+           ToastService.ShowError("An error occurred during the search. Please try again later.");  
+       }  
+   }
+
+   private void FlipCard(int movieId)  
+   {  
+       flippedMovieId = flippedMovieId == movieId ? (int?)null : movieId;  
+   }  
+
+    private async Task AddToFavorites(int tmdbId)
+    {
+        if (UserState.CurrentUser == null)
+        {
+            Navigation.NavigateTo("authentication/login");
+            return;
+        }
+        try
+        {
+            var result = await MovieService.AddToFavoritesAsync(tmdbId);
+
+            if (result == "Movie added to favorites successfully.")
+            {
+                ToastService.ShowSuccess(result);
+            }
+            else if (result == "This movie is already in your favorites.")
+            {
+                ToastService.ShowError(result);
+            }
+            else
+            {
+                ToastService.ShowError(result);
+            }
+
+            movies = movies.Where(m => m.TmdbId != tmdbId).ToList();
+            StateHasChanged();
+        }
+        catch (Exception)
+        {
+            ToastService.ShowError("Failed to add movie to favorites!");
+            StateHasChanged();
+        }
+    }
+}

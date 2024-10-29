@@ -1,11 +1,8 @@
 ﻿@inject MovieService MovieService
 @inject UserState UserState
 @inject NavigationManager NavigationManager
+@inject IToastService ToastService
 
-@if (message != null)
-{
-    <div class="alert alert-info">@message</div>
-}
 
 <div class="action-buttons">
     <button class="btn action-buttons__button action-buttons__button--trailer" @onclick="WatchTrailer" aria-label="Watch Trailer" data-tooltip="Watch Trailer">
@@ -18,16 +15,20 @@
     </button>
 </div>
 
-
-
 @code {
-    private string? message;
-    [Parameter] public int TmdbId { get; set; } 
-  
+    [Parameter] 
+    public int TmdbId { get; set; } 
+
+    [Parameter] 
+    public EventCallback<int> OnTrailerRequested { get; set; }
+
 
     private void WatchTrailer()
     {
-        // todo
+        if(OnTrailerRequested.HasDelegate)
+        {
+            OnTrailerRequested.InvokeAsync(TmdbId);
+        }
     }
 
     private async void AddToFavorites()
@@ -38,12 +39,26 @@
             return;
         }
 
-        message = await MovieService.AddToFavorites(TmdbId);
+        try
+        {
+            var result = await MovieService.AddToFavoritesAsync(TmdbId);
 
-        StateHasChanged();
-
-        await Task.Delay(3000);
-        message = null;
-        StateHasChanged();
+            if (result == "Movie added to favorites successfully.")
+            {
+                ToastService.ShowSuccess(result);
+            }
+            else if (result == "This movie is already in your favorites.")
+            {
+                ToastService.ShowError(result); 
+            }
+            else
+            {
+                ToastService.ShowError(result);
+            }
+        }
+        catch (Exception)
+        {
+            ToastService.ShowError("Failed to add movie to favorites!");
+        }
     }
 }

@@ -22,4 +22,7 @@ public class MovieDto
 
     [StringLength(500, ErrorMessage = "Backdrop path can have a maximum of 500 characters.")]
     public string BackdropPath { get; set; } = default!;
+
+    [StringLength(500, ErrorMessage = "Trailer URL can have a maximum of 500 characters.")]
+    public string? TrailerUrl { get; set; }
 }

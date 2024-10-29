@@ -1,0 +1,91 @@
+﻿<div class="search-bar-container">
+    <div class="search-bar-inner">
+        <input type="text"
+               class="form-control search-bar-input @InputClass"
+               placeholder="@Placeholder"
+               value="@CurrentValue"
+               @oninput="OnInputChanged"
+               @attributes="AdditionalAttributes" />
+        @if (ShowSearchButton)
+        {
+            <button class="btn-search"
+                    @onclick="HandleSearchClick"
+                    disabled="@IsSearchDisabled"
+                    aria-label="Search">
+                <i class='bx bx-search-alt'></i>
+            </button>
+        }
+        else
+        {
+            <i class='bx bx-search-alt search-icon'></i>
+        }
+    </div>
+</div>
+
+@code {
+    private string CurrentValue
+    {
+        get => Value;
+        set
+        {
+            if (Value != value)
+            {
+                Value = value;
+                ValueChanged.InvokeAsync(value);
+                CheckIfSearchDisabled();
+            }
+        }
+    }
+
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnSearch { get; set; }
+
+    [Parameter]
+    public bool ShowSearchButton { get; set; } = false;
+
+    [Parameter]
+    public bool DisableSearchButtonWhenEmpty { get; set; } = false;
+
+    [Parameter]
+    public string Placeholder { get; set; } = "Search...";
+
+    [Parameter]
+    public string InputClass { get; set; } = string.Empty;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> AdditionalAttributes { get; set; } = new();
+
+    private bool IsSearchDisabled { get; set; } = false;
+
+    private void OnInputChanged(ChangeEventArgs e)
+    {
+        CurrentValue = e.Value?.ToString() ?? string.Empty;
+    }
+
+    private void CheckIfSearchDisabled()
+    {
+        if (DisableSearchButtonWhenEmpty)
+        {
+            IsSearchDisabled = string.IsNullOrWhiteSpace(Value);
+        }
+    }
+
+    private async Task HandleSearchClick()
+    {
+        if (OnSearch.HasDelegate && !IsSearchDisabled)
+        {
+            await OnSearch.InvokeAsync(null);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        CheckIfSearchDisabled();
+    }
+}

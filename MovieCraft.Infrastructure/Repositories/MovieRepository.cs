@@ -46,5 +46,13 @@ namespace MovieCraft.Infrastructure.Persistence.Repositories
                 .Select(m => m.TmdbId)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<Movie>> GetMoviesByTmdbIdsAsync(IEnumerable<int> tmdbIds)
+        {
+            return await _dbContext.Movies
+                .AsNoTracking()
+                .Where(m => tmdbIds.Contains(m.TmdbId))
+                .ToListAsync();
+        }
     }
 }

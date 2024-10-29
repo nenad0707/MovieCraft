@@ -10,14 +10,16 @@ public class AddFavoriteMovieCommandHandler : IRequestHandler<AddFavoriteMovieCo
     private readonly IFavoriteMovieRepository _favoriteMovieRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMovieRepository _movieRepository;
+    private readonly ITmdbService _tmdbService;
     private readonly ILogger<AddFavoriteMovieCommandHandler> _logger;
 
-    public AddFavoriteMovieCommandHandler(IFavoriteMovieRepository favoriteMovieRepository, IUserRepository userRepository, 
-        IMovieRepository movieRepository, ILogger<AddFavoriteMovieCommandHandler> logger)
+    public AddFavoriteMovieCommandHandler(IFavoriteMovieRepository favoriteMovieRepository, IUserRepository userRepository,
+        IMovieRepository movieRepository, ITmdbService tmdbService, ILogger<AddFavoriteMovieCommandHandler> logger)
     {
         _favoriteMovieRepository = favoriteMovieRepository;
         _userRepository = userRepository;
         _movieRepository = movieRepository;
+        _tmdbService = tmdbService;
         _logger = logger;
     }
 
@@ -25,7 +27,6 @@ public class AddFavoriteMovieCommandHandler : IRequestHandler<AddFavoriteMovieCo
     {
         _logger.LogInformation($"Adding movie with TmdbId {request.MovieId} to favorites for user with Id {request.UserId}.");
 
-      
         var user = await _userRepository.GetByUserIdAsync(request.UserId);
         if (user == null)
         {
@@ -36,7 +37,22 @@ public class AddFavoriteMovieCommandHandler : IRequestHandler<AddFavoriteMovieCo
         var movie = await _movieRepository.GetByTmdbIdAsync(request.MovieId);
         if (movie == null)
         {
-            throw new ArgumentNullException(nameof(movie), "Movie not found.");
+           
+            var tmdbMovieDetails = await _tmdbService.GetMovieDetailsAsync(request.MovieId);
+
+           
+            movie = new Movie
+            {
+                TmdbId = tmdbMovieDetails.TmdbId,
+                Title = tmdbMovieDetails.Title,
+                Overview = tmdbMovieDetails.Overview,
+                ReleaseDate = tmdbMovieDetails.ReleaseDate,
+                PosterPath = tmdbMovieDetails.PosterPath,
+                BackdropPath = tmdbMovieDetails.BackdropPath,
+                TrailerUrl = tmdbMovieDetails.TrailerUrl
+            };
+
+            await _movieRepository.AddAsync(movie);  
         }
 
         
@@ -47,18 +63,14 @@ public class AddFavoriteMovieCommandHandler : IRequestHandler<AddFavoriteMovieCo
             throw new InvalidOperationException("This movie is already in your favorites.");
         }
 
-        
         var favoriteMovie = new FavoriteMovie
         {
             UserId = user.UserId,
             MovieId = movie.Id
         };
 
-        _logger.LogInformation("Saving favorite movie to the database.");
         await _favoriteMovieRepository.AddFavoriteMovieAsync(favoriteMovie);
 
         return Unit.Value;
     }
-
 }
-

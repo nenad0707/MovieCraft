@@ -1,0 +1,92 @@
+﻿.movie-card {
+    perspective: 1000px;
+    position: relative;
+    width: 200px;
+    height: 300px;
+    cursor: pointer;
+}
+
+.movie-card-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.movie-card:hover .movie-card-inner {
+    transform: rotateY(180deg);
+}
+
+.movie-card.flipped .movie-card-inner {
+    transform: rotateY(180deg);
+}
+
+.movie-card-front, .movie-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+    .movie-card-front img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.movie-card-back {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+}
+
+    .movie-card-back h2 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .movie-card-back p {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .movie-card-back button {
+        padding: 10px;
+        background-color: #f4c402;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background-color 0.3s ease;
+    }
+
+        .movie-card-back button:hover {
+            background-color: #d4a402;
+        }
+
+.btn-trailer {
+    background-color: #f4c402;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+    .btn-trailer:hover {
+        background-color: #d4a402;
+    }

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Identity.Web.Resource;
-using MovieCraft.Application.DTOs;
 using MovieCraft.Application.Features.Movies.Commands;
 using MovieCraft.Application.Features.Movies.Queries;
 using MovieCraft.Shared.DTOs;
@@ -21,7 +20,7 @@ public class MoviesController : ControllerBase
     private readonly IMediator _mediator;
     private readonly ILogger<MoviesController> _logger;
     private readonly IMemoryCache _memoryCache;
-    
+
     private const string PopularMoviesCacheKey = "popularMovies";
 
     public MoviesController(IMediator mediator, ILogger<MoviesController> logger,
@@ -77,7 +76,8 @@ public class MoviesController : ControllerBase
             ReleaseDate = addMovieDto.ReleaseDate,
             PosterPath = addMovieDto.PosterPath,
             BackdropPath = addMovieDto.BackdropPath,
-            TmdbId = addMovieDto.TmdbId ?? throw new ArgumentNullException(nameof(addMovieDto.TmdbId))
+            TmdbId = addMovieDto.TmdbId ?? throw new ArgumentNullException(nameof(addMovieDto.TmdbId)),
+            TrailerUrl = addMovieDto.TrailerUrl
         };
         try
         {
@@ -98,5 +98,18 @@ public class MoviesController : ControllerBase
             _logger.LogError(ex, "Error occurred while adding a movie.");
             return StatusCode(500, "An error occurred while adding the movie.");
         }
+    }
+    [HttpGet("search")]
+    [AllowAnonymous]
+    public async Task<IActionResult> SearchMovies([FromQuery] string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return BadRequest("Query parameter is required.");
+        }
+
+        _logger.LogInformation($"Searching for movies with query: {query}");
+        var movies = await _mediator.Send(new SearchMoviesQuery(query));
+        return Ok(movies);
     }
 }

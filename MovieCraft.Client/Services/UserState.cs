@@ -44,7 +44,7 @@ public class UserState
                     var newUser = new UserDto
                     {
                         UserId = userId,
-                        Name = user.Identity.Name
+                        Name = user.Identity.Name!
                     };
 
                     var response = await _httpClient.PostAsJsonAsync("api/users/sync", newUser);

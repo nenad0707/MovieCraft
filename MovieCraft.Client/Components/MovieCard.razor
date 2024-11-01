@@ -14,21 +14,10 @@
         <div class="movie-card-back">
             <h2>@(string.IsNullOrEmpty(Movie.Title) ? "Unknown Title" : Movie.Title)</h2>
             <p>Release Date: @(Movie.ReleaseDate?.ToString("dd.MM.yyyy") ?? "Unknown")</p>
-            <div class="button-group">
-                <button @onclick:stopPropagation="true"
-                        @onclick="() => AddToFavorites(Movie.TmdbId)"
-                        class="btn-favorite"
-                        aria-label="Add to Favorites">
-                    <i class="bx bx-heart"></i>Favorites
-                </button>
-
-                <button @onclick:stopPropagation="true"
-                        @onclick="() => OnWatchTrailer.InvokeAsync(Movie.TmdbId)"
-                        class="btn-trailer"
-                        aria-label="Watch Trailer">
-                    <i class="bx bx-play-circle"></i>Trailer
-                </button>
-            </div>
+            <ActionButtons 
+                TmdbId="Movie.TmdbId" 
+                OnTrailerRequested="OnWatchTrailer" 
+                ButtonBorderRadius="20px" />
         </div>
     </div>
 </div>

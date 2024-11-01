@@ -5,11 +5,11 @@
 
 
 <div class="action-buttons">
-    <button class="btn action-buttons__button action-buttons__button--trailer" @onclick="WatchTrailer" aria-label="Watch Trailer" data-tooltip="Watch Trailer">
+    <button class="btn action-buttons__button action-buttons__button--trailer" style="border-radius: @(ButtonBorderRadius)" @onclick="WatchTrailer" aria-label="Watch Trailer" data-tooltip="Watch Trailer">
         <i class="bx bx-play-circle"></i>
         <span>Trailer</span>
     </button>
-    <button class="btn action-buttons__button action-buttons__button--favorite" @onclick="AddToFavorites" aria-label="Add to Favorites" data-tooltip="Add to Favorites">
+    <button class="btn action-buttons__button action-buttons__button--favorite" style="border-radius: @(ButtonBorderRadius)" @onclick="AddToFavorites" aria-label="Add to Favorites" data-tooltip="Add to Favorites">
         <i class="bx bx-heart"></i>
         <span>Favorite</span>
     </button>
@@ -22,6 +22,8 @@
     [Parameter] 
     public EventCallback<int> OnTrailerRequested { get; set; }
 
+    [Parameter]
+    public string ButtonBorderRadius { get; set; } = "5px";
 
     private void WatchTrailer()
     {

@@ -16,8 +16,8 @@
     justify-content: center;
     padding: 10px 15px;
     font-size: 16px;
-    color: #ffffff; 
-    background-color: #f4c402; 
+    color: #ffffff;
+    background-color: #f4c402;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -25,11 +25,11 @@
     width: 150px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    position: relative; 
+    position: relative;
+    gap: 8px;
 }
 
     .action-buttons__button i {
-        margin-right: 8px;
         font-size: 20px;
         text-shadow: none;
         color: inherit; 
@@ -76,13 +76,13 @@
 
 @media (max-width: 600px) {
     .action-buttons__button {
-        padding: 8px 12px;
+        padding: 8px 10px;
         font-size: 14px;
         width: 130px;
+        gap: 6px;
     }
 
         .action-buttons__button i {
-            margin-right: 6px;
             font-size: 18px;
         }
 }

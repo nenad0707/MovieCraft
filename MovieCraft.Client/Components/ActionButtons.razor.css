@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     width: 100%;
     padding: 10px;
     border-radius: 5px;
@@ -13,59 +13,65 @@
 .action-buttons__button {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 10px 15px;
+    justify-content: flex-start;
+    padding: 10px 15px 10px 25px;
     font-size: 16px;
     color: #ffffff;
-    background-color: #f4c402;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
     width: 150px;
-    text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     position: relative;
-    gap: 8px;
+    gap: 12px;
 }
 
-    .action-buttons__button i {
-        font-size: 20px;
-        text-shadow: none;
-        color: inherit; 
-    }
+.action-buttons__button i {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    min-width: 24px;
+}
 
-    .action-buttons__button:hover {
-        background-color: #d4a402; 
-        box-shadow: 0 0px 15px rgba(255, 255, 255, 0.9), 0 4px 6px rgba(0, 0, 0, 0.3);
-    }
+.action-buttons__button span {
+    flex: 1;
+    text-align: left;
+}
 
-        .action-buttons__button:hover i {
-            transform: scale(1.1);
-            transition: transform 0.3s ease;
-        }
+.action-buttons__button:hover {
+    background-color: #d4a402;
+    box-shadow: 0 0px 15px rgba(255, 255, 255, 0.9), 0 4px 6px rgba(0, 0, 0, 0.3);
+}
 
-    .action-buttons__button:active {
-        transform: scale(0.98);
-    }
+.action-buttons__button:hover i {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.action-buttons__button:active {
+    transform: scale(0.98);
+}
 
 .action-buttons__button--favorite {
-    background-color: #8c2a1a; 
-    color: #ffffff; 
+    background-color: #8c2a1a;
+    color: #ffffff;
 }
 
-    .action-buttons__button--favorite:hover {
-        background-color: #6d2214;
-    }
+.action-buttons__button--favorite:hover {
+    background-color: #6d2214;
+}
 
 .action-buttons__button--trailer {
     background-color: #1e4c7a;
-    color: #ffffff; 
+    color: #ffffff;
 }
 
-    .action-buttons__button--trailer:hover {
-        background-color: #16435c; 
-    }
+.action-buttons__button--trailer:hover {
+    background-color: #16435c;
+}
 
 @media (min-width: 992px) {
     .action-buttons {
@@ -75,16 +81,22 @@
 }
 
 @media (max-width: 600px) {
-    .action-buttons__button {
-        padding: 8px 10px;
-        font-size: 14px;
-        width: 130px;
-        gap: 6px;
+    .action-buttons {
+        padding: 5px;
+        gap: 10px;
     }
 
-        .action-buttons__button i {
-            font-size: 18px;
-        }
+    .action-buttons__button {
+        padding: 8px 8px 8px 15px;
+        font-size: 14px;
+        width: 120px;
+        gap: 6px;
+        margin-bottom: 5px;
+    }
+
+    .action-buttons__button i {
+        font-size: 18px;
+    }
 }
 
 .action-buttons__button:focus {

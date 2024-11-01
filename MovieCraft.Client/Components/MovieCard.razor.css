@@ -22,7 +22,8 @@
     transform: rotateY(180deg);
 }
 
-.movie-card-front, .movie-card-back {
+.movie-card-front,
+.movie-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -32,11 +33,11 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-    .movie-card-front img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+.movie-card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 .movie-card-back {
     background-color: rgba(255, 255, 255, 0.1);
@@ -44,18 +45,74 @@
     transform: rotateY(180deg);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
     padding: 20px;
     backdrop-filter: blur(10px);
 }
 
+.movie-card-back h2 {
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 2.4em;
+}
+
+.movie-card-back p {
+    font-size: 0.9rem;
+    text-align: center;
+    margin: 0 0 20px 0;
+    color: #e0e0e0;
+}
+
+.movie-card-back> :last-child {
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .movie-card {
+        width: 180px;
+        height: 270px;
+    }
+
+    .movie-card-back {
+        padding: 15px;
+    }
+
     .movie-card-back h2 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
+        font-size: 1.1rem;
+        margin: 5px 0;
+        min-height: 2.2em;
     }
 
     .movie-card-back p {
-        font-size: 0.9rem;
-        margin-bottom: 15px;
+        font-size: 0.8rem;
+        margin: 0 0 15px 0;
     }
+}
+
+@media (max-width: 480px) {
+    .movie-card {
+        width: 160px;
+        height: 240px;
+    }
+
+    .movie-card-back {
+        padding: 10px;
+    }
+
+    .movie-card-back h2 {
+        font-size: 1rem;
+        margin: 5px 0;
+    }
+
+    .movie-card-back p {
+        font-size: 0.75rem;
+        margin: 0 0 10px 0;
+    }
+}

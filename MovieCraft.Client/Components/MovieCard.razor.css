@@ -4,6 +4,11 @@
     width: 200px;
     height: 300px;
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
 }
 
 .movie-card-inner {
@@ -37,17 +42,19 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: opacity 0.3s ease;
 }
 
 .movie-card-back {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
     transform: rotateY(180deg);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     padding: 20px;
-    backdrop-filter: blur(10px);
 }
 
 .movie-card-back h2 {
@@ -60,13 +67,25 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     min-height: 2.4em;
+    color: #ffffff;
+    /* Promena sa var(--nav-hover-color) na čisto belu */
+    font-weight: 600;
+    /* Podebljan font */
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.8),
+        /* Dublja senka */
+        0 4px 8px rgba(0, 0, 0, 0.6);
+    /* Dodatna senka za bolji kontrast */
+    letter-spacing: 0.5px;
+    /* Malo veći razmak između slova */
 }
 
 .movie-card-back p {
     font-size: 0.9rem;
     text-align: center;
     margin: 0 0 20px 0;
-    color: #e0e0e0;
+    color: var(--nav-text-color);
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .movie-card-back> :last-child {

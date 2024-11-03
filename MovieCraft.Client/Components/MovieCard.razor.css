@@ -4,6 +4,11 @@
     width: 200px;
     height: 300px;
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
 }
 
 .movie-card-inner {
@@ -22,7 +27,8 @@
     transform: rotateY(180deg);
 }
 
-.movie-card-front, .movie-card-back {
+.movie-card-front,
+.movie-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -32,61 +38,100 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-    .movie-card-front img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+.movie-card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
 
 .movie-card-back {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
     transform: rotateY(180deg);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
     padding: 20px;
-    backdrop-filter: blur(10px);
 }
 
+.movie-card-back h2 {
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 2.4em;
+    color: #ffffff;
+    /* Promena sa var(--nav-hover-color) na čisto belu */
+    font-weight: 600;
+    /* Podebljan font */
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.8),
+        /* Dublja senka */
+        0 4px 8px rgba(0, 0, 0, 0.6);
+    /* Dodatna senka za bolji kontrast */
+    letter-spacing: 0.5px;
+    /* Malo veći razmak između slova */
+}
+
+.movie-card-back p {
+    font-size: 0.9rem;
+    text-align: center;
+    margin: 0 0 20px 0;
+    color: var(--nav-text-color);
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.movie-card-back> :last-child {
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .movie-card {
+        width: 180px;
+        height: 270px;
+    }
+
+    .movie-card-back {
+        padding: 15px;
+    }
+
     .movie-card-back h2 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
+        font-size: 1.1rem;
+        margin: 5px 0;
+        min-height: 2.2em;
     }
 
     .movie-card-back p {
-        font-size: 0.9rem;
-        margin-bottom: 15px;
+        font-size: 0.8rem;
+        margin: 0 0 15px 0;
     }
-
-    .movie-card-back button {
-        padding: 10px;
-        background-color: #f4c402;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: background-color 0.3s ease;
-    }
-
-        .movie-card-back button:hover {
-            background-color: #d4a402;
-        }
-
-.btn-trailer {
-    background-color: #f4c402;
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 20px;
-    display: inline-block;
-    margin-top: 10px;
 }
 
-    .btn-trailer:hover {
-        background-color: #d4a402;
+@media (max-width: 480px) {
+    .movie-card {
+        width: 160px;
+        height: 240px;
     }
+
+    .movie-card-back {
+        padding: 10px;
+    }
+
+    .movie-card-back h2 {
+        font-size: 1rem;
+        margin: 5px 0;
+    }
+
+    .movie-card-back p {
+        font-size: 0.75rem;
+        margin: 0 0 10px 0;
+    }
+}

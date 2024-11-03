@@ -10,15 +10,14 @@
                 <img src="images/cinema.jpg" alt="No Image Available" />
             }
         </div>
-        <!-- Back of the card -->
+
         <div class="movie-card-back">
             <h2>@(string.IsNullOrEmpty(Movie.Title) ? "Unknown Title" : Movie.Title)</h2>
             <p>Release Date: @(Movie.ReleaseDate?.ToString("dd.MM.yyyy") ?? "Unknown")</p>
-            <button @onclick:stopPropagation="true"
-                    @onclick="() => AddToFavorites(Movie.TmdbId)"
-                    aria-label="Add to Favorites">
-                <i class="bx bx-heart"></i> Add to Favorites
-            </button>
+            <ActionButtons 
+                TmdbId="Movie.TmdbId" 
+                OnTrailerRequested="OnWatchTrailer" 
+                ButtonBorderRadius="20px" />
         </div>
     </div>
 </div>
@@ -35,6 +34,9 @@
     [Parameter]
     public int? FlippedMovieId { get; set; }
 
+    [Parameter]
+    public EventCallback<int> OnWatchTrailer { get; set; }
+
     private void FlipCard(int movieId)
     {
         FlippedMovieId = FlippedMovieId == movieId ? (int?)null : movieId;
@@ -44,5 +46,4 @@
     {
         await OnAddToFavorites.InvokeAsync(tmdbId);
     }
-
 }

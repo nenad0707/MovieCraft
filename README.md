@@ -1,12 +1,24 @@
 # 🎬 MovieCraft - Blazor Hosted Movie Application
 
+![.NET](https://img.shields.io/badge/.NET%208.0-512BD4?style=flat&logo=.net&logoColor=white)
+![Blazor](https://img.shields.io/badge/Blazor-512BD4?style=flat&logo=blazor&logoColor=white)
+![Azure](https://img.shields.io/badge/Azure-0078D4?style=flat&logo=microsoftazure&logoColor=white)
+[![🚀 Build, publish, and deploy MovieCraft to SmarterASP.NET](https://github.com/nenad0707/MovieCraft/actions/workflows/moviecraft-web-deploy.yml/badge.svg)](https://github.com/nenad0707/MovAieCraft/actions/workflows/moviecraft-web-deploy.yml)
+
 **MovieCraft** is a **Blazor Hosted** application designed to provide a seamless experience for browsing and managing your favorite movies. The project incorporates a modular architecture with distinct layers, following **Clean Architecture** principles. It leverages **Azure Active Directory B2C** for authentication and **TMDb API** for fetching movie data such as trailers, release dates, and more.
 
-## 🚀 **Live Demo**: [Visit MovieCraft](https://nenadtara-001-site3.jtempurl.com/)
+## 🌐 Live Demo
+
+[![MovieCraft Demo](https://img.shields.io/badge/MovieCraft-Live%20Demo-512BD4?style=for-the-badge&logo=microsoft-edge&logoColor=white)](https://nenadtara-001-site3.jtempurl.com/)
+
+> **⚠️ Note:** Registration with valid email required for accessing favorites and personalized features.
+
+---
 
 ## 📖 Table of Contents
 
 - [🎬 MovieCraft - Blazor Hosted Movie Application](#-moviecraft---blazor-hosted-movie-application)
+  - [🌐 Live Demo](#-live-demo)
   - [📖 Table of Contents](#-table-of-contents)
   - [📚 Project Overview](#-project-overview)
   - [✨ Features](#-features)
@@ -43,12 +55,18 @@ The project is structured as a **Blazor Hosted** application, separating the **C
 
 ## ✨ Features
 
-- **Dynamic Movie Search**: Instantly search for movies with real-time results fetched from **TMDb API**.
-- **Favorites Management**: Users can securely log in and manage their favorite movies.
-- **Trailer Playback**: Watch trailers for movies directly through an integrated modal.
-- **Responsive UI**: Built with a mobile-first approach, ensuring great user experience on both desktop and mobile devices.
-- **Blazored Toast Notifications**: Visual feedback through notifications for actions like adding favorites or errors.
-- **Dynamic Backgrounds**: Background images adjust based on the selected movie for an immersive experience.
+- 🔍 **Dynamic Movie Search**
+  - Instantly search for movies with real-time results fetched from **TMDb API**
+- ❤️ **Favorites Management**
+  - Users can securely log in and manage their favorite movies
+- 🎬 **Trailer Playback**
+  - Watch trailers for movies directly through an integrated modal
+- 📱 **Responsive UI**
+  - Built with a mobile-first approach, ensuring great user experience on both desktop and mobile devices
+- 🔔 **Blazored Toast Notifications**
+  - Visual feedback through notifications for actions like adding favorites or errors
+- 🎨 **Dynamic Backgrounds**
+  - Background images adjust based on the selected movie for an immersive experience
 
 ---
 

@@ -70,6 +70,24 @@ The project is structured as a **Blazor Hosted** application, separating the **C
 
 ---
 
+## 📸 Screenshots
+
+### 🖥️ Desktop View
+
+#### Home Page
+
+![Home Page](./docs/images/home-desktop.jpg)
+
+#### Search Page
+
+![Search Page](./docs/images/search-desktop.jpg)
+
+#### Favorites Page
+
+![Favorites Page](./docs/images/favorites-desktop.jpg)
+
+---
+
 ## 🛠️ Tech Stack & Tools
 
 ### Frontend

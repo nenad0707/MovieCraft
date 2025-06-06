@@ -1,25 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MovieCraft.Infrastructure.Configuration;
-using MovieCraft.Infrastructure.Persistence;
-using Serilog.Events;
-using Serilog.Formatting.Display;
-using Serilog.Sinks.SystemConsole.Themes;
-using Serilog;
-using Serilog.Sinks.Network;
+﻿using FluentValidation;
+using MediatR;
+using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using MovieCraft.Application.Features.Movies.Queries;
 using MovieCraft.Application.Interfaces;
 using MovieCraft.Application.Mappings;
+using MovieCraft.Infrastructure.Configuration;
+using MovieCraft.Infrastructure.Persistence;
 using MovieCraft.Infrastructure.Persistence.Repositories;
 using MovieCraft.Infrastructure.Repositories;
 using MovieCraft.Infrastructure.Services;
-using Microsoft.AspNetCore.RateLimiting;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 using System.Threading.RateLimiting;
-using Microsoft.Extensions.Options;
-using FluentValidation;
-using MediatR;
-using MediatR.Extensions.FluentValidation.AspNetCore;
 
 namespace MovieCraft.Server.Extensions;
 
@@ -29,7 +26,7 @@ public static class DependencyInjectionExtensions
     {
         builder.Host.UseSerilog((hostingContext, services, loggerConfiguration) =>
         {
-            
+
             loggerConfiguration
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
@@ -39,7 +36,10 @@ public static class DependencyInjectionExtensions
                 .WriteTo.Console(
                     outputTemplate: "{Timestamp:yyyy-MM-ddTHH:mm:ssZ} [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}",
                     theme: AnsiConsoleTheme.Literate
-                );
+                ).WriteTo.ApplicationInsights(
+                hostingContext.Configuration["ApplicationInsights:ConnectionString"],
+                TelemetryConverter.Traces,
+                restrictedToMinimumLevel: LogEventLevel.Warning);
         });
     }
 
@@ -59,6 +59,8 @@ public static class DependencyInjectionExtensions
         builder.Services.AddMemoryCache();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddApplicationInsightsTelemetry();
+
     }
 
     public static void AddDatabaseServices(this WebApplicationBuilder builder)
